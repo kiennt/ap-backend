@@ -41,7 +41,7 @@ export class PinterestClient {
       case HTTP_METHODS.DELETE:
         return request.delete;
       default:
-        return undefined;
+        return null;
     }
   }
 
