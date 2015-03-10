@@ -1,14 +1,14 @@
-import { PinterestClient } from './pinterest-client';
+import { PinterestClient } from "./pinterest-client";
 
 var testCallback = function (error, response, body) {
   if (!error) {
     switch(response.statusCode) {
       case 200:
         console.log(body);
-        break
+        break;
       case 401:
         console.log(body);
-        break
+        break;
       default:
     }
   } else {

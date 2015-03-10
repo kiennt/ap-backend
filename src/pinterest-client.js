@@ -1,4 +1,4 @@
-const DOMAIN = 'https://api.pinterest.com/v3';
+const DOMAIN = "https://api.pinterest.com/v3";
 const CLIENT_ID = "1431594";
 
 const HTTP_METHODS = {
@@ -8,7 +8,7 @@ const HTTP_METHODS = {
   DELETE : "delete"
 };
 
-var request = require('request');
+var request = require("request");
 
 export class PinterestClient {
   constructor(accessToken) {
@@ -22,7 +22,7 @@ export class PinterestClient {
       let stringOfParams = "";
       for (var key in params) {
         stringOfParams += `${key}=${params[key]}&`;
-      };
+      }
       url += `?${stringOfParams}`;
     }
 
@@ -71,7 +71,7 @@ export class PinterestClient {
     let requestBody = {
       url: url,
       formData: {
-        access_token: this.accessToken
+        "access_token": this.accessToken
       }
     };
 
