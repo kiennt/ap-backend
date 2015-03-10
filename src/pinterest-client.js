@@ -46,10 +46,10 @@ export class PinterestClient {
 		}
 		func({
 			url: url,
-			formData: { 
-				access_token: this.authKey 
+			formData: {
+				access_token: this.authKey
 			}
-		}, function (error, response, body) { 
+		}, function (error, response, body) {
 			if (!error) {
 				switch(response.statusCode) {
 					case 200:
