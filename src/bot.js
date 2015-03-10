@@ -17,10 +17,10 @@ var testCallback = function (error, response, body) {
 };
 
 export class Bot {
-  constructor(authKey, type) {
+  constructor(accessToken, type) {
     switch (type) {
       case "pinterest":
-        this.client = new PinterestClient(authKey);
+        this.client = new PinterestClient(accessToken);
     }
   }
 

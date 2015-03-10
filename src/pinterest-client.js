@@ -11,8 +11,8 @@ const HTTP_METHODS = {
 var request = require('request');
 
 export class PinterestClient {
-  constructor(authKey) {
-    this.authKey = authKey;
+  constructor(accessToken) {
+    this.accessToken = accessToken;
   }
 
   getURL(path, params) {
@@ -71,7 +71,7 @@ export class PinterestClient {
     let requestBody = {
       url: url,
       formData: {
-        access_token: this.authKey
+        access_token: this.accessToken
       }
     };
 
@@ -82,7 +82,7 @@ export class PinterestClient {
   // Again, should be seperated to 2 different callbacks
   likeAPin(pinId, callback) {
     let params = {
-      access_token : this.authKey
+      "access_token" : this.accessToken
     };
     this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, null, params, callback);
   }
