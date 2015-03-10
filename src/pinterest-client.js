@@ -86,7 +86,7 @@ export class PinterestClient {
 
   likeAPin(pinId) {
     let params = {
-      "access_token" : this.authKey
+      access_token : this.authKey
     };
     this.request(PUT, `pins/${pinId}/like/`, null, params);
   }
