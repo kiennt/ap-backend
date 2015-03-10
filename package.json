@@ -1,0 +1,12 @@
+{
+  "name": "ap-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.53.0"
+  }
+}
