@@ -4,6 +4,7 @@ const CLIENT_ID = "1431594";
 const GET = "get";
 const POST = "post";
 const PUT = "put";
+const DELETE = "delete";
 
 var request = require('request');
 
@@ -26,7 +27,23 @@ export class PinterestClient {
 		return url;
 	}
 
-	requestToServer(methodName, path, params, data) {
+  get(path, params={}) {
+    return this.request(GET, path, params)
+  }
+
+  post(path, params={}, data={}) {
+    return this.request(POST, path, params, data)
+  }
+
+  put(path, params={}, data={}) {
+    return this.request(PUT, path, params, data)
+  }
+
+  delete(path, params={}, data={}) {
+    return this.request(DELETE, path, params, data)
+  }
+
+	request(methodName, path, params={}, data={}) {
 		let url = this.getURL(methodName, path, params);
 		console.log(url);
 
@@ -44,7 +61,8 @@ export class PinterestClient {
 			default:
 				break;
 		}
-		func({
+
+		return func({
 			url: url,
 			formData: {
 				access_token: this.authKey
@@ -70,6 +88,6 @@ export class PinterestClient {
 		let params = {
 			"access_token" : this.authKey
 		};
-		this.requestToServer(PUT, `pins/${pinId}/like/`, null, params);
+		this.request(PUT, `pins/${pinId}/like/`, null, params);
 	}
 }
