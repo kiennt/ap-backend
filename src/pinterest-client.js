@@ -1,10 +1,12 @@
 const DOMAIN = 'https://api.pinterest.com/v3';
 const CLIENT_ID = "1431594";
 
-const GET = "get";
-const POST = "post";
-const PUT = "put";
-const DELETE = "delete";
+const HTTP_METHODS = {
+  GET : "get",
+  POST : "post",
+  PUT : "put",
+  DELETE : "delete"
+};
 
 var request = require('request');
 
@@ -13,7 +15,7 @@ export class PinterestClient {
     this.authKey = authKey;
   }
 
-  getURL(methodName, path, params) {
+  getURL(path, params) {
     let url = `${DOMAIN}/${path}`;
 
     if (params) {
@@ -27,67 +29,61 @@ export class PinterestClient {
     return url;
   }
 
-  get(path, params={}) {
-    return this.request(GET, path, params)
+  // This should be move to a helper class...
+  getHttpHandler(httpMethod) {
+    switch(httpMethod) {
+      case HTTP_METHODS.GET:
+        return request.get;
+      case HTTP_METHODS.PUT:
+        return request.put;
+      case HTTP_METHODS.POST:
+        return request.post;
+      case HTTP_METHODS.DELETE:
+        return request.delete;
+      default:
+        return undefined;
+    }
   }
 
-  post(path, params={}, data={}) {
-    return this.request(POST, path, params, data)
+  get(path, params={}, callback) {
+    return this.request(HTTP_METHODS.GET, path, params, {}, callback);
   }
 
-  put(path, params={}, data={}) {
-    return this.request(PUT, path, params, data)
+  post(path, params={}, data={}, callback) {
+    return this.request(HTTP_METHODS.POST, path, params, data, callback);
   }
 
-  delete(path, params={}, data={}) {
-    return this.request(DELETE, path, params, data)
+  put(path, params={}, data={}, callback) {
+    return this.request(HTTP_METHODS.PUT, path, params, data, callback);
   }
 
-  request(methodName, path, params={}, data={}) {
-    let url = this.getURL(methodName, path, params);
+  delete(path, params={}, data={}, callback) {
+    return this.request(HTTP_METHODS.DELETE, path, params, data, callback);
+  }
+
+  // This should be seperated to 2 different callbacks
+  request(httpMethod, path, params={}, data={}, callback) {
+    let url = this.getURL(path, params);
     console.log(url);
 
-    var func;
-    switch(methodName) {
-      case PUT:
-        func = request.put;
-        break;
-      case POST:
-        func = request.post;
-        break;
-      case DELETE:
-        func = request.delete;
-        break;
-      default:
-        break;
-    }
+    let handler = this.getHttpHandler(httpMethod);
 
-    return func({
+    let requestBody = {
       url: url,
       formData: {
         access_token: this.authKey
       }
-    }, function (error, response, body) {
-      if (!error) {
-        switch(response.statusCode) {
-          case 200:
-            console.log(body);
-            break
-          case 401:
-            console.log(body);
-            break
-          default:
-        }
-      } else {
-        throw error;
-      }
-    });
+    };
+
+    if (handler)
+      handler(requestBody, callback);
   }
 
-  likeAPin(pinId) {
+  // Again, should be seperated to 2 different callbacks
+  likeAPin(pinId, callback) {
     let params = {
       access_token : this.authKey
     };
-    this.request(PUT, `pins/${pinId}/like/`, null, params);
+    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, null, params, callback);
   }
 }
