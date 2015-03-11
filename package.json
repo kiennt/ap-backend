@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -12,10 +11,18 @@
   "devDependencies": {
     "babel": "^4.7.5",
     "babel-eslint": "^1.0.0",
+    "babel-jest": "^4.0.0",
     "eslint": "^0.16.2",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.0",
     "gulp-eslint": "^0.6.0",
-    "gulp-sourcemaps": "^1.5.0"
+    "gulp-sourcemaps": "^1.5.0",
+    "jest-cli": "^0.4.0"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

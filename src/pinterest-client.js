@@ -8,9 +8,7 @@ const HTTP_METHODS = {
   DELETT: 'delete'
 };
 
-var request = require('request');
-
-export class PinterestClient {
+export default class PinterestClient {
   constructor(accessToken) {
     this.accessToken = accessToken;
   }
@@ -30,6 +28,7 @@ export class PinterestClient {
 
   // This should be move to a helper class...
   getHttpHandler(httpMethod) {
+    var request = require('request');
     switch (httpMethod) {
       case HTTP_METHODS.GET:
         return request.get;
