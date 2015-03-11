@@ -9,10 +9,9 @@ const HTTP_METHODS = {
 };
 
 const HTTP_HEADERS = {
-  'X-Pixel-Ratio': 2,
-  'X-Pinterest-Device': 'iPhone7,2',
-  'X-Pinterest-AppState': 'active',
-  'User-Agent': 'Pinterest for iOS/4.3 (iPhone; 8.1.1)'
+  'X-Pinterest-Device': 'GT-I9300',
+  'X-Pinterest-AppState': 'background',
+  'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
 };
 
 export default class PinterestClient {
