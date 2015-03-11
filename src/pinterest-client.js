@@ -1,6 +1,4 @@
 const DOMAIN = 'https://api.pinterest.com/v3';
-const CLIENT_ID = '1431594';
-
 const HTTP_METHODS = {
   GET: 'get',
   POST: 'post',
