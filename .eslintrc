@@ -3,7 +3,8 @@
   "rules": {
     "strict": 0,
     // "block-scoped-var": 2,  // Disable because of ES6 class + methods
-    "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    // "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
+    "no-unused-vars": 0, // Disable because of ES6
     "brace-style": [2, "1tbs", {"allowSingleLine": true}],
     "camelcase": 1,
     "curly": 2,
