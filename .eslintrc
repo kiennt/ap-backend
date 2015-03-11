@@ -8,6 +8,7 @@
     "brace-style": [2, "1tbs"],
     "camelcase": 1,
     "curly": 2,
+    "dot-notation": [2, {"allowPattern": "^[a-z]+(_[a-z]+)+$"}],
     "eol-last": 2,
     "eqeqeq": [2, "smart"],
     "max-depth": [1, 3],

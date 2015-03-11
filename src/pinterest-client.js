@@ -62,18 +62,14 @@ export class PinterestClient {
 
   // This should be seperated to 2 different callbacks
   request(httpMethod, path, params={}, data={}, callback) {
+    data['access_token'] = this.accessToken;
+
     let url = this.getURL(path, params);
-    console.log(url);
-
     let handler = this.getHttpHandler(httpMethod);
-
     let requestBody = {
       url: url,
-      formData: {
-        'access_token': this.accessToken
-      }
+      formData: data
     };
-
     if (handler) {
       handler(requestBody, callback);
     }
