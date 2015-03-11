@@ -8,6 +8,12 @@ const HTTP_METHODS = {
   DELETT: 'delete'
 };
 
+const HTTP_HEADERS = {
+  'X-Pinterest-Device': 'GT-I9300',
+  'X-Pinterest-AppState': 'background',
+  'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
+};
+
 export default class PinterestClient {
   constructor(accessToken) {
     this.accessToken = accessToken;
@@ -44,19 +50,23 @@ export default class PinterestClient {
   }
 
   get(path, params={}, callback) {
-    return this.request(HTTP_METHODS.GET, path, params, {}, callback);
+    return this.request(
+      HTTP_METHODS.GET, HTTP_HEADERS, path, params, {}, callback);
   }
 
   post(path, params={}, data={}, callback) {
-    return this.request(HTTP_METHODS.POST, path, params, data, callback);
+    return this.request(
+      HTTP_METHODS.POST, HTTP_HEADERS, path, params, data, callback);
   }
 
   put(path, params={}, data={}, callback) {
-    return this.request(HTTP_METHODS.PUT, path, params, data, callback);
+    return this.request(
+      HTTP_METHODS.PUT, HTTP_HEADERS, path, params, data, callback);
   }
 
   delete(path, params={}, data={}, callback) {
-    return this.request(HTTP_METHODS.DELETE, path, params, data, callback);
+    return this.request(
+      HTTP_METHODS.DELETE, HTTP_HEADERS, path, params, data, callback);
   }
 
   // This should be seperated to 2 different callbacks
