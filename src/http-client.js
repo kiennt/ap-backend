@@ -7,7 +7,7 @@ const HTTP_HANDLERS = {
   DELETE: request.delete
 };
 
-let isStatusCodeValid = function (statusCode) {
+function isStatusCodeValid(statusCode) {
   let is2xx = (statusCode >= 200) && (statusCode <= 299);
   let is3xx = (statusCode >= 300) && (statusCode <= 300);
   return is2xx || is3xx;
@@ -25,14 +25,13 @@ export default class HttpClient {
   request(httpMethod, absolutePath, params={}, data={}, headers={}) {
     httpMethod = (httpMethod || '').toUpperCase();
     let handler = HTTP_HANDLERS[httpMethod];
-    let fullUrl = this.getFullURL(absolutePath, params);
-    let requestBody = {
-      url: fullUrl,
-      formData: data
-    };
-
     if (!handler)
       return Promise.reject(new Error(`Unknown HTTP method: ${httpMethod}`));
+
+    let requestBody = {
+      url: this.getFullURL(absolutePath, params),
+      formData: data
+    };
 
     return new Promise((resolve, reject) => {
       handler(requestBody, (err, response, body) => {

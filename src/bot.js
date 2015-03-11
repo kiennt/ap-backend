@@ -9,9 +9,8 @@ export class Bot {
   }
 
   run() {
-    this.client.likeAPin('83879611786469438').then(
-      (body) => console.log(body),
-      (err) => console.log(err)
-    );
+    this.client.likeAPin('83879611786469438')
+      .then((body) => console.log(body))
+      .catch((err) => console.log(err));
   }
 }
