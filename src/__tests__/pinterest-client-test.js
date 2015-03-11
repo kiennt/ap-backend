@@ -2,8 +2,7 @@
 
 'use strict';
 
-jest.dontMock('request');
-jest.dontMock('../pinterest-client');
+jest.autoMockOff();
 
 describe('PinterestClient', function() {
   var PinterestClient = require('../pinterest-client');
@@ -15,7 +14,7 @@ describe('PinterestClient', function() {
 
   it('should have valid getURL', function() {
     var url = client.getURL('path', {a: 10, y: 20});
-    expect(url).toBe('https://api.pinterest.com/v3/path?a=10&y=20&');
+    expect(url).toBe('https://api.pinterest.com/v3/path?a=10&y=20');
   });
 
 });
