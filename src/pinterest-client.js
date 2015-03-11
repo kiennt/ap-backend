@@ -1,14 +1,14 @@
-const DOMAIN = "https://api.pinterest.com/v3";
-const CLIENT_ID = "1431594";
+const DOMAIN = 'https://api.pinterest.com/v3';
+const CLIENT_ID = '1431594';
 
 const HTTP_METHODS = {
-  GET : "get",
-  POST : "post",
-  PUT : "put",
-  DELETE : "delete"
+  GET: 'get',
+  POST: 'post',
+  PUT: 'put',
+  DELETT: 'delete'
 };
 
-var request = require("request");
+var request = require('request');
 
 export class PinterestClient {
   constructor(accessToken) {
@@ -19,19 +19,18 @@ export class PinterestClient {
     let url = `${DOMAIN}/${path}`;
 
     if (params) {
-      let stringOfParams = "";
+      let stringOfParams = '';
       for (var key in params) {
         stringOfParams += `${key}=${params[key]}&`;
       }
       url += `?${stringOfParams}`;
     }
-
     return url;
   }
 
   // This should be move to a helper class...
   getHttpHandler(httpMethod) {
-    switch(httpMethod) {
+    switch (httpMethod) {
       case HTTP_METHODS.GET:
         return request.get;
       case HTTP_METHODS.PUT:
@@ -63,27 +62,21 @@ export class PinterestClient {
 
   // This should be seperated to 2 different callbacks
   request(httpMethod, path, params={}, data={}, callback) {
+    data['access_token'] = this.accessToken;
+
     let url = this.getURL(path, params);
-    console.log(url);
-
     let handler = this.getHttpHandler(httpMethod);
-
     let requestBody = {
       url: url,
-      formData: {
-        "access_token": this.accessToken
-      }
+      formData: data
     };
-
-    if (handler)
+    if (handler) {
       handler(requestBody, callback);
+    }
   }
 
   // Again, should be seperated to 2 different callbacks
   likeAPin(pinId, callback) {
-    let params = {
-      "access_token" : this.accessToken
-    };
-    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, null, params, callback);
+    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, {}, {}, callback);
   }
 }

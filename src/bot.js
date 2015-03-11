@@ -1,8 +1,8 @@
-import { PinterestClient } from "./pinterest-client";
+import { PinterestClient } from './pinterest-client';
 
 var testCallback = function (error, response, body) {
   if (!error) {
-    switch(response.statusCode) {
+    switch (response.statusCode) {
       case 200:
         console.log(body);
         break;
@@ -19,12 +19,12 @@ var testCallback = function (error, response, body) {
 export class Bot {
   constructor(accessToken, type) {
     switch (type) {
-      case "pinterest":
+      case 'pinterest':
         this.client = new PinterestClient(accessToken);
     }
   }
 
   run() {
-    this.client.likeAPin("83879611786469438", testCallback);
+    this.client.likeAPin('83879611786469438', testCallback);
   }
 }
