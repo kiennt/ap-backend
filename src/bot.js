@@ -1,4 +1,4 @@
-import { PinterestClient } from './pinterest-client';
+import PinterestClient from './pinterest-client';
 
 var testCallback = function (error, response, body) {
   if (!error) {
