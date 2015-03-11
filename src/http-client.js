@@ -9,7 +9,7 @@ const HTTP_HANDLERS = {
 
 function isStatusCodeValid(statusCode) {
   let is2xx = (statusCode >= 200) && (statusCode <= 299);
-  let is3xx = (statusCode >= 300) && (statusCode <= 300);
+  let is3xx = (statusCode >= 300) && (statusCode <= 399);
   return is2xx || is3xx;
 }
 
