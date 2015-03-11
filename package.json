@@ -23,6 +23,6 @@
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
   },
   "scripts": {
-    "test": "jest"
+    "test": "gulp lint && jest"
   }
 }
