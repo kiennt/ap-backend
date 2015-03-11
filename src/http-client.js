@@ -11,7 +11,7 @@ function isStatusCodeValid(statusCode) {
   let is2xx = (statusCode >= 200) && (statusCode <= 299);
   let is3xx = (statusCode >= 300) && (statusCode <= 300);
   return is2xx || is3xx;
-};
+}
 
 export default class HttpClient {
   constructor() {
@@ -25,8 +25,9 @@ export default class HttpClient {
   request(httpMethod, absolutePath, params={}, data={}, headers={}) {
     httpMethod = (httpMethod || '').toUpperCase();
     let handler = HTTP_HANDLERS[httpMethod];
-    if (!handler)
+    if (!handler) {
       return Promise.reject(new Error(`Unknown HTTP method: ${httpMethod}`));
+    }
 
     let requestBody = {
       url: this.getFullURL(absolutePath, params),
@@ -35,11 +36,16 @@ export default class HttpClient {
 
     return new Promise((resolve, reject) => {
       handler(requestBody, (err, response, body) => {
-        if (err) return reject(err);
+        if (err) {
+          return reject(err);
+        }
 
         let statusCode = response.statusCode;
-        if (isStatusCodeValid(statusCode)) resolve(body);
-        else reject(new Error(`HTTP Status: ${statusCode}`));
+        if (isStatusCodeValid(statusCode)) {
+          resolve(body);
+        } else {
+          reject(new Error(`HTTP Status: ${statusCode}`));
+        }
       });
     });
   }
