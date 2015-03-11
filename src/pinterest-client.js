@@ -1,3 +1,5 @@
+import request from 'request';
+
 const DOMAIN = 'https://api.pinterest.com/v3';
 const HTTP_METHODS = {
   GET: 'get',
@@ -18,21 +20,12 @@ export default class PinterestClient {
   }
 
   getURL(path, params) {
-    let url = `${DOMAIN}/${path}`;
-
-    if (params) {
-      let stringOfParams = '';
-      for (var key in params) {
-        stringOfParams += `${key}=${params[key]}&`;
-      }
-      url += `?${stringOfParams}`;
-    }
-    return url;
+    let query = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');
+    return `${DOMAIN}/${path}?${query}`;
   }
 
   // This should be move to a helper class...
   getHttpHandler(httpMethod) {
-    var request = require('request');
     switch (httpMethod) {
       case HTTP_METHODS.GET:
         return request.get;
