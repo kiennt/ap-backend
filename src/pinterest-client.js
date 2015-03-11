@@ -77,10 +77,6 @@ export class PinterestClient {
 
   // Again, should be seperated to 2 different callbacks
   likeAPin(pinId, callback) {
-    let params = {
-      'access_token': this.accessToken
-    };
-    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`,
-      null, params, callback);
+    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, {}, {}, callback);
   }
 }
