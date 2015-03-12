@@ -21,6 +21,13 @@ export default class PinterestClient {
       httpMethod, absolutePath, params, data, HTTP_HEADERS);
   }
 
+  commentAPin(pinId, text) {
+    let data = {
+      text: text
+    };
+    return this.request('POST', `pins/${pinId}/comment/`, {}, data);
+  }
+
   likeAPin(pinId) {
     // Ở đây em vẫn đẩy body ngược lên, best practice là ko catch error
     // để mình catch 1 thể ở Promise chain
