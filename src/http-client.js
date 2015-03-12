@@ -19,7 +19,11 @@ export default class HttpClient {
 
   getFullURL(absolutePath, params) {
     let query = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');
-    return `${absolutePath}?${query}`;
+    if (query.length) {
+      return `${absolutePath}?${query}`;
+    } else {
+      return absolutePath;
+    }
   }
 
   request(httpMethod, absolutePath, params={}, data={}, headers={}) {
