@@ -41,13 +41,12 @@ export default class HttpClient {
     };
 
     var promisifiedHandler = Promise.promisify(handler);
-    return promisifiedHandler(requestBody).then((result) => {
-      let [response, body] = result;
+    return promisifiedHandler(requestBody).spread((response, body) => {
       let statusCode = response.statusCode;
       if (isStatusCodeValid(statusCode)) {
         return body;
       } else {
-        throw new new Error(`HTTP Status: ${statusCode}`);
+        throw new Error(`HTTP Status: ${statusCode}`);
       }
     });
   }
