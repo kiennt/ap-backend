@@ -1,3 +1,7 @@
+// This is an extension for default Babel's Promise
+// Since we use Bluebird now, it isn't needed
+// However I still want to keep it in case we need it later
+
 function callback(context, ...args) {
   if (args.length === 0) {
     return context.resolve(undefined);

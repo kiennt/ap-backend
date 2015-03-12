@@ -1,5 +1,5 @@
 import request from 'request';
-import './exts/promise';
+import Promise from './lib/promise';
 
 const HTTP_HANDLERS = {
   GET: request.get,
