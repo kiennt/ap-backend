@@ -12,5 +12,9 @@ export class Bot {
     this.client.likeAPin('83879611786469438')
       .then((body) => console.log(body))
       .catch((err) => console.log(err));
+
+    this.client.commentAPin('83879611786469438', 'cool')
+      .then((body) => console.log(body))
+      .catch((err) => console.log(err));
   }
 }
