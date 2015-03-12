@@ -13,9 +13,9 @@ const BOT_TYPE = 'pinterest';
 // Demo code for Promise.delay
 console.log('start');
 Promise.resolve(1)
-  .then(Promise.delay(1000))
+  .delay(1000)
   .then((x) => console.log(x))
   .then(() => Promise.resolve(2))
-  .then(Promise.delay(2000))
+  .delay(Promise.delayed(2000))
   .then((x) => console.log(x))
   .then(() => console.log('end'));
