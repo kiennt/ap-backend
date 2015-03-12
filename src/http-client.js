@@ -1,4 +1,5 @@
 import request from 'request';
+import './exts/promise';
 
 const HTTP_HANDLERS = {
   GET: request.get,
@@ -35,19 +36,15 @@ export default class HttpClient {
       headers: headers
     };
 
-    return new Promise((resolve, reject) => {
-      handler(requestBody, (err, response, body) => {
-        if (err) {
-          return reject(err);
-        }
-
-        let statusCode = response.statusCode;
-        if (isStatusCodeValid(statusCode)) {
-          resolve(body);
-        } else {
-          reject(new Error(`HTTP Status: ${statusCode}`));
-        }
-      });
+    var promisifiedHandler = Promise.promisify(handler);
+    return promisifiedHandler(requestBody).then((result) => {
+      let [response, body] = result;
+      let statusCode = response.statusCode;
+      if (isStatusCodeValid(statusCode)) {
+        return body;
+      } else {
+        throw new new Error(`HTTP Status: ${statusCode}`);
+      }
     });
   }
 }
