@@ -25,7 +25,33 @@ export default class PinterestClient {
     let data = {
       text: text
     };
-    return this.request('POST', `pins/${pinId}/comment/`, {}, data);
+    return this.request('POST', `pins/${pinId}/comment/`, {}, data)
+      .then((body) => {
+        let content = JSON.parse(body);
+        if (content.status !== 'success') {
+          throw new Error('getInfoOfMe: ' + body.message);
+        }
+        return true;
+      });
+  }
+
+  getInfoOfMe() {
+    let fields = 'user.country,user.default_shipping(),user.default_payment()';
+    let data = {
+      'access_token': this.accessToken,
+      'add_fields': fields
+    };
+    let promise = this.request('GET', `users/me/`, data, {});
+    return promise.then((body) => {
+      let content = JSON.parse(body);
+      if (content.status !== 'success') {
+        throw new Error('getInfoOfMe: ' + body.message);
+      }
+
+      this.clientId = content.data.id;
+
+      return content.data;
+    });
   }
 
   likeAPin(pinId) {
