@@ -1,12 +1,6 @@
-import request from 'request';
+import HttpClient from './http-client'
 
 const DOMAIN = 'https://api.pinterest.com/v3';
-const HTTP_METHODS = {
-  GET: 'get',
-  POST: 'post',
-  PUT: 'put',
-  DELETT: 'delete'
-};
 
 const HTTP_HEADERS = {
   'X-Pinterest-Device': 'GT-I9300',
@@ -17,66 +11,24 @@ const HTTP_HEADERS = {
 export default class PinterestClient {
   constructor(accessToken) {
     this.accessToken = accessToken;
+    this.httpClient = new HttpClient();
   }
 
-  getURL(path, params) {
-    let query = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');
-    return `${DOMAIN}/${path}?${query}`;
-  }
-
-  // This should be move to a helper class...
-  getHttpHandler(httpMethod) {
-    switch (httpMethod) {
-      case HTTP_METHODS.GET:
-        return request.get;
-      case HTTP_METHODS.PUT:
-        return request.put;
-      case HTTP_METHODS.POST:
-        return request.post;
-      case HTTP_METHODS.DELETE:
-        return request.delete;
-      default:
-        return null;
-    }
-  }
-
-  get(path, params={}, callback) {
-    return this.request(
-      HTTP_METHODS.GET, HTTP_HEADERS, path, params, {}, callback);
-  }
-
-  post(path, params={}, data={}, callback) {
-    return this.request(
-      HTTP_METHODS.POST, HTTP_HEADERS, path, params, data, callback);
-  }
-
-  put(path, params={}, data={}, callback) {
-    return this.request(
-      HTTP_METHODS.PUT, HTTP_HEADERS, path, params, data, callback);
-  }
-
-  delete(path, params={}, data={}, callback) {
-    return this.request(
-      HTTP_METHODS.DELETE, HTTP_HEADERS, path, params, data, callback);
-  }
-
-  // This should be seperated to 2 different callbacks
-  request(httpMethod, path, params={}, data={}, callback) {
+  request(httpMethod, relativePath, params={}, data={}) {
     data['access_token'] = this.accessToken;
-
-    let url = this.getURL(path, params);
-    let handler = this.getHttpHandler(httpMethod);
-    let requestBody = {
-      url: url,
-      formData: data
-    };
-    if (handler) {
-      handler(requestBody, callback);
-    }
+    let absolutePath = `${DOMAIN}/${relativePath}`;
+    return this.httpClient.request(
+      httpMethod, absolutePath, params, data, HTTP_HEADERS);
   }
 
-  // Again, should be seperated to 2 different callbacks
-  likeAPin(pinId, callback) {
-    this.request(HTTP_METHODS.PUT, `pins/${pinId}/like/`, {}, {}, callback);
+  likeAPin(pinId) {
+    // Ở đây em vẫn đẩy body ngược lên, best practice là ko catch error
+    // để mình catch 1 thể ở Promise chain
+    return this.request('PUT', `pins/${pinId}/like/`, {}, {});
+
+    // Nếu ko định đẩy body lên mà đẩy 1 cái gì đấy thì làm như này:
+    // (Lỗi vẫn để đẩy ngược lên trên)
+    // return this.request('PUT', `pins/${pinId}/like/`, {}, {})
+    //            .then((body) => JSON.parse(body)['field?']);
   }
 }
