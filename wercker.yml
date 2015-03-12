@@ -1,6 +1,8 @@
 box: wercker/nodejs
 build:
     steps:
+        - domudall/nave@0.0.5:
+            node-version: 0.12.0
         - npm-install
         - npm-test
     after-steps:

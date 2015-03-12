@@ -11,18 +11,15 @@
   "devDependencies": {
     "babel": "^4.7.5",
     "babel-eslint": "^1.0.0",
-    "babel-jest": "^4.0.0",
     "eslint": "^0.16.2",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.0",
     "gulp-eslint": "^0.6.0",
+    "gulp-jasmine": "^2.0.0",
     "gulp-sourcemaps": "^1.5.0",
-    "jest-cli": "^0.4.0"
-  },
-  "jest": {
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest"
+    "jasmine": "^2.2.1"
   },
   "scripts": {
-    "test": "gulp lint && jest"
+    "test": "gulp test"
   }
 }
