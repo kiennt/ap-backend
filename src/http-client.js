@@ -31,7 +31,8 @@ export default class HttpClient {
 
     let requestBody = {
       url: this.getFullURL(absolutePath, params),
-      formData: data
+      formData: data,
+      headers: headers
     };
 
     return new Promise((resolve, reject) => {
