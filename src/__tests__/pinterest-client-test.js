@@ -12,9 +12,4 @@ describe('PinterestClient', function() {
     expect(client.accessToken).toBe('');
   });
 
-  it('should have valid getURL', function() {
-    var url = client.getURL('path', {a: 10, y: 20});
-    expect(url).toBe('https://api.pinterest.com/v3/path?a=10&y=20');
-  });
-
 });

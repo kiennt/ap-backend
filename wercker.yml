@@ -1,0 +1,10 @@
+box: wercker/nodejs
+build:
+    steps:
+        - npm-install
+        - npm-test
+    after-steps:
+        - wantedly/pretty-slack-notify@0.2.7:
+            webhook_url: https://hooks.slack.com/services/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
+            channel: backend
+            username: Wercker
