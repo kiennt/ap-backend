@@ -1,7 +1,3 @@
-Promise.delay = function delay(timeout) {
-  return function delayedPromise(...args) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => resolve(...args), timeout);
-    });
-  };
+Promise.delay = function delay(time) {
+  return (x) => new Promise((resolve, reject) => setTimeout(resolve, time, x));
 };
