@@ -8,6 +8,14 @@ const HTTP_HEADERS = {
   'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
 };
 
+function isValidOfContent(json) {
+  let content = JSON.parse(json);
+  if (content.code !== 0) {
+    return false;
+  }
+  return true;
+}
+
 export default class PinterestClient {
   constructor(accessToken) {
     this.accessToken = accessToken;
@@ -27,11 +35,7 @@ export default class PinterestClient {
     };
     return this.request('POST', `pins/${pinId}/comment/`, {}, data)
       .then((body) => {
-        let content = JSON.parse(body);
-        if (content.status !== 'success') {
-          throw new Error('getInfoOfMe: ' + body.message);
-        }
-        return true;
+        return isValidOfContent(body);
       });
   }
 
@@ -44,24 +48,14 @@ export default class PinterestClient {
     let promise = this.request('GET', `users/me/`, data, {});
     return promise.then((body) => {
       let content = JSON.parse(body);
-      if (content.status !== 'success') {
-        throw new Error('getInfoOfMe: ' + body.message);
-      }
-
-      this.clientId = content.data.id;
-
       return content.data;
     });
   }
 
   likeAPin(pinId) {
-    // Ở đây em vẫn đẩy body ngược lên, best practice là ko catch error
-    // để mình catch 1 thể ở Promise chain
-    return this.request('PUT', `pins/${pinId}/like/`, {}, {});
-
-    // Nếu ko định đẩy body lên mà đẩy 1 cái gì đấy thì làm như này:
-    // (Lỗi vẫn để đẩy ngược lên trên)
-    // return this.request('PUT', `pins/${pinId}/like/`, {}, {})
-    //            .then((body) => JSON.parse(body)['field?']);
+    let promise = this.request('PUT', `pins/${pinId}/like/`, {}, {});
+    return promise.then((body) => {
+      return isValidOfContent(body);
+    });
   }
 }
