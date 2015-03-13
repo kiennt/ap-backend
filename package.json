@@ -18,9 +18,10 @@
     "gulp-jasmine": "^2.0.0",
     "gulp-sourcemaps": "^1.5.0",
     "jasmine": "^2.2.1",
+    "mock-promises": "^0.3.0",
     "nock": "^1.1.0"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "rm -rf dist spec-dist && gulp test"
   }
 }
