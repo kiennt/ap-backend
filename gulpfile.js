@@ -27,7 +27,7 @@ gulp.task('lint', function () {
     .pipe(eslint.failOnError());
 });
 
-gulp.task('test', ['lint', 'dist', 'spec-dist'], function () {
+gulp.task('test', ['dist', 'spec-dist'], function () {
   return gulp.src(['spec-dist/**/*.js'])
     .pipe(jasmine());
 });
