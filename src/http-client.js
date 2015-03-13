@@ -40,8 +40,8 @@ export default class HttpClient {
       headers: headers
     };
 
-    var promisifiedHandler = Promise.promisify(handler);
-    return promisifiedHandler(requestBody).spread((response, body) => {
+    return Promise.promisify(handler)(requestBody).spread((response, body) => {
+      let foo = this.getFullURL;
       let statusCode = response.statusCode;
       if (isStatusCodeValid(statusCode)) {
         return body;
