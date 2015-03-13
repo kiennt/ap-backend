@@ -23,10 +23,12 @@ describe('HttpClient', () => {
       client.request('a').catch(done);
     });
 
-    it('should call getFullURL', () => {
+    it('should call getFullURL', (done) => {
       spyOn(client, 'getFullURL');
-      client.request('get', 'a');
-      expect(client.getFullURL).toHaveBeenCalled();
+      client.request('get', 'a').catch(() => {
+        expect(client.getFullURL).toHaveBeenCalled();
+        done();
+      });
     });
 
     describe('request with valid method', () => {

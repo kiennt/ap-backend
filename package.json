@@ -6,7 +6,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.53.0"
+    "request": "^2.53.0",
+    "bluebird": "^2.9.14"
   },
   "devDependencies": {
     "babel": "^4.7.5",

@@ -1,4 +1,5 @@
 import request from 'request';
+import Promise from './lib/promise';
 
 const HTTP_HANDLERS = {
   GET: request.get,
@@ -39,19 +40,14 @@ export default class HttpClient {
       headers: headers
     };
 
-    return new Promise((resolve, reject) => {
-      handler(requestBody, (err, response, body) => {
-        if (err) {
-          return reject(err);
-        }
-
-        let statusCode = response.statusCode;
-        if (isStatusCodeValid(statusCode)) {
-          resolve(body);
-        } else {
-          reject(new Error(`HTTP Status: ${statusCode}`));
-        }
-      });
+    return Promise.promisify(handler)(requestBody).spread((response, body) => {
+      let foo = this.getFullURL;
+      let statusCode = response.statusCode;
+      if (isStatusCodeValid(statusCode)) {
+        return body;
+      } else {
+        throw new Error(`HTTP Status: ${statusCode}`);
+      }
     });
   }
 }
