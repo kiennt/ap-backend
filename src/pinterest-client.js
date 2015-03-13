@@ -8,7 +8,7 @@ const HTTP_HEADERS = {
   'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
 };
 
-function isValidOfContent(json) {
+function isValidContent(json) {
   let content = JSON.parse(json);
   if (content.code !== 0) {
     return false;
@@ -35,7 +35,7 @@ export default class PinterestClient {
     };
     return this.request('POST', `pins/${pinId}/comment/`, {}, data)
       .then((body) => {
-        return isValidOfContent(body);
+        return isValidContent(body);
       });
   }
 
@@ -45,17 +45,15 @@ export default class PinterestClient {
       'access_token': this.accessToken,
       'add_fields': fields
     };
-    let promise = this.request('GET', `users/me/`, data, {});
-    return promise.then((body) => {
+    return this.request('GET', `users/me/`, data, {}).then((body) => {
       let content = JSON.parse(body);
       return content.data;
     });
   }
 
   likeAPin(pinId) {
-    let promise = this.request('PUT', `pins/${pinId}/like/`, {}, {});
-    return promise.then((body) => {
-      return isValidOfContent(body);
+    return this.request('PUT', `pins/${pinId}/like/`, {}, {}).then((body) => {
+      return isValidContent(body);
     });
   }
 }
