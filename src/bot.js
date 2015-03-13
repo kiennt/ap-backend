@@ -14,11 +14,11 @@ export class Bot {
       .catch((err) => console.log(err));
 
     this.client.commentAPin('83879611786469438', 'cool')
-    .then((body) => console.log(body))
-    .catch((err) => console.log(err));
+      .then((body) => console.log(body))
+      .catch((err) => console.log(err));
 
     this.client.getInfoOfMe()
-    .then((body) => console.log(body))
-    .catch((err) => console.log(err));
+      .then((body) => console.log(body))
+      .catch((err) => console.log(err));
   }
 }
