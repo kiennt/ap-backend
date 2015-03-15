@@ -1,4 +1,5 @@
 import HttpClient from './http-client'
+import Promise from './lib/promise';
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 
@@ -8,12 +9,13 @@ const HTTP_HEADERS = {
   'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
 };
 
-function isValidContent(json) {
-  let content = JSON.parse(json);
-  if (content.code !== 0) {
-    return false;
+function validateResponse(jsonString) {
+  let content = JSON.parse(jsonString);
+  if (content.code) {
+    throw new Error('Response not valid, with [code] = ' + content.code +
+      ' ::: ' + jsonString);
   }
-  return true;
+  return content;
 }
 
 export default class PinterestClient {
@@ -34,26 +36,21 @@ export default class PinterestClient {
       text: text
     };
     return this.request('POST', `pins/${pinId}/comment/`, {}, data)
-      .then((body) => {
-        return isValidContent(body);
-      });
+      .then(validateResponse).then((content) => true, (error) => false);
   }
 
   getInfoOfMe() {
     let fields = 'user.country,user.default_shipping(),user.default_payment()';
-    let data = {
+    let params = {
       'access_token': this.accessToken,
       'add_fields': fields
     };
-    return this.request('GET', `users/me/`, data, {}).then((body) => {
-      let content = JSON.parse(body);
-      return content.data;
-    });
+    return this.request('GET', `users/me/`, params, {})
+      .then(JSON.parse).get('data');
   }
 
   likeAPin(pinId) {
-    return this.request('PUT', `pins/${pinId}/like/`, {}, {}).then((body) => {
-      return isValidContent(body);
-    });
+    return this.request('PUT', `pins/${pinId}/like/`, {}, {})
+      .then(validateResponse).then((content) => true, (error) => false);
   }
 }
