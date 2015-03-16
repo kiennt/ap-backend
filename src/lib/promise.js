@@ -24,12 +24,12 @@ function attempt(config, promiseFunc, funcArgs) {
 }
 
 // Example:
-//    let retryConfig = {maxRetries: 5, delay: 1000};
-//    promiseA.then((x) => Promise.until(retryConfig, asyncFunc, x)).then(...)
+//    let config = {maxRetries: 5, delay: 1000};
+//    promiseA.then((x) => Promise.tryUntil(config, asyncFunc, x)).then(...)
 //    ! asyncFunc(x) returns a promise (or a "promise chain" with `.then`)
 // Usage:
-//    Promise.until(promiseFunc, funcArgs)
-//    Promise.until(config, promiseFunc, funcArgs)
+//    Promise.tryUntil(promiseFunc, funcArgs)
+//    Promise.tryUntil(config, promiseFunc, funcArgs)
 // Parameters:
 //  - config: (default = {maxRetries: undefined, delay: 0})
 //    + maxRetries: (default = undefined) maximum number of retries, can be:
@@ -42,21 +42,24 @@ function attempt(config, promiseFunc, funcArgs) {
 //  - promiseFunc: a function that returns a promise
 //  - funcArgs: the arguments that would be passed to the `promiseFunc`
 
-Promise.until = function until(...args) {
-  let config, promiseFunc, funcArgs;
+Promise.tryUntil = function tryUntil(...args) {
+  let userConfig, promiseFunc, funcArgs;
   if (typeof args[0] === 'function') {
-    config = {};
+    userConfig = {};
     promiseFunc = args[0];
     funcArgs = args.slice(1);
   } else {
-    config = args[0];
+    userConfig = args[0];
     promiseFunc = args[1];
     funcArgs = args.slice(2);
   }
 
-  // Normalized config
-  config.delay = config.delay || 0;
-  config.incrementalFactor = config.incrementalFactor || 1;
+  // Normalize config
+  let normalizedConfig = {
+    maxRetries: userConfig.maxRetries,
+    delay: userConfig.delay || 0,
+    incrementalFactor: userConfig.incrementalFactor || 1
+  };
 
-  return attempt(config, promiseFunc, funcArgs);
+  return attempt(normalizedConfig, promiseFunc, funcArgs);
 };

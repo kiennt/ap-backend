@@ -29,7 +29,7 @@ function checkPromiseUntil() {
 
   let retryConfig = {maxRetries: 5, delay: 1000, incrementalFactor: 0.5};
   Promise.resolve('Hello')
-    .then((x) => Promise.until(retryConfig, inc, x))
+    .then((x) => Promise.tryUntil(retryConfig, inc, x))
     .then((x) => console.log('!!! ' + x))
     .catch((err) => console.log('*** Error: ' + err));
 }
