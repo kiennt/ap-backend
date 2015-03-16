@@ -1,5 +1,6 @@
 /* global describe, it, expect */
 
+import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
 import nock from 'nock';
@@ -14,6 +15,9 @@ describe('PinterestClient', () => {
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
   let fixtureDir = path.join(__dirname, '../spec/fixture');
+
+  // Disable auto-retry
+  HttpClient.setRetryConfiguration({willRetry: (error) => false});
 
   it('should have accessToken', () => {
     expect(client.accessToken).toBe(accessToken);

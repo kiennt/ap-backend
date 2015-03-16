@@ -8,6 +8,7 @@ function attempt(config, promiseFunc, funcArgs) {
     let anyRetriesLeft = (config.maxRetries === undefined ||
                           config.maxRetries > 0);
     if (shouldRetry && anyRetriesLeft) {
+      // console.log('Retries left: ' + config.maxRetries);
       if (config.maxRetries) {
         config.maxRetries = config.maxRetries - 1;
       }
@@ -64,7 +65,7 @@ Promise.tryUntil = function tryUntil(...args) {
     maxRetries: userConfig.maxRetries,
     delay: userConfig.delay || 0,
     incrementalFactor: userConfig.incrementalFactor || 1,
-    willRetry: userConfig.willRetry || defaultWillRetry
+    willRetry: userConfig.willRetry || (error) => true
   };
 
   return attempt(normalizedConfig, promiseFunc, funcArgs);

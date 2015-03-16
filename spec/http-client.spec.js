@@ -5,7 +5,10 @@ import nock from 'nock';
 
 
 describe('HttpClient', () => {
-  var client = new HttpClient();
+  let client = new HttpClient();
+  // Disable auto-retry
+  HttpClient.setRetryConfiguration({willRetry: (error) => false});
+  // TODO: need a test for auto-retry
 
   describe('getfullURL', () => {
     it('should return value', () => {
