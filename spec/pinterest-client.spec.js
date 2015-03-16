@@ -7,6 +7,8 @@ import path from 'path';
 describe('PinterestClient', () => {
   let validPinId = '83879611786469438';
   let invalidPinId = '83879611786469438111111100000111';
+  let validUserId = '10414780296729982';
+  let invalidUserId = '104147802967299821111111111';
   let accessToken = 'this_is_access_token';
   let client = new PinterestClient(accessToken);
   let fixtureDir = path.join(__dirname, '../spec/fixture');
@@ -34,6 +36,30 @@ describe('PinterestClient', () => {
         .post('/comment/', {'text': text, 'access_token': accessToken})
         .replyWithFile(200, fixture);
       client.commentAPin(validPinId, text).then((x) => {
+        expect(x).toBe(false);
+        done();
+      });
+    });
+  });
+
+  describe('followUser', () => {
+    it('should return true when userId is valid', (done) => {
+      let fixture = path.join(fixtureDir, 'user-follow.json');
+      nock(`https://api.pinterest.com/v3/users/${validUserId}`)
+        .put('/follow/', {'access_token': accessToken})
+        .replyWithFile(200, fixture);
+      client.followUser(validUserId).then((x) => {
+        expect(x).toBe(true);
+        done();
+      });
+    });
+
+    it('should return false when userId is invalid', (done) => {
+      let fixture = path.join(fixtureDir, 'user-follow-invalid-user-id.json');
+      nock(`https://api.pinterest.com/v3/users/${invalidUserId}`)
+        .put('/follow/', {'access_token': accessToken})
+        .replyWithFile(200, fixture);
+      client.followUser(invalidUserId).then((x) => {
         expect(x).toBe(false);
         done();
       });

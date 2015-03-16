@@ -1,0 +1,10 @@
+{
+  "status": "failure",
+  "code": 12,
+  "host": "ngapi2-3faadc6c",
+  "generated_at": "Mon, 16 Mar 2015 09:53:52 +0000",
+  "message": "Something went wrong on our end. Sorry about that.",
+  "data": {
+    "request_id": "158108573159"
+  }
+}
