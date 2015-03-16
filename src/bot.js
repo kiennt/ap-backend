@@ -13,6 +13,10 @@ export class Bot {
       .then((body) => console.log(body))
       .catch((err) => console.log(err));
 
+    this.client.followUser('10414780296729982')
+      .then((body) => console.log(body))
+      .catch((err) => console.log(err));
+
     this.client.commentAPin('83879611786469438', 'cool')
       .then((body) => console.log(body))
       .catch((err) => console.log(err));

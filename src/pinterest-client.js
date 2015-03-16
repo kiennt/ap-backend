@@ -39,6 +39,11 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
+  followUser(userId) {
+    return this.request('PUT', `users/${userId}/follow/`, {}, {})
+      .then(validateResponse).then((content) => true, (error) => false);
+  }
+
   getInfoOfMe() {
     let fields = 'user.country,user.default_shipping(),user.default_payment()';
     let params = {
