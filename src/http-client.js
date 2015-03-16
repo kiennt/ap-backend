@@ -36,12 +36,11 @@ export default class HttpClient {
 
     let requestBody = {
       url: this.getFullURL(absolutePath, params),
-      formData: data,
+      form: data,
       headers: headers
     };
 
     return Promise.promisify(handler)(requestBody).spread((response, body) => {
-      let foo = this.getFullURL;
       let statusCode = response.statusCode;
       if (isStatusCodeValid(statusCode)) {
         return body;
