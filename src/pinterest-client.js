@@ -1,4 +1,5 @@
 import HttpClient from './http-client'
+import Promise from './lib/promise';
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 
@@ -7,6 +8,15 @@ const HTTP_HEADERS = {
   'X-Pinterest-AppState': 'background',
   'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
 };
+
+function validateResponse(jsonString) {
+  let content = JSON.parse(jsonString);
+  if (content.code) {
+    throw new Error('Response not valid, with [code] = ' + content.code +
+      ' ::: ' + jsonString);
+  }
+  return content;
+}
 
 export default class PinterestClient {
   constructor(accessToken) {
@@ -25,17 +35,22 @@ export default class PinterestClient {
     let data = {
       text: text
     };
-    return this.request('POST', `pins/${pinId}/comment/`, {}, data);
+    return this.request('POST', `pins/${pinId}/comment/`, {}, data)
+      .then(validateResponse).then((content) => true, (error) => false);
+  }
+
+  getInfoOfMe() {
+    let fields = 'user.country,user.default_shipping(),user.default_payment()';
+    let params = {
+      'access_token': this.accessToken,
+      'add_fields': fields
+    };
+    return this.request('GET', `users/me/`, params, {})
+      .then(JSON.parse).get('data');
   }
 
   likeAPin(pinId) {
-    // Ở đây em vẫn đẩy body ngược lên, best practice là ko catch error
-    // để mình catch 1 thể ở Promise chain
-    return this.request('PUT', `pins/${pinId}/like/`, {}, {});
-
-    // Nếu ko định đẩy body lên mà đẩy 1 cái gì đấy thì làm như này:
-    // (Lỗi vẫn để đẩy ngược lên trên)
-    // return this.request('PUT', `pins/${pinId}/like/`, {}, {})
-    //            .then((body) => JSON.parse(body)['field?']);
+    return this.request('PUT', `pins/${pinId}/like/`, {}, {})
+      .then(validateResponse).then((content) => true, (error) => false);
   }
 }
