@@ -37,12 +37,22 @@ describe('HttpClient', () => {
         client.request('get', 'http://test.com/test').catch(done);
       });
 
-      it('should return promise if request success', (done) => {
+      it('should return promise if GET request success', (done) => {
         nock('http://test.com').get('/test').reply(200, 'ok');
         client.request('get', 'http://test.com/test').then((x) => {
           expect(x).toBe('ok');
           done();
         });
+      });
+
+      it('should return promise if POST request success', (done) => {
+        nock('http://test.com').post('/test', {foo: 'ABC'}).reply(200, 'ok');
+        client.request('post', 'http://test.com/test', {}, {foo: 'ABC'})
+          .then((x) => {
+            expect(x).toBe('ok');
+            done();
+          }
+        );
       });
     });
   });
