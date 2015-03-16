@@ -5,11 +5,11 @@ import nock from 'nock';
 import path from 'path';
 
 describe('PinterestClient', () => {
-  var validPinId = '83879611786469438';
-  var invalidPinId = '83879611786469438111111100000111';
-  var accessToken = 'this_is_access_token';
-  var client = new PinterestClient(accessToken);
-  var fixtureDir = path.join(__dirname, '../spec/fixture');
+  let validPinId = '83879611786469438';
+  let invalidPinId = '83879611786469438111111100000111';
+  let accessToken = 'this_is_access_token';
+  let client = new PinterestClient(accessToken);
+  let fixtureDir = path.join(__dirname, '../spec/fixture');
 
   it('should have accessToken', () => {
     expect(client.accessToken).toBe(accessToken);
