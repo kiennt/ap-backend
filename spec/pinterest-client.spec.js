@@ -15,6 +15,31 @@ describe('PinterestClient', () => {
     expect(client.accessToken).toBe(accessToken);
   });
 
+  describe('commentAPin', () => {
+    let text = 'this is comment';
+    it('should return true when pinId is valid', (done) => {
+      let fixture = path.join(fixtureDir, 'pin-comment.json');
+      nock(`https://api.pinterest.com/v3/pins/${validPinId}`)
+        .post('/comment/', {'text': text, 'access_token': accessToken})
+        .replyWithFile(200, fixture);
+      client.commentAPin(validPinId, text).then((x) => {
+        expect(x).toBe(true);
+        done();
+      });
+    });
+
+    it('should return false when pinId is invalid', (done) => {
+      let fixture = path.join(fixtureDir, 'pin-comment-invalid-pin-id.json');
+      nock(`https://api.pinterest.com/v3/pins/${invalidPinId}`)
+        .post('/comment/', {'text': text, 'access_token': accessToken})
+        .replyWithFile(200, fixture);
+      client.commentAPin(validPinId, text).then((x) => {
+        expect(x).toBe(false);
+        done();
+      });
+    });
+  });
+
   describe('likeAPin', () => {
     it('should return true when pinId is valid', (done) => {
       let fixture = path.join(fixtureDir, 'pin-like.json');

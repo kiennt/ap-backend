@@ -1,0 +1,25 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-7e40172e",
+  "generated_at": "Mon, 16 Mar 2015 09:31:42 +0000",
+  "message": "ok",
+  "data": {
+    "text": "cool",
+    "created_at": "Mon, 16 Mar 2015 09:31:42 +0000",
+    "commenter": {
+      "username": "dxungngh",
+      "first_name": "Nguyen",
+      "last_name": "Daniel",
+      "gender": "male",
+      "image_medium_url": "http://passets-ak.pinterest.com/images/user/default_75.png",
+      "full_name": "Nguyen Daniel",
+      "image_small_url": "http://passets-ak.pinterest.com/images/user/default_30.png",
+      "type": "user",
+      "id": "537265567954947123",
+      "image_large_url": "http://passets-ak.pinterest.com/images/user/default_140.png"
+    },
+    "type": "comment",
+    "id": "432556945338029109"
+  }
+}
