@@ -3,8 +3,11 @@ export * from 'bluebird';
 import Promise from 'bluebird';
 
 function attempt(config, promiseFunc, funcArgs) {
-  let catcher = (err) => {
-    if (config.maxRetries === undefined || config.maxRetries > 0) {
+  let catcher = (error) => {
+    let shouldRetry = config.willRetry(error);
+    let anyRetriesLeft = (config.maxRetries === undefined ||
+                          config.maxRetries > 0);
+    if (shouldRetry && anyRetriesLeft) {
       if (config.maxRetries) {
         config.maxRetries = config.maxRetries - 1;
       }
@@ -17,7 +20,7 @@ function attempt(config, promiseFunc, funcArgs) {
         return attempt(config, promiseFunc, funcArgs);
       }
     } else {
-      return Promise.reject(err);
+      return Promise.reject(error);
     }
   };
   return promiseFunc(...funcArgs).catch(catcher);
@@ -39,6 +42,7 @@ function attempt(config, promiseFunc, funcArgs) {
 //    + incrementalFactor: (default = 1)
 //      * == 1: the delay times between each retries are the same
 //      * > 1: the delay times are multiplied, for example (1 -> 2 -> 4 -> ...)
+//    + willRetry: (default = undefined - always retry) `(error) => true/false`
 //  - promiseFunc: a function that returns a promise
 //  - funcArgs: the arguments that would be passed to the `promiseFunc`
 
@@ -55,10 +59,12 @@ Promise.tryUntil = function tryUntil(...args) {
   }
 
   // Normalize config
+  let defaultWillRetry = (error) => true;  // Linter is too dumb
   let normalizedConfig = {
     maxRetries: userConfig.maxRetries,
     delay: userConfig.delay || 0,
-    incrementalFactor: userConfig.incrementalFactor || 1
+    incrementalFactor: userConfig.incrementalFactor || 1,
+    willRetry: userConfig.willRetry || defaultWillRetry
   };
 
   return attempt(normalizedConfig, promiseFunc, funcArgs);

@@ -27,7 +27,12 @@ function checkPromiseUntil() {
     });
   };
 
-  let retryConfig = {maxRetries: 5, delay: 1000, incrementalFactor: 0.5};
+  let retryConfig = {
+    maxRetries: 5,
+    delay: 1000,
+    incrementalFactor: 0.5,
+    willRetry: (error) => (typeof error === 'number')
+  };
   Promise.resolve('Hello')
     .then((x) => Promise.tryUntil(retryConfig, inc, x))
     .then((x) => console.log('!!! ' + x))
