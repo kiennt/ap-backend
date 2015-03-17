@@ -1,6 +1,5 @@
 import HttpClient from './http-client'
 import Promise from './lib/promise';
-import HttpHeaders from './config/http-headers';
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 
