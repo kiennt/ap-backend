@@ -16,8 +16,7 @@ describe('PinterestClient', () => {
   let client = new PinterestClient(accessToken, headers);
   let fixtureDir = path.join(__dirname, '../spec/fixture');
 
-  // Disable auto-retry
-  HttpClient.setRetryConfiguration({willRetry: (error) => false});
+  HttpClient.disableAutoRetry();
 
   it('should have accessToken', () => {
     expect(client.accessToken).toBe(accessToken);

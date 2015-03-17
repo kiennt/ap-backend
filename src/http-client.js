@@ -30,6 +30,14 @@ export default class HttpClient {
   constructor() {
   }
 
+  static disableAutoRetry() {
+    this.isAutoRetryDisabled = true;
+  }
+
+  static enableAutoRetry() {
+    this.isAutoRetryDisabled = false;
+  }
+
   static setRetryConfiguration(retryConfiguration) {
     this.retryConfiguration = retryConfiguration;
   }
@@ -72,6 +80,11 @@ export default class HttpClient {
       });
     };
 
-    return Promise.tryUntil(HttpClient.getRetryConfiguration(), singleRequest);
+    if (HttpClient.isAutoRetryDisabled) {
+      return singleRequest();
+    } else {
+      let retryConfiguration = HttpClient.getRetryConfiguration();
+      return Promise.tryUntil(retryConfiguration, singleRequest);
+    }
   }
 }

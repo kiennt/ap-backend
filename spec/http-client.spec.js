@@ -6,8 +6,7 @@ import nock from 'nock';
 
 describe('HttpClient', () => {
   let client = new HttpClient();
-  // Disable auto-retry
-  HttpClient.setRetryConfiguration({willRetry: (error) => false});
+  HttpClient.disableAutoRetry();
   // TODO: need a test for auto-retry
 
   describe('getfullURL', () => {
