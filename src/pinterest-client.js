@@ -3,12 +3,6 @@ import Promise from './lib/promise';
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 
-const HTTP_HEADERS = {
-  'X-Pinterest-Device': 'GT-I9300',
-  'X-Pinterest-AppState': 'background',
-  'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'
-};
-
 function validateResponse(jsonString) {
   let content = JSON.parse(jsonString);
   if (content.code) {
@@ -19,8 +13,9 @@ function validateResponse(jsonString) {
 }
 
 export default class PinterestClient {
-  constructor(accessToken) {
+  constructor(accessToken, httpHeaders) {
     this.accessToken = accessToken;
+    this.httpHeaders = httpHeaders;
     this.httpClient = new HttpClient();
   }
 
@@ -28,7 +23,7 @@ export default class PinterestClient {
     data['access_token'] = this.accessToken;
     let absolutePath = `${DOMAIN}/${relativePath}`;
     return this.httpClient.request(
-      httpMethod, absolutePath, params, data, HTTP_HEADERS);
+      httpMethod, absolutePath, params, data, this.httpHeaders);
   }
 
   commentAPin(pinId, text) {
