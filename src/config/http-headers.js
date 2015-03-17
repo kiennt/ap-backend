@@ -38,7 +38,7 @@ const HTTP_HEADERS = [
 ];
 
 function getRandomHeaders() {
-  let index = Math.floor(Math.random() * 1000 % HTTP_HEADERS.length);
+  let index = Math.floor(Math.random() * HTTP_HEADERS.length);
   return HTTP_HEADERS[index];
 }
 
