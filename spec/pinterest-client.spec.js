@@ -1,6 +1,7 @@
 /* global describe, it, expect */
 
 import PinterestClient from '../dist/pinterest-client';
+import httpHeaders from '../dist/config/http-headers';
 import nock from 'nock';
 import path from 'path';
 
@@ -10,7 +11,8 @@ describe('PinterestClient', () => {
   let validUserId = '10414780296729982';
   let invalidUserId = '104147802967299821111111111';
   let accessToken = 'this_is_access_token';
-  let client = new PinterestClient(accessToken);
+  let headers = httpHeaders.randomHeaders();
+  let client = new PinterestClient(accessToken, headers);
   let fixtureDir = path.join(__dirname, '../spec/fixture');
 
   it('should have accessToken', () => {

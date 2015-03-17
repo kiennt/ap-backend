@@ -1,4 +1,4 @@
-let HttpHeaders = [
+const HTTP_HEADERS = [
 	{'X-Pinterest-Device': 'GT-I9300',
 	'X-Pinterest-AppState': 'background',
 	'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.1.2)'},
@@ -37,4 +37,11 @@ let HttpHeaders = [
 	'User-Agent': 'Pinterest for Android/4.3.1 (c1lgt; 4.4.4)'}
 ];
 
-export default HttpHeaders;
+function getRandomHeaders() {
+	let index = Math.floor(Math.random() * 1000 % HTTP_HEADERS.length);
+	return HTTP_HEADERS[index];
+}
+
+export default {
+	randomHeaders: getRandomHeaders
+};

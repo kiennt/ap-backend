@@ -14,10 +14,10 @@ function validateResponse(jsonString) {
 }
 
 export default class PinterestClient {
-  constructor(accessToken) {
+  constructor(accessToken, httpHeaders) {
     this.accessToken = accessToken;
+    this.httpHeaders = httpHeaders;
     this.httpClient = new HttpClient();
-    this.httpHeaders = HttpHeaders[Math.random() % HttpHeaders.length];
   }
 
   request(httpMethod, relativePath, params={}, data={}) {

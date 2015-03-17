@@ -1,10 +1,10 @@
 import PinterestClient from './pinterest-client';
 
 export class Bot {
-  constructor(accessToken, type) {
+  constructor(accessToken, httpHeaders, type) {
     switch (type) {
       case 'pinterest':
-        this.client = new PinterestClient(accessToken);
+        this.client = new PinterestClient(accessToken, httpHeaders);
     }
   }
 
