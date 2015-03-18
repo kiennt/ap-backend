@@ -14,13 +14,13 @@ describe('Promise-extensions', () => {
       let failValue = -1;
       let retryConfig = {maxRetries: 5};
       Promise.tryUntil(retryConfig, promiseFunc, failValue)
-        .then(() => done(new Error('This Promise should never be resolved')))
+        .then(() => fail('This Promise should never be resolved'))
         .catch((x) => {
           expect(x).toBe(failValue);
           expect(promiseFunc).toHaveBeenCalledWith(failValue);
           expect(promiseFunc.calls.count()).toBe(retryConfig.maxRetries + 1);
         })
-        .then(() => done());
+        .then(done);
     });
 
     it('should resolve when succeed', (done) => {
@@ -43,10 +43,8 @@ describe('Promise-extensions', () => {
           expect(promiseFunc).toHaveBeenCalledWith(successValue);
           expect(promiseFunc.calls.count()).toBe(counterLimit);
         })
-        .catch(() => {
-          done(new Error('This Promise should be resolved after some retries'));
-        })
-        .then(() => done());
+        .catch(() => fail('This Promise should be resolved after some retries'))
+        .then(done);
     });
 
     it('should delay after each try', (done) => {
@@ -119,7 +117,6 @@ describe('Promise-extensions', () => {
           done();
         });
     });
-
   });
 
 });

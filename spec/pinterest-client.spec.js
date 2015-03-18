@@ -85,7 +85,8 @@ describe('PinterestClient', () => {
       };
 
       nock(`https://api.pinterest.com`)
-        .get(`/v3/users/${validUserId}/pins/?access_token=${accessToken}&page_size=${pageSize}`)
+        .get(`/v3/users/${validUserId}/pins/` +
+          `?access_token=${accessToken}&page_size=${pageSize}`)
         .replyWithFile(200, fixture);
       client.getPinsOfUser(validUserId, pageSize).then((data) => {
         expect(data[0].id).toBe('164944405079105168');
