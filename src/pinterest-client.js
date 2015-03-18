@@ -37,7 +37,7 @@ function getSearchAddFields(type) {
   }
 }
 
-function getUrlOfSearch(type) {
+function getSearchPath(type) {
   switch (type) {
     case SEARCH_TYPE.BOARD:
       return 'search/boards/';
@@ -111,7 +111,7 @@ export default class PinterestClient {
       'query': `${keyword}`,
       'term_meta[]': `${keyword}|typed`
     };
-    return this.request('GET', getUrlOfSearch(type), params, {})
+    return this.request('GET', getSearchPath(type), params, {})
       .then(JSON.parse).get('data');
   }
 }
