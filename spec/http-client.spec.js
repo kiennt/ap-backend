@@ -1,11 +1,17 @@
-/* global describe, it, expect, spyOn, beforeEach, afterEach, jasmine */
+/* global describe, it, expect, spyOn, jasmine, fail */
+/* global beforeEach, afterEach, beforeAll, afterAll */
 
 import HttpClient from '../dist/http-client';
 import nock from 'nock';
 
 
 describe('HttpClient', () => {
-  var client = new HttpClient();
+  // TODO: need a test for auto-retry
+  let client = new HttpClient();
+
+  beforeAll(() => HttpClient.disableAutoRetry());
+
+  afterAll(() => HttpClient.enableAutoRetry());
 
   describe('getfullURL', () => {
     it('should return value', () => {
