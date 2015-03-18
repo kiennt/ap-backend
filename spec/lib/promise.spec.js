@@ -11,15 +11,14 @@ describe('Promise-extensions', () => {
       let promiseFunc = jasmine.createSpy('promiseFunc');
       promiseFunc.and.callFake((x) => Promise.reject(x));
 
-      let maxRetries = 5;
       let failValue = -1;
-      let retryConfig = {maxRetries: maxRetries};
+      let retryConfig = {maxRetries: 5};
       Promise.tryUntil(retryConfig, promiseFunc, failValue)
         .then(() => done(new Error('This Promise should never be resolved')))
         .catch((x) => {
           expect(x).toBe(failValue);
           expect(promiseFunc).toHaveBeenCalledWith(failValue);
-          expect(promiseFunc.calls.count()).toBe(maxRetries + 1);
+          expect(promiseFunc.calls.count()).toBe(retryConfig.maxRetries + 1);
         })
         .then(() => done());
     });
@@ -51,22 +50,24 @@ describe('Promise-extensions', () => {
     });
 
     it('should delay after each try', (done) => {
+      spyOn(Promise, 'delay').and.callThrough();
       let promiseFunc = jasmine.createSpy('promiseFunc');
       promiseFunc.and.callFake((x) => Promise.reject(x));
 
-      spyOn(Promise, 'delay').and.callThrough();
-
-      let delay = 1;
-      let maxRetries = 3;
-      let retryConfig = {maxRetries: maxRetries, delay: delay};
+      let retryConfig = {
+        maxRetries: 3,
+        delay: 1
+      };
       let failValue = -1;
       Promise.tryUntil(retryConfig, promiseFunc, failValue)
         .catch((x) => {
           expect(x).toBe(failValue);
-          expect(promiseFunc.calls.count()).toBe(maxRetries + 1);
+          expect(promiseFunc.calls.count()).toBe(retryConfig.maxRetries + 1);
           expect(promiseFunc).toHaveBeenCalledWith(failValue);
-          expect(Promise.delay.calls.count()).toBe(maxRetries);
-          for (let i = 0; i < maxRetries; i++) {
+          expect(Promise.delay.calls.count()).toBe(retryConfig.maxRetries);
+
+          let delay = retryConfig.delay;
+          for (let i = 0; i < retryConfig.maxRetries; i++) {
             expect(Promise.delay.calls.argsFor(i)).toEqual([delay]);
           }
           done();
@@ -74,27 +75,27 @@ describe('Promise-extensions', () => {
     });
 
     it('should increase delay after each try', (done) => {
+      spyOn(Promise, 'delay').and.callThrough();
       let promiseFunc = jasmine.createSpy('promiseFunc');
       promiseFunc.and.callFake((x) => Promise.reject(x));
 
-      spyOn(Promise, 'delay').and.callThrough();
-
-      let delay = 1;
-      let maxRetries = 3;
-      let incrFactor = 2;
       let retryConfig = {
-        maxRetries: maxRetries, delay: delay, incrementalFactor: incrFactor
+        maxRetries: 3,
+        delay: 1,
+        incrementalFactor: 2
       };
       let failValue = -1;
       Promise.tryUntil(retryConfig, promiseFunc, failValue)
         .catch((x) => {
           expect(x).toBe(failValue);
-          expect(promiseFunc.calls.count()).toBe(maxRetries + 1);
+          expect(promiseFunc.calls.count()).toBe(retryConfig.maxRetries + 1);
           expect(promiseFunc).toHaveBeenCalledWith(failValue);
-          expect(Promise.delay.calls.count()).toBe(maxRetries);
-          for (let i = 0; i < maxRetries; i++) {
+          expect(Promise.delay.calls.count()).toBe(retryConfig.maxRetries);
+
+          let delay = 1;
+          for (let i = 0; i < retryConfig.maxRetries; i++) {
             expect(Promise.delay.calls.argsFor(i)).toEqual([delay]);
-            delay *= incrFactor;
+            delay *= retryConfig.incrementalFactor;
           }
           done();
         });
@@ -104,9 +105,8 @@ describe('Promise-extensions', () => {
       let promiseFunc = jasmine.createSpy('promiseFunc');
       promiseFunc.and.callFake((x) => Promise.reject(x));
 
-      let maxRetries = 3;
       let retryConfig = {
-        maxRetries: maxRetries,
+        maxRetries: 3,
         willRetry: (x) => x < 0
       };
 
