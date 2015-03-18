@@ -49,6 +49,19 @@ export default class PinterestClient {
       .then(JSON.parse).get('data');
   }
 
+  getPinsOfUser(userId, pageSize) {
+    let fields = 'pin.images[474x, 1200x],pin.rich_summary(),pin.pinner(),' +
+      'pin.dominant_color,pin.place_summary(),pin.board(),pin.embed(),' +
+      'pin.lookbook(),pin.via_pinner()';
+    let params = {
+      'access_token': this.accessToken,
+      'add_fields': fields,
+      'page_size': pageSize
+    };
+    return this.request('GET', `users/${userId}/pins/`, params, {})
+      .then(JSON.parse).get('data');
+  }
+
   likeAPin(pinId) {
     return this.request('PUT', `pins/${pinId}/like/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
