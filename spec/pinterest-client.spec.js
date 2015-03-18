@@ -1,10 +1,12 @@
-/* global describe, it, expect */
+/* global describe, it, expect, spyOn, jasmine, fail */
+/* global beforeEach, afterEach, beforeAll, afterAll */
 
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
 import nock from 'nock';
 import path from 'path';
+
 
 describe('PinterestClient', () => {
   let validPinId = '83879611786469438';
@@ -16,7 +18,9 @@ describe('PinterestClient', () => {
   let client = new PinterestClient(accessToken, headers);
   let fixtureDir = path.join(__dirname, '../spec/fixture');
 
-  HttpClient.disableAutoRetry();
+  beforeAll(() => HttpClient.disableAutoRetry());
+
+  afterAll(() => HttpClient.enableAutoRetry());
 
   it('should have accessToken', () => {
     expect(client.accessToken).toBe(accessToken);
