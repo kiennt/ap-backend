@@ -21,7 +21,7 @@ function getAddFieldsOfSearch(type) {
   let fields = '';
   switch (type) {
     case SEARCH_TYPE.BOARD:
-      fields = 'add_fields board.owner(),board.pin_thumbnail_urls,' +
+      fields = 'board.owner(),board.pin_thumbnail_urls,' +
         'board.image_cover_url,board.follower_count,board.pin_count';
       break;
     case SEARCH_TYPE.PIN:
@@ -30,7 +30,7 @@ function getAddFieldsOfSearch(type) {
         'pin.lookbook(),pin.via_pinner()';
       break;
     case SEARCH_TYPE.USER:
-      fields = 'add_fields  user.blocked_by_me,user.implicitly_followed_by_' +
+      fields = 'user.blocked_by_me,user.implicitly_followed_by_' +
         'me,user.follower_count,user.domain_verified,user.pin_thumbnail_url' +
         's,user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
