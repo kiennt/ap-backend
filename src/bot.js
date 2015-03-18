@@ -24,7 +24,7 @@ export class Bot {
     // this.client.getInfoOfMe()
     //   .then((body) => console.log(body))
     //   .catch((err) => console.log(err));
-    this.client.getPinsOfUser('164944542510877518', 1)
+    this.client.search('dungnh', 1, 'user')
       .then((body) => console.log(body))
       .catch((body) => console.log(body));
   }

@@ -2,6 +2,11 @@ import HttpClient from './http-client'
 import Promise from './lib/promise';
 
 const DOMAIN = 'https://api.pinterest.com/v3';
+const SEARCH_TYPE = {
+  PIN: 'pin',
+  BOARD: 'board',
+  USER: 'user'
+};
 
 function validateResponse(jsonString) {
   let content = JSON.parse(jsonString);
@@ -10,6 +15,43 @@ function validateResponse(jsonString) {
       ' ::: ' + jsonString);
   }
   return content;
+}
+
+function getAddFieldsOfSearch(type) {
+  let fields = '';
+  switch (type) {
+    case SEARCH_TYPE.BOARD:
+      fields = 'add_fields board.owner(),board.pin_thumbnail_urls,' +
+        'board.image_cover_url,board.follower_count,board.pin_count';
+      break;
+    case SEARCH_TYPE.PIN:
+      fields = 'pin.images[474x, 1200x],pin.rich_summary(),pin.pinner(),' +
+        'pin.dominant_color,pin.place_summary(),pin.board(),pin.embed(),' +
+        'pin.lookbook(),pin.via_pinner()';
+      break;
+    case SEARCH_TYPE.USER:
+      fields = 'add_fields  user.blocked_by_me,user.implicitly_followed_by_' +
+        'me,user.follower_count,user.domain_verified,user.pin_thumbnail_url' +
+        's,user.explicitly_followed_by_me,user.location,user.website_url,' +
+        'user.following_count';
+      break;
+    default:
+      throw new Error(`${type} is wrong type`);
+  }
+  return fields;
+}
+
+function getUrlOfSearch(type) {
+  switch (type) {
+    case SEARCH_TYPE.BOARD:
+      return 'search/boards/';
+    case SEARCH_TYPE.PIN:
+      return 'search/pins/';
+    case SEARCH_TYPE.USER:
+      return 'search/users/';
+    default:
+      throw new Error(`${type} is wrong type`);
+  }
 }
 
 export default class PinterestClient {
@@ -61,5 +103,19 @@ export default class PinterestClient {
   likeAPin(pinId) {
     return this.request('PUT', `pins/${pinId}/like/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
+  }
+
+  search(keyword, pageSize, type) {
+    let params = {
+      'access_token': this.accessToken,
+      'add_refine[]': `${keyword}|typed`,
+      'add_fields': getAddFieldsOfSearch(type),
+      'asterix': true,
+      'page_size': pageSize,
+      'query': `${keyword}`,
+      'term_meta[]': `${keyword}|typed`
+    };
+    return this.request('GET', getUrlOfSearch(type), params, {})
+      .then(JSON.parse).get('data');
   }
 }

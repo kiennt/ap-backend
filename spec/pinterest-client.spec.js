@@ -110,5 +110,4 @@ describe('PinterestClient', () => {
       });
     });
   });
-
 });
