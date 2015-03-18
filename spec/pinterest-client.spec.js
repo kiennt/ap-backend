@@ -1,5 +1,4 @@
-/* global describe, it, expect, spyOn, jasmine, fail */
-/* global beforeEach, afterEach, beforeAll, afterAll */
+/*eslint-env jasmine*/
 
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
