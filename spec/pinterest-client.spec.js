@@ -68,6 +68,25 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('getPinsOfUser', () => {
+    it('should return list of pins of user when userId is valid', (done) => {
+      let fixture = path.join(fixtureDir, 'user-pins.json');
+      let pageSize = 25;
+      let params = {
+        'access_token': accessToken,
+        'page_size': pageSize
+      };
+
+      nock(`https://api.pinterest.com`)
+        .get(`/v3/users/${validUserId}/pins/?access_token=${accessToken}&page_size=${pageSize}`)
+        .replyWithFile(200, fixture);
+      client.getPinsOfUser(validUserId, pageSize).then((x) => {
+        expect(x[0].id).toBe('164944405079105168');
+        done();
+      });
+    });
+  });
+
   describe('likeAPin', () => {
     it('should return true when pinId is valid', (done) => {
       let fixture = path.join(fixtureDir, 'pin-like.json');
