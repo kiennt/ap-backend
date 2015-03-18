@@ -25,7 +25,7 @@ export class Bot {
       .then((data) => console.log(data))
       .catch((err) => console.log(err));
 
-    this.client.search('dungnh', 1, 'user')
+    this.client.search('dungnh', 25, 'user')
       .then((body) => console.log(body))
       .catch((body) => console.log(body));
   }
