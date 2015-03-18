@@ -1,11 +1,17 @@
 /*eslint-env jasmine*/
 
+import nock from 'nock';
+import fs from 'fs';
+import path from 'path';
+
+import Promise from '../dist/lib/promise';
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
-import nock from 'nock';
-import path from 'path';
+import {fixtureAsync} from './fixtures';
 
+
+let fixtureDir = path.join(__dirname, '../spec/fixture');
 
 describe('PinterestClient', () => {
   let validPinId = '83879611786469438';
@@ -15,7 +21,6 @@ describe('PinterestClient', () => {
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
-  let fixtureDir = path.join(__dirname, '../spec/fixture');
 
   beforeAll(() => HttpClient.disableAutoRetry());
 
@@ -28,12 +33,15 @@ describe('PinterestClient', () => {
   describe('commentAPin', () => {
     let text = 'this is comment';
     it('should return true when pinId is valid', (done) => {
-      let fixture = path.join(fixtureDir, 'pin-comment.json');
-      nock(`https://api.pinterest.com/v3/pins/${validPinId}`)
-        .post('/comment/', {'text': text, 'access_token': accessToken})
-        .replyWithFile(200, fixture);
+      spyOn(client, 'request')
+        .and.returnValue(fixtureAsync('pin-comment.json'));
+
+      let url = `pins/${validPinId}/comment/`;
+      let data = {'text': text};
+
       client.commentAPin(validPinId, text).then((x) => {
         expect(x).toBe(true);
+        expect(client.request).toHaveBeenCalledWith('POST', url, {}, data);
         done();
       });
     });
