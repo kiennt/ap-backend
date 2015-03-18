@@ -17,28 +17,24 @@ function validateResponse(jsonString) {
   return content;
 }
 
-function getAddFieldsOfSearch(type) {
+function getSearchAddFields(type) {
   let fields = '';
   switch (type) {
     case SEARCH_TYPE.BOARD:
-      fields = 'board.owner(),board.pin_thumbnail_urls,' +
+      return 'board.owner(),board.pin_thumbnail_urls,' +
         'board.image_cover_url,board.follower_count,board.pin_count';
-      break;
     case SEARCH_TYPE.PIN:
-      fields = 'pin.images[474x, 1200x],pin.rich_summary(),pin.pinner(),' +
+      return 'pin.images[474x, 1200x],pin.rich_summary(),pin.pinner(),' +
         'pin.dominant_color,pin.place_summary(),pin.board(),pin.embed(),' +
         'pin.lookbook(),pin.via_pinner()';
-      break;
     case SEARCH_TYPE.USER:
-      fields = 'user.blocked_by_me,user.implicitly_followed_by_' +
-        'me,user.follower_count,user.domain_verified,user.pin_thumbnail_url' +
-        's,user.explicitly_followed_by_me,user.location,user.website_url,' +
+      return 'user.blocked_by_me,user.implicitly_followed_by_me,' +
+        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
+        'user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
-      break;
     default:
       throw new Error(`${type} is wrong type`);
   }
-  return fields;
 }
 
 function getUrlOfSearch(type) {
@@ -109,7 +105,7 @@ export default class PinterestClient {
     let params = {
       'access_token': this.accessToken,
       'add_refine[]': `${keyword}|typed`,
-      'add_fields': getAddFieldsOfSearch(type),
+      'add_fields': getSearchAddFields(type),
       'asterix': true,
       'page_size': pageSize,
       'query': `${keyword}`,
