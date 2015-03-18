@@ -31,4 +31,4 @@ spec-dist
 # Sublime
 *.sublime*
 
-/src/bot.js
+src/bot.js
