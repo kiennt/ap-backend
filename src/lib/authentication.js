@@ -10,9 +10,7 @@ const URL = 'https://api.pinterest.com/v3/login/';
 function sortData(data) {
   let keys = Object.keys(data).sort();
   let sortedData = {};
-  keys.forEach(function(key) {
-    sortedData[key] = data[key];
-  });
+  keys.forEach((key) => sortedData[key] = data[key]);
   return sortedData;
 }
 
