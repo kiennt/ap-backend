@@ -1,11 +1,8 @@
-/* global describe, it, expect, spyOn, jasmine, fail */
-/* global beforeEach, afterEach, beforeAll, afterAll */
-
+import Promise from '../dist/lib/promise';
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
-import nock from 'nock';
-import path from 'path';
+import {fixtureAsync} from './fixtures';
 
 
 describe('PinterestClient', () => {
@@ -16,7 +13,6 @@ describe('PinterestClient', () => {
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
-  let fixtureDir = path.join(__dirname, '../spec/fixture');
 
   beforeAll(() => HttpClient.disableAutoRetry());
 
@@ -26,24 +22,43 @@ describe('PinterestClient', () => {
     expect(client.accessToken).toBe(accessToken);
   });
 
+  it('should complete request information', () => {
+    spyOn(client.httpClient, 'request');
+
+    let params = {'name': 'Nova'};
+    let expectedData = {'access_token': accessToken};
+    let relativeUrl = 'hello/';
+    let fullUrl = `https://api.pinterest.com/v3/${relativeUrl}`;
+
+    client.request('GET', relativeUrl, params, {});
+    expect(client.httpClient.request).toHaveBeenCalledWith(
+      'GET', fullUrl, params, expectedData, headers);
+  });
+
   describe('commentAPin', () => {
     let text = 'this is comment';
+
     it('should return true when pinId is valid', (done) => {
-      let fixture = path.join(fixtureDir, 'pin-comment.json');
-      nock(`https://api.pinterest.com/v3/pins/${validPinId}`)
-        .post('/comment/', {'text': text, 'access_token': accessToken})
-        .replyWithFile(200, fixture);
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-comment.json'));
+
+      let url = `pins/${validPinId}/comment/`;
+      let data = {'text': text};
+
       client.commentAPin(validPinId, text).then((x) => {
         expect(x).toBe(true);
+        expect(client.request).toHaveBeenCalledWith('POST', url, {}, data);
         done();
       });
     });
 
     it('should return false when pinId is invalid', (done) => {
-      let fixture = path.join(fixtureDir, 'pin-comment-invalid-pin-id.json');
-      nock(`https://api.pinterest.com/v3/pins/${invalidPinId}`)
-        .post('/comment/', {'text': text, 'access_token': accessToken})
-        .replyWithFile(200, fixture);
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-comment-invalid-pin-id.json'));
+
+      let url = `pins/${validPinId}/comment/`;
+      let data = {'text': text};
+
       client.commentAPin(validPinId, text).then((x) => {
         expect(x).toBe(false);
         done();
@@ -53,22 +68,25 @@ describe('PinterestClient', () => {
 
   describe('followUser', () => {
     it('should return true when userId is valid', (done) => {
-      let fixture = path.join(fixtureDir, 'user-follow.json');
-      nock(`https://api.pinterest.com/v3/users/${validUserId}`)
-        .put('/follow/', {'access_token': accessToken})
-        .replyWithFile(200, fixture);
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('user-follow.json'));
+
+      let url = `users/${validUserId}/follow/`;
+
       client.followUser(validUserId).then((x) => {
         expect(x).toBe(true);
+        expect(client.request).toHaveBeenCalledWith('PUT', url, {}, {});
         done();
       });
     });
 
     it('should return false when userId is invalid', (done) => {
-      let fixture = path.join(fixtureDir, 'user-follow-invalid-user-id.json');
-      nock(`https://api.pinterest.com/v3/users/${invalidUserId}`)
-        .put('/follow/', {'access_token': accessToken})
-        .replyWithFile(200, fixture);
-      client.followUser(invalidUserId).then((x) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('user-follow-invalid-user-id.json'));
+
+      let url = `users/${validUserId}/follow/`;
+
+      client.followUser(validUserId).then((x) => {
         expect(x).toBe(false);
         done();
       });
@@ -77,19 +95,19 @@ describe('PinterestClient', () => {
 
   describe('getPinsOfUser', () => {
     it('should return list of pins of user when userId is valid', (done) => {
-      let fixture = path.join(fixtureDir, 'user-pins.json');
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('user-pins.json'));
+
       let pageSize = 25;
+      let url = `users/${validUserId}/pins/`;
       let params = {
         'access_token': accessToken,
         'page_size': pageSize
       };
 
-      nock(`https://api.pinterest.com`)
-        .get(`/v3/users/${validUserId}/pins/` +
-          `?access_token=${accessToken}&page_size=${pageSize}`)
-        .replyWithFile(200, fixture);
       client.getPinsOfUser(validUserId, pageSize).then((data) => {
         expect(data[0].id).toBe('164944405079105168');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
         done();
       });
     });
@@ -97,22 +115,25 @@ describe('PinterestClient', () => {
 
   describe('likeAPin', () => {
     it('should return true when pinId is valid', (done) => {
-      let fixture = path.join(fixtureDir, 'pin-like.json');
-      nock(`https://api.pinterest.com/v3/pins/${validPinId}`)
-        .put('/like/', {'access_token': accessToken})
-        .replyWithFile(200, fixture);
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-like.json'));
+
+      let url = `pins/${validPinId}/like/`;
+
       client.likeAPin(validPinId).then((x) => {
         expect(x).toBe(true);
+        expect(client.request).toHaveBeenCalledWith('PUT', url, {}, {});
         done();
       });
     });
 
     it('should return false when pinId is invalid', (done) => {
-      let fixture = path.join(fixtureDir, 'pin-like-invalid-pin-id.json');
-      nock(`https://api.pinterest.com/v3/pins/${invalidPinId}`)
-        .put('/like/', {'access_token': accessToken})
-        .replyWithFile(200, fixture);
-      client.likeAPin(invalidPinId).then((x) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-like-invalid-pin-id.json'));
+
+      let url = `pins/${validPinId}/like/`;
+
+      client.likeAPin(validPinId).then((x) => {
         expect(x).toBe(false);
         done();
       });

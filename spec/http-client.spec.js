@@ -1,6 +1,3 @@
-/* global describe, it, expect, spyOn, jasmine, fail */
-/* global beforeEach, afterEach, beforeAll, afterAll */
-
 import HttpClient from '../dist/http-client';
 import nock from 'nock';
 
