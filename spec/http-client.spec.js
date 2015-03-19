@@ -1,5 +1,3 @@
-/*eslint-env jasmine*/
-
 import HttpClient from '../dist/http-client';
 import nock from 'nock';
 

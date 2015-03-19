@@ -1,5 +1,3 @@
-/*eslint-env jasmine*/
-
 import Promise from '../dist/lib/promise';
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';

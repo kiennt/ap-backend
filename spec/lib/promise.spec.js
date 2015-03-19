@@ -1,5 +1,3 @@
-/*eslint-env jasmine*/
-
 import Promise from '../../dist/lib/promise';
 
 
