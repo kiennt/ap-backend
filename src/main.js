@@ -39,4 +39,4 @@ function checkPromiseUntil() {
     .catch((err) => console.log('*** Error: ' + err));
 }
 
-checkPromiseUntil();
+checkBot();
