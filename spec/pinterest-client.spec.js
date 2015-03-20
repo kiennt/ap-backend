@@ -94,7 +94,7 @@ describe('PinterestClient', () => {
   });
 
   describe('getFollowersOfUser', () => {
-    it('should return true when userId is valid', (done) => {
+    it('should return a list of followers when userId is valid', (done) => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-followers.json'));
 
