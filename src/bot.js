@@ -11,10 +11,7 @@ export class Bot {
   }
 
   run() {
-    let email = 'dxungngh@gmail.com';
-    let password = 'qwerty@A123';
-    let headers = HttpHeaders.randomHeaders();
-    Authentication.getAccessToken(email, password, headers).then((x) => {
+    this.client.getFollowersOfUser('95279485774987606', 20).then((x) => {
       console.log(x);
     });
   }

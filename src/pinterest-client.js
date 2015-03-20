@@ -77,6 +77,20 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
+  getFollowersOfUser(userId, pageSize) {
+    let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
+      'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
+      'user.explicitly_followed_by_me,user.location,user.website_url,' +
+      'user.following_count';
+    let params = {
+      'access_token': this.accessToken,
+      'add_fields': fields,
+      'page_size': pageSize
+    };
+    return this.request('GET', `users/${userId}/followers/`, params, {})
+      .then(JSON.parse).get('data');
+  }
+
   getInfoOfMe() {
     let fields = 'user.country,user.default_shipping(),user.default_payment()';
     let params = {
