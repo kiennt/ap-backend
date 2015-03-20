@@ -115,6 +115,28 @@ describe('PinterestClient', () => {
         done();
       });
     });
+
+    it('should return false when userId is invalid', (done) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('user-followers-invalid-user-id.json'));
+
+      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
+        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
+        'user.explicitly_followed_by_me,user.location,user.website_url,' +
+        'user.following_count';
+      let params = {
+        'access_token': accessToken,
+        'add_fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${invalidUserId}/followers/`;
+
+      client.getFollowersOfUser(invalidUserId, 1).then((data) => {
+        expect(data['request_id']).toBe('598443295031');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        done();
+      });
+    });
   });
 
   describe('getPinsOfUser', () => {
