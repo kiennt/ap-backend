@@ -7,7 +7,9 @@
   "license": "ISC",
   "dependencies": {
     "request": "^2.53.0",
-    "bluebird": "^2.9.14"
+    "bluebird": "^2.9.14",
+    "crypto-js": "^3.1.2",
+    "utf8": "^2.1.0"
   },
   "devDependencies": {
     "babel": "^4.7.5",
