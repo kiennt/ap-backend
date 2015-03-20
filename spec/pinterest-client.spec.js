@@ -116,7 +116,7 @@ describe('PinterestClient', () => {
       });
     });
 
-    it('should return false when userId is invalid', (done) => {
+    it('should return request_id when userId is invalid', (done) => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-followers-invalid-user-id.json'));
 
