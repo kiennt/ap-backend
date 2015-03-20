@@ -93,6 +93,30 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('getFollowersOfUser', () => {
+    it('should return true when userId is valid', (done) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('user-followers.json'));
+
+      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
+        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
+        'user.explicitly_followed_by_me,user.location,user.website_url,' +
+        'user.following_count';
+      let params = {
+        'access_token': accessToken,
+        'add_fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${validUserId}/followers/`;
+
+      client.getFollowersOfUser(validUserId, 1).then((data) => {
+        expect(data[0].id).toBe('355854945464877577');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getPinsOfUser', () => {
     it('should return list of pins of user when userId is valid', (done) => {
       spyOn(client, 'request').and.returnValue(
