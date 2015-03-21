@@ -136,7 +136,6 @@ describe('PinterestClient', () => {
         'user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
       let params = {
-        'access_token': accessToken,
         'add_fields': fields,
         'page_size': 1
       };
@@ -158,7 +157,6 @@ describe('PinterestClient', () => {
         'user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
       let params = {
-        'access_token': accessToken,
         'add_fields': fields,
         'page_size': 1
       };
@@ -182,7 +180,6 @@ describe('PinterestClient', () => {
         'user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
       let params = {
-        'access_token': accessToken,
         'add_fields': fields,
         'page_size': 1
       };
@@ -204,7 +201,6 @@ describe('PinterestClient', () => {
         'user.explicitly_followed_by_me,user.location,user.website_url,' +
         'user.following_count';
       let params = {
-        'access_token': accessToken,
         'add_fields': fields,
         'page_size': 1
       };
@@ -226,7 +222,6 @@ describe('PinterestClient', () => {
       let pageSize = 25;
       let url = `users/${validUserId}/pins/`;
       let params = {
-        'access_token': accessToken,
         'page_size': pageSize
       };
 
