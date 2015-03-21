@@ -11,7 +11,7 @@ export class Bot {
   }
 
   run() {
-    this.client.getDetailOfPin('494481234063127024').then((x) => {
+    this.client.getInfoOfMe().then((x) => {
       console.log(x);
     });
   }

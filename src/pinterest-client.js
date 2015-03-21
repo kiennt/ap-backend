@@ -107,7 +107,6 @@ export default class PinterestClient {
       'user.explicitly_followed_by_me,user.location,user.website_url,' +
       'user.following_count';
     let params = {
-      'access_token': this.accessToken,
       'add_fields': fields,
       'page_size': pageSize
     };
@@ -121,7 +120,6 @@ export default class PinterestClient {
       'user.explicitly_followed_by_me,user.location,user.website_url,' +
       'user.following_count';
     let params = {
-      'access_token': this.accessToken,
       'add_fields': fields,
       'page_size': pageSize
     };
@@ -132,7 +130,6 @@ export default class PinterestClient {
   getInfoOfMe() {
     let fields = 'user.country,user.default_shipping(),user.default_payment()';
     let params = {
-      'access_token': this.accessToken,
       'add_fields': fields
     };
     return this.request('GET', `users/me/`, params, {})
@@ -141,7 +138,6 @@ export default class PinterestClient {
 
   getPinsOfUser(userId, pageSize) {
     let params = {
-      'access_token': this.accessToken,
       'page_size': pageSize
     };
     return this.request('GET', `users/${userId}/pins/`, params, {})
@@ -155,7 +151,6 @@ export default class PinterestClient {
 
   search(keyword, pageSize, type) {
     let params = {
-      'access_token': this.accessToken,
       'add_refine[]': `${keyword}|typed`,
       'add_fields': getSearchAddFields(type),
       'asterix': true,
