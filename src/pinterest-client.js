@@ -54,6 +54,7 @@ export default class PinterestClient {
   constructor(accessToken, httpHeaders) {
     this.accessToken = accessToken;
     this.httpHeaders = httpHeaders;
+    //TODO: need to create new object before modifying object
     this.httpHeaders.Authorization = `Bearer ${accessToken}`;
     this.httpClient = new HttpClient();
   }
