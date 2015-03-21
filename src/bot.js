@@ -11,7 +11,7 @@ export class Bot {
   }
 
   run() {
-    this.client.getFollowersOfUser('95279485774987606', 20).then((x) => {
+    this.client.getFollowingOfUser('95279485774987606', 20).then((x) => {
       console.log(x);
     });
   }
