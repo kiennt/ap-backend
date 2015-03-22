@@ -2,7 +2,7 @@ import _ from 'lodash';
 import CryptoJS from 'crypto-js';
 import utf8 from 'utf8';
 
-import HttpClient from '../http-client'
+import HttpClient from '../http-client';
 
 
 const CLIENT_ID = '1431602';
