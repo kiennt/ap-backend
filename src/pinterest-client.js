@@ -1,6 +1,9 @@
-import HttpClient from './http-client'
+import _ from 'lodash';
+
 import Promise from './lib/promise';
-import Fields from './lib/fields'
+import HttpClient from './http-client'
+import Fields from './lib/fields';
+
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 const SEARCH_TYPE = {
@@ -48,13 +51,13 @@ function getSearchPath(type) {
 export default class PinterestClient {
   constructor(accessToken, httpHeaders) {
     this.accessToken = accessToken;
-    this.httpHeaders = httpHeaders;
-    //TODO: need to create new object before modifying object
+    this.httpHeaders = _.clone(httpHeaders);
     this.httpHeaders.Authorization = `Bearer ${accessToken}`;
     this.httpClient = new HttpClient();
   }
 
   request(httpMethod, relativePath, params={}, data={}) {
+    data = _.clone(data);
     data['access_token'] = this.accessToken;
     let absolutePath = `${DOMAIN}/${relativePath}`;
     return this.httpClient.request(
@@ -132,8 +135,8 @@ export default class PinterestClient {
       'query': `${keyword}`
     };
     if (type === SEARCH_TYPE.PIN) {
-      params['add_refine[]'] = `${keyword}|typed`;
       params.asterix = true;
+      params['add_refine[]'] = `${keyword}|typed`;
       params['term_meta[]'] = `${keyword}|typed`;
     }
     return this.request('GET', getSearchPath(type), params, {})

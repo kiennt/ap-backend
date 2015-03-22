@@ -3,7 +3,7 @@ import nock from 'nock';
 
 
 describe('HttpClient', () => {
-  // TODO: need a test for auto-retry
+  // TODO: need a test for auto-retry, do this when we have custom error class
   let client = new HttpClient();
 
   beforeAll(() => HttpClient.disableAutoRetry());
