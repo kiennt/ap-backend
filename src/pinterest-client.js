@@ -22,11 +22,11 @@ function getSearchAddFields(type) {
   let fields = '';
   switch (type) {
     case SEARCH_TYPE.BOARD:
-      return Fields.getFields('SEARCH_TYPE.BOARD');
+      return Fields.getFields('search.board');
     case SEARCH_TYPE.PIN:
-      return Fields.getFields('SEARCH_TYPE.PIN');
+      return Fields.getFields('search.pin');
     case SEARCH_TYPE.USER:
-      return Fields.getFields('SEARCH_TYPE.USER');
+      return Fields.getFields('search.user');
     default:
       throw new Error(`${type} is wrong type`);
   }

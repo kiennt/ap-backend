@@ -30,7 +30,7 @@ const GET_FOLLOWING_OF_USER = 'user.implicitly_followed_by_me,' +
 const GET_INFO_OF_ME = 'user.country,user.default_shipping(),' +
   'user.default_payment()';
 
-const SEARCH_TYPE_BOARD = 'fields board.id,board.url,board.name,' +
+const SEARCH_TYPE_BOARD = 'board.id,board.url,board.name,' +
   'board.category,board.created_at,board.layout,' +
   'board.collaborator_invites_enabled,board.image_cover_url,' +
   'board.images[90x90],board.collaborated_by_me,board.is_collaborative,' +
@@ -63,9 +63,9 @@ const FIELDS = {
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
   'getFollowingOfUser': GET_FOLLOWING_OF_USER,
   'getInfoOfMe': GET_INFO_OF_ME,
-  'SEARCH_TYPE.BOARD': SEARCH_TYPE_BOARD,
-  'SEARCH_TYPE.PIN': SEARCH_TYPE_PIN,
-  'SEARCH_TYPE.USER': SEARCH_TYPE_USER
+  'search.board': SEARCH_TYPE_BOARD,
+  'search.pin': SEARCH_TYPE_PIN,
+  'search.user': SEARCH_TYPE_USER
 };
 
 function getFields(functionName) {
