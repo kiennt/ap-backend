@@ -1,4 +1,5 @@
 import Promise from '../dist/lib/promise';
+import Fields from '../dist/lib/fields';
 import HttpClient from '../dist/http-client'
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
@@ -98,21 +99,7 @@ describe('PinterestClient', () => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('pin-detail.json'));
 
-      let fields = 'pin.images[136x136,736x],pin.id,pin.description,' +
-        'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
-        'pin.like_count,pin.repin_count,pin.comment_count,pin.view_tags,' +
-        'board.id,board.url,board.name,board.category,board.created_at,' +
-        'board.layout,board.collaborator_invites_enabled,user.id,' +
-        'user.username,user.first_name,user.last_name,user.full_name,' +
-        'user.gender,user.partner(),place.id,place.name,place.latitude,' +
-        'place.longitude,place.source_icon,place.source_name,' +
-        'board.image_thumbnail_url,user.image_medium_url,pin.link,' +
-        'pin.liked_by_me,pin.tracked_link,pin.domain,pin.board(),' +
-        'pin.comment_count,pin.pinned_to_board,pin.pinner(),pin.via_pinner(),' +
-        'pin.rich_metadata(),pin.rich_summary(),pin.embed(),' +
-        'pin.canonical_pin,user.blocked_by_me,pin.place(),place.street,' +
-        'place.locality,place.region,place.country,place.phone,place.url,' +
-        'pin.is_video';
+      let fields = Fields.getFields('getDetailOfPin');
       let params = {
         'fields': fields
       };
@@ -131,12 +118,9 @@ describe('PinterestClient', () => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-followers.json'));
 
-      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-        'user.explicitly_followed_by_me,user.location,user.website_url,' +
-        'user.following_count';
+      let fields = Fields.getFields('getFollowersOfUser');
       let params = {
-        'add_fields': fields,
+        'fields': fields,
         'page_size': 1
       };
       let url = `users/${validUserId}/followers/`;
@@ -152,12 +136,9 @@ describe('PinterestClient', () => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-followers-invalid-user-id.json'));
 
-      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-        'user.explicitly_followed_by_me,user.location,user.website_url,' +
-        'user.following_count';
+      let fields = Fields.getFields('getFollowersOfUser');
       let params = {
-        'add_fields': fields,
+        'fields': fields,
         'page_size': 1
       };
       let url = `users/${invalidUserId}/followers/`;
@@ -175,12 +156,9 @@ describe('PinterestClient', () => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-following.json'));
 
-      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-        'user.explicitly_followed_by_me,user.location,user.website_url,' +
-        'user.following_count';
+      let fields = Fields.getFields('getFollowingOfUser');
       let params = {
-        'add_fields': fields,
+        'fields': fields,
         'page_size': 1
       };
       let url = `users/${validUserId}/following/`;
@@ -196,12 +174,9 @@ describe('PinterestClient', () => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-following-invalid-user-id.json'));
 
-      let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-        'user.explicitly_followed_by_me,user.location,user.website_url,' +
-        'user.following_count';
+      let fields = Fields.getFields('getFollowingOfUser');
       let params = {
-        'add_fields': fields,
+        'fields': fields,
         'page_size': 1
       };
       let url = `users/${invalidUserId}/following/`;

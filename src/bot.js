@@ -11,7 +11,11 @@ export class Bot {
   }
 
   run() {
-    this.client.getInfoOfMe().then((x) => {
+    this.client.search('kiennt', 1, 'user').then((x) => {
+      console.log(x);
+    });
+
+    this.client.search('sex toy', 1, 'pin').then((x) => {
       console.log(x);
     });
   }
