@@ -1,5 +1,6 @@
 import HttpClient from './http-client'
 import Promise from './lib/promise';
+import Fields from './lib/fields'
 
 const DOMAIN = 'https://api.pinterest.com/v3';
 const SEARCH_TYPE = {
@@ -21,17 +22,11 @@ function getSearchAddFields(type) {
   let fields = '';
   switch (type) {
     case SEARCH_TYPE.BOARD:
-      return 'board.owner(),board.pin_thumbnail_urls,' +
-        'board.image_cover_url,board.follower_count,board.pin_count';
+      return Fields.getFields('search.board');
     case SEARCH_TYPE.PIN:
-      return 'pin.images[474x, 1200x],pin.rich_summary(),pin.pinner(),' +
-        'pin.dominant_color,pin.place_summary(),pin.board(),pin.embed(),' +
-        'pin.lookbook(),pin.via_pinner()';
+      return Fields.getFields('search.pin');
     case SEARCH_TYPE.USER:
-      return 'user.blocked_by_me,user.implicitly_followed_by_me,' +
-        'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-        'user.explicitly_followed_by_me,user.location,user.website_url,' +
-        'user.following_count';
+      return Fields.getFields('search.user');
     default:
       throw new Error(`${type} is wrong type`);
   }
@@ -80,20 +75,7 @@ export default class PinterestClient {
   }
 
   getDetailOfPin(pinId) {
-    let fields = 'pin.images[136x136,736x],pin.id,pin.description,' +
-      'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
-      'pin.like_count,pin.repin_count,pin.comment_count,pin.view_tags,' +
-      'board.id,board.url,board.name,board.category,board.created_at,' +
-      'board.layout,board.collaborator_invites_enabled,user.id,user.username,' +
-      'user.first_name,user.last_name,user.full_name,user.gender,' +
-      'user.partner(),place.id,place.name,place.latitude,place.longitude,' +
-      'place.source_icon,place.source_name,board.image_thumbnail_url,' +
-      'user.image_medium_url,pin.link,pin.liked_by_me,pin.tracked_link,' +
-      'pin.domain,pin.board(),pin.comment_count,pin.pinned_to_board,' +
-      'pin.pinner(),pin.via_pinner(),pin.rich_metadata(),pin.rich_summary(),' +
-      'pin.embed(),pin.canonical_pin,user.blocked_by_me,pin.place(),' +
-      'place.street,place.locality,place.region,place.country,place.phone,' +
-      'place.url,pin.is_video';
+    let fields = Fields.getFields('getDetailOfPin');
     let params = {
       'fields': fields
     };
@@ -102,12 +84,9 @@ export default class PinterestClient {
   }
 
   getFollowersOfUser(userId, pageSize) {
-    let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-      'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-      'user.explicitly_followed_by_me,user.location,user.website_url,' +
-      'user.following_count';
+    let fields = Fields.getFields('getFollowersOfUser');
     let params = {
-      'add_fields': fields,
+      'fields': fields,
       'page_size': pageSize
     };
     return this.request('GET', `users/${userId}/followers/`, params, {})
@@ -115,12 +94,9 @@ export default class PinterestClient {
   }
 
   getFollowingOfUser(userId, pageSize) {
-    let fields = 'user.implicitly_followed_by_me,user.blocked_by_me,' +
-      'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-      'user.explicitly_followed_by_me,user.location,user.website_url,' +
-      'user.following_count';
+    let fields = Fields.getFields('getFollowingOfUser');
     let params = {
-      'add_fields': fields,
+      'fields': fields,
       'page_size': pageSize
     };
     return this.request('GET', `users/${userId}/following/`, params, {})
@@ -128,11 +104,11 @@ export default class PinterestClient {
   }
 
   getInfoOfMe() {
-    let fields = 'user.country,user.default_shipping(),user.default_payment()';
+    let fields = Fields.getFields('getInfoOfMe');
     let params = {
-      'add_fields': fields
+      'fields': fields
     };
-    return this.request('GET', `users/me/`, params, {})
+    return this.request('GET', 'users/me/', params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -151,13 +127,15 @@ export default class PinterestClient {
 
   search(keyword, pageSize, type) {
     let params = {
-      'add_refine[]': `${keyword}|typed`,
-      'add_fields': getSearchAddFields(type),
-      'asterix': true,
+      'fields': getSearchAddFields(type),
       'page_size': pageSize,
-      'query': `${keyword}`,
-      'term_meta[]': `${keyword}|typed`
+      'query': `${keyword}`
     };
+    if (type === SEARCH_TYPE.PIN) {
+      params['add_refine[]'] = `${keyword}|typed`;
+      params.asterix = true;
+      params['term_meta[]'] = `${keyword}|typed`;
+    }
     return this.request('GET', getSearchPath(type), params, {})
       .then(JSON.parse).get('data');
   }
