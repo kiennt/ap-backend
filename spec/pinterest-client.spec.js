@@ -1,6 +1,8 @@
+import _ from 'lodash';
+
 import Promise from '../dist/lib/promise';
 import Fields from '../dist/lib/fields';
-import HttpClient from '../dist/http-client'
+import HttpClient from '../dist/http-client';
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
 import {fixtureAsync} from './fixtures';
@@ -30,10 +32,12 @@ describe('PinterestClient', () => {
     let expectedData = {'access_token': accessToken};
     let relativeUrl = 'hello/';
     let fullUrl = `https://api.pinterest.com/v3/${relativeUrl}`;
+    let fullHeaders = _.clone(headers);
+    fullHeaders.Authorization = `Bearer ${accessToken}`;
 
     client.request('GET', relativeUrl, params, {});
     expect(client.httpClient.request).toHaveBeenCalledWith(
-      'GET', fullUrl, params, expectedData, headers);
+      'GET', fullUrl, params, expectedData, fullHeaders);
   });
 
   describe('commentAPin', () => {

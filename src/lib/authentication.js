@@ -1,6 +1,8 @@
+import _ from 'lodash';
 import CryptoJS from 'crypto-js';
 import utf8 from 'utf8';
-import HttpClient from '../http-client'
+
+import HttpClient from '../http-client';
 
 
 const CLIENT_ID = '1431602';
@@ -15,12 +17,15 @@ function sorted(data) {
 }
 
 function generateSignature(method, url, data) {
+  data = _.clone(data);
   data['client_id'] = CLIENT_ID;
   data = sorted(data);
+
   method = method.toUpperCase();
   url = encodeURIComponent(url);
+
   let query = Object.keys(data)
-    .map(function(key) {
+    .map((key) => {
       let encodedValue = encodeURIComponent(data[key]);
       return `${key}=${encodedValue}`;
     })
