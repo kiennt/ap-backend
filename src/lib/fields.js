@@ -1,4 +1,4 @@
-const GET_DETAIL_OF_FIELDS = 'pin.images[136x136,736x],pin.id,' +
+const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
   'pin.like_count,pin.repin_count,pin.comment_count,pin.view_tags,' +
@@ -59,7 +59,7 @@ const SEARCH_TYPE_USER = 'fields  user.id,user.username,user.first_name,' +
   'user.pin_thumbnail_urls';
 
 const FIELDS = {
-  'getDetailOfPin': GET_DETAIL_OF_FIELDS,
+  'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
   'getFollowingOfUser': GET_FOLLOWING_OF_USER,
   'getInfoOfMe': GET_INFO_OF_ME,
