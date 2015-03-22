@@ -13,17 +13,16 @@
     "lodash": "^3.5.0"
   },
   "devDependencies": {
-    "babel": "^4.7.5",
-    "babel-eslint": "^1.0.0",
-    "eslint": "^0.16.2",
+    "babel": "^4.7.16",
+    "babel-eslint": "^2.0.2",
+    "eslint": "^0.17.1",
     "gulp": "^3.8.11",
     "gulp-babel": "^4.0.0",
-    "gulp-eslint": "^0.6.0",
+    "gulp-eslint": "^0.7.0",
     "gulp-jasmine": "^2.0.0",
-    "gulp-sourcemaps": "^1.5.0",
+    "gulp-sourcemaps": "^1.5.1",
     "jasmine": "^2.2.1",
-    "mock-promises": "^0.3.0",
-    "nock": "^1.1.0"
+    "nock": "^1.2.0"
   },
   "scripts": {
     "test": "rm -rf dist spec-dist && gulp test"
