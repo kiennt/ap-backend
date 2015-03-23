@@ -1,4 +1,4 @@
-/* global HttpClient */
+import _ from 'lodash';
 
 import request from 'request';
 import Promise from './lib/promise';
@@ -47,7 +47,9 @@ export default class HttpClient {
   }
 
   getFullURL(absolutePath, params) {
-    let query = Object.keys(params).map(x => `${x}=${params[x]}`).join('&');
+    let query = _(params)
+      .map((value, key) => `${key}=${value}`)
+      .join('&');
     if (query) {
       return `${absolutePath}?${query}`;
     } else {

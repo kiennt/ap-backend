@@ -10,10 +10,7 @@ const CLIENT_SECRET = '492124fd20e80e0f678f7a03344875f9b6234e2b';
 const URL = 'https://api.pinterest.com/v3/login/';
 
 function sorted(data) {
-  let keys = Object.keys(data).sort();
-  let sortedData = {};
-  keys.forEach((key) => sortedData[key] = data[key]);
-  return sortedData;
+  return _(data).pairs().sort().zipObject().value();
 }
 
 function generateSignature(method, url, data) {
@@ -24,11 +21,8 @@ function generateSignature(method, url, data) {
   method = method.toUpperCase();
   url = encodeURIComponent(url);
 
-  let query = Object.keys(data)
-    .map((key) => {
-      let encodedValue = encodeURIComponent(data[key]);
-      return `${key}=${encodedValue}`;
-    })
+  let query = _(data)
+    .map((value, key) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
   let message = `${method}&${url}&${query}`;
   let hash = CryptoJS.HmacSHA256(utf8.encode(message), CLIENT_SECRET);
