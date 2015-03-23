@@ -27,7 +27,10 @@ class HttpMethodError extends BaseCustomError {
   }
 }
 
-class HttpNetworkError extends BaseCustomError {
+// DISCUSS: Em đang suy nghĩ về cái tên này
+// HttpNetworkError thì ko cover được hết các case như mình gửi sai cấu trúc
+// VD: `options.uri is a required argument`
+class HttpRequestError extends BaseCustomError {
   constructor(baseError) {
     super(baseError);
     this.cause = baseError;
@@ -44,6 +47,6 @@ class HttpResponseError extends BaseCustomError {
 
 export default {
   HttpMethodError: HttpMethodError,
-  HttpNetworkError: HttpNetworkError,
+  HttpRequestError: HttpRequestError,
   HttpResponseError: HttpResponseError
 };

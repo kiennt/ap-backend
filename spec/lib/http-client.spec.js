@@ -1,5 +1,9 @@
-import HttpClient from '../../dist/lib/http-client';
+import _ from 'lodash';
 import nock from 'nock';
+
+import Promise from '../../dist/lib/promise';
+import HttpClient from '../../dist/lib/http-client';
+import Errors from '../../dist/lib/errors';
 
 
 describe('HttpClient', () => {
@@ -16,16 +20,12 @@ describe('HttpClient', () => {
         .toBe('test?a=10&b=20');
     });
 
-    it('should dont have ? if call with empty', () => {
+    it('should not have `?` if call with empty params', () => {
       expect(client.getFullURL('test', {})).toBe('test');
     });
   });
 
   describe('request', () => {
-    it('should return reject promise if call with invalid method', (done) => {
-      client.request('a').catch(done);
-    });
-
     it('should call getFullURL', (done) => {
       spyOn(client, 'getFullURL');
       client.request('get', 'a').catch(() => {
@@ -34,12 +34,40 @@ describe('HttpClient', () => {
       });
     });
 
-    describe('request with valid method', () => {
-      it('should return reject promise if request fail', (done) => {
-        nock('http://test.com').get('/test').reply(404);
-        client.request('get', 'http://test.com/test').catch(done);
+    describe('should reject with exact error classes when failed', () => {
+      it('should throw HttpMethodError with wrong HTTP method', (done) => {
+        client.request('FOO').catch((error) => {
+          expect(error).toEqual(jasmine.any(Errors.HttpMethodError));
+          done();
+        });
       });
 
+      it('should throw HttpRequestError with bad request structure', (done) => {
+        client.request('get').catch((error) => {
+          expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
+          expect(error.message).toBe('options.uri is a required argument');
+          done();
+        });
+      });
+
+      it('should throw HttpRequestError when not able to connect', (done) => {
+        client.request('get', 'http://localhost:6969/').catch((error) => {
+          expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
+          expect(error.cause.name).toBe('NetConnectNotAllowedError');
+          done();
+        });
+      });
+
+      it('should throw HttpResponseError with bad HTTP StatusCode', (done) => {
+        nock('http://test.com').get('/test').reply(404);
+        client.request('get', 'http://test.com/test').catch((error) => {
+          expect(error).toEqual(jasmine.any(Errors.HttpResponseError));
+          done();
+        });
+      });
+    });
+
+    describe('request with valid method', () => {
       it('should return promise if GET request success', (done) => {
         nock('http://test.com').get('/test').reply(200, 'ok');
         client.request('get', 'http://test.com/test').then((x) => {
@@ -58,7 +86,44 @@ describe('HttpClient', () => {
         );
       });
     });
+
+    describe('should have correct auto-retry behavior', () => {
+      let retryConfig = {};
+
+      beforeAll(() => {
+        HttpClient.enableAutoRetry();
+        // Patching retry configuration
+        retryConfig = _.clone(HttpClient.getRetryConfiguration());
+        retryConfig.delay = 1;
+        retryConfig.incrementalFactor = 1;
+        retryConfig.maxRetries = 3;
+        HttpClient.setRetryConfiguration(retryConfig);
+      });
+
+      afterAll(() => {
+        HttpClient.disableAutoRetry();
+        HttpClient.setRetryConfiguration(undefined);  // use default
+      });
+
+      it('should retry with HttpRequestError', (done) => {
+        spyOn(Promise.prototype, 'spread').and.callThrough();
+        client.request('get', 'http://localhost:6969/').catch((error) => {
+          expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
+          let callCount = Promise.prototype.spread.calls.count();
+          expect(callCount).toBe(1 + retryConfig.maxRetries);
+          done();
+        });
+      });
+
+      it('should not retry with anything else', (done) => {
+        nock('http://test.com').get('/test').reply(500);
+        spyOn(Promise.prototype, 'spread').and.callThrough();
+        client.request('get', 'http://test.com/test').catch((error) => {
+          expect(error).not.toEqual(jasmine.any(Errors.HttpRequestError));
+          expect(Promise.prototype.spread.calls.count()).toBe(1);
+          done();
+        });
+      });
+    });
   });
-
 });
-

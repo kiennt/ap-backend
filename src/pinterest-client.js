@@ -15,6 +15,9 @@ const SEARCH_TYPE = {
 function validateResponse(jsonString) {
   let content = JSON.parse(jsonString);
   if (content.code) {
+    // TODO: Chỗ này cần 1 cái error class kiểu khác
+    // vì nó liên quan chặt đến cấu trúc dữ liệu trả về của Pinterest
+    // Anh em bàn bạc sau nhé
     throw new Error('Response not valid, with [code] = ' + content.code +
       ' ::: ' + jsonString);
   }
@@ -31,6 +34,7 @@ function getSearchAddFields(type) {
     case SEARCH_TYPE.USER:
       return Fields.getFields('search.user');
     default:
+      // DISCUSS: Chỗ này thì em nghĩ là có thể không cần lắm
       throw new Error(`${type} is wrong type`);
   }
 }

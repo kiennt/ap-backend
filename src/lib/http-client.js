@@ -1,7 +1,9 @@
 import _ from 'lodash';
-
 import request from 'request';
+
 import Promise from './promise';
+import Errors from './errors'
+
 
 const HTTP_HANDLERS = {
   GET: request.get,
@@ -14,10 +16,7 @@ const DEFAULT_RETRY_CONFIGURATION = {
   maxRetries: 5,
   delay: 1000,
   incrementalFactor: 2,  // 1 -> 2 -> 4 -> 8 -> 16
-  willRetry: (error) => {
-    // TODO: We will update this function when we have custom error classes
-    return true;  // always retry
-  }
+  willRetry: (error) => (error instanceof Errors.HttpRequestError)
 };
 
 function isStatusCodeValid(statusCode) {
@@ -61,7 +60,7 @@ export default class HttpClient {
     httpMethod = (httpMethod || '').toUpperCase();
     let handler = HTTP_HANDLERS[httpMethod];
     if (!handler) {
-      return Promise.reject(new Error(`Unknown HTTP method: ${httpMethod}`));
+      return Promise.reject(new Errors.HttpMethodError(httpMethod));
     }
 
     let requestBody = {
@@ -72,14 +71,17 @@ export default class HttpClient {
 
     let promisifiedHandler = Promise.promisify(handler);
     let singleRequest = () => {
-      return promisifiedHandler(requestBody).spread((response, body) => {
-        let statusCode = response.statusCode;
-        if (isStatusCodeValid(statusCode)) {
-          return body;
-        } else {
-          throw new Error(`HTTP Status: ${statusCode}`);
-        }
-      });
+      return promisifiedHandler(requestBody)
+        .spread((response, body) => {
+          let statusCode = response.statusCode;
+          if (isStatusCodeValid(statusCode)) {
+            return body;
+          } else {
+            throw new Errors.HttpResponseError(response, body);
+          }
+        }, (error) => {
+          throw new Errors.HttpRequestError(error);
+        });
     };
 
     if (HttpClient.isAutoRetryDisabled) {
