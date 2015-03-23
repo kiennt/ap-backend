@@ -1,4 +1,4 @@
-import HttpClient from '../dist/http-client';
+import HttpClient from '../../dist/lib/http-client';
 import nock from 'nock';
 
 
