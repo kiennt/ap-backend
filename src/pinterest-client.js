@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import Promise from './lib/promise';
-import HttpClient from './http-client';
+import HttpClient from './lib/http-client';
 import Fields from './lib/fields';
 
 

@@ -2,7 +2,7 @@ import _ from 'lodash';
 
 import Promise from '../dist/lib/promise';
 import Fields from '../dist/lib/fields';
-import HttpClient from '../dist/http-client';
+import HttpClient from '../dist/lib/http-client';
 import PinterestClient from '../dist/pinterest-client';
 import httpHeaders from '../dist/config/http-headers';
 import {fixtureAsync} from './fixtures';

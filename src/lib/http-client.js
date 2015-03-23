@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 import request from 'request';
-import Promise from './lib/promise';
+import Promise from './promise';
 
 const HTTP_HANDLERS = {
   GET: request.get,
