@@ -1,4 +1,6 @@
-import Promise from '../../dist/lib/promise';
+import Promise from 'bluebird';
+
+import '../../dist/exts/promise';
 
 
 describe('Promise-extensions', () => {

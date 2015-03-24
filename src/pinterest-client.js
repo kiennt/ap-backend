@@ -1,6 +1,6 @@
 import _ from 'lodash';
+import Promise from 'bluebird';
 
-import Promise from './lib/promise';
 import HttpClient from './lib/http-client';
 import Fields from './lib/fields';
 

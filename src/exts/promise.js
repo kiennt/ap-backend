@@ -1,5 +1,3 @@
-export * from 'bluebird';
-
 import Promise from 'bluebird';
 
 function attempt(config, promiseFunc, funcArgs) {

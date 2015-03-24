@@ -1,7 +1,7 @@
 import _ from 'lodash';
+import Promise from 'bluebird';
 import nock from 'nock';
 
-import Promise from '../../dist/lib/promise';
 import HttpClient from '../../dist/lib/http-client';
 import Errors from '../../dist/lib/errors';
 
