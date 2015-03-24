@@ -23,9 +23,6 @@ class BaseCustomError extends Error {
 class HttpError extends BaseCustomError {
 }
 
-// DISCUSS: Em đang suy nghĩ về cái tên này
-// HttpNetworkError thì ko cover được hết các case như mình gửi sai cấu trúc
-// VD: `options.uri is a required argument`
 class HttpRequestError extends HttpError {
   constructor(baseError) {
     super(baseError);
