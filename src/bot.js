@@ -11,7 +11,7 @@ export class Bot {
   }
 
   run() {
-    this.client.getFeeds(25).then((x) => {
+    this.client.getRelatedPins('524880531547866779', 25).then((x) => {
       console.log(x);
     });
   }
