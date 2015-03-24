@@ -1,6 +1,7 @@
 import PinterestClient from './pinterest-client';
 import Authentication from './lib/authentication';
 import HttpHeaders from './config/http-headers';
+import RandomUtil from './lib/random-util';
 import Promise from './lib/promise';
 import _ from 'lodash';
 
@@ -9,7 +10,7 @@ export class Bot {
     switch (type) {
       case 'pinterest':
         this.client = new PinterestClient(accessToken, httpHeaders);
-        this.maxRetry = Math.floor(Math.random() * 4) + 1;
+        this.maxRetry = RandomUtil.randomMaxRetry(3, 5);
     }
   }
 
@@ -17,12 +18,13 @@ export class Bot {
     return this.client.likeAPin(item.id)
       .then((status) => console.log(item.id))
       .catch(console.error)
-      .delay(2000)
+      .delay(RandomUtil.randomDelay(1, 2))
       .then(() => this.client.followUser(item.pinner.id))
-      .delay(1000);
+      .delay(RandomUtil.randomDelay(2, 4));
   }
 
   perform(counter, bookmark) {
+    console.log(this.maxRetry);
     if (counter >= this.maxRetry) {
       return 0;
     }
@@ -47,7 +49,7 @@ export class Bot {
           throw new Error('data is null');
         }
       })
-      .delay(5000)
+      .delay(RandomUtil.randomDelay(3, 5))
       .then((nextBookmark) => this.perform(counter + 1, nextBookmark));
   }
 
