@@ -1,14 +1,14 @@
 class BaseCustomError extends Error {
-  constructor(argument) {
+  constructor(cause) {
     Error.call(this);
     this.name = this.constructor.name;
-    if (argument instanceof Error) {
-      // Using argument as the base Error for extending
-      this.message = argument.message;
-      this.extendStackTrace(argument);
+    if (cause instanceof Error) {
+      // Using `cause` as the base Error for extending
+      this.message = cause.message;
+      this.extendStackTrace(cause);
     } else {
-      // Using argument as the Error message
-      this.message = argument;
+      // Using `cause` as the Error message
+      this.message = cause;
       Error.captureStackTrace(this, this.constructor);
     }
   }
