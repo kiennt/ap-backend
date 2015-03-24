@@ -233,6 +233,50 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('getRelatedPins', () => {
+    it('should return list of related pins when pinId is valid', (done) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-related.json'));
+
+      let pageSize = 1;
+      let url = `pins/${validPinId}/related/pin/`;
+      let fields = Fields.getFields('getRelatedPins');
+      let params = {
+        'page_size': pageSize,
+        'fields': fields
+      };
+
+      client.getRelatedPins(validPinId, pageSize).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('373376625330854516');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        done();
+      });
+    });
+
+    it('should return list of related pins when pinId is valid', (done) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('pin-related.json'));
+
+      let pageSize = 1;
+      let url = `pins/${validPinId}/related/pin/`;
+      let fields = Fields.getFields('getRelatedPins');
+      let bookmark = 'bookmark';
+      let params = {
+        'page_size': pageSize,
+        'fields': fields,
+        'bookmark': bookmark
+      };
+
+      client.getRelatedPins(validPinId, pageSize, bookmark).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('373376625330854516');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('likeAPin', () => {
     it('should return true when pinId is valid', (done) => {
       spyOn(client, 'request').and.returnValue(

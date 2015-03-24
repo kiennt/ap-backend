@@ -135,6 +135,19 @@ export default class PinterestClient {
       .then(JSON.parse).get('data');
   }
 
+  getRelatedPins(pinId, pageSize, bookmark) {
+    let fields = Fields.getFields('getRelatedPins');
+    let params = {
+      'page_size': pageSize,
+      'fields': fields
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.request('GET', `pins/${pinId}/related/pin/`, params, {})
+      .then(JSON.parse);
+  }
+
   likeAPin(pinId) {
     return this.request('PUT', `pins/${pinId}/like/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
