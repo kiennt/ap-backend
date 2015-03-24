@@ -25,7 +25,9 @@ function generateSignature(method, url, data) {
     .map((value, key) => `${key}=${encodeURIComponent(value)}`)
     .join('&');
   let message = `${method}&${url}&${query}`;
+  /*eslint-disable*/
   let hash = CryptoJS.HmacSHA256(utf8.encode(message), CLIENT_SECRET);
+  /*eslint-enable*/
   let signature = hash.toString(CryptoJS.enc.Hex);
 
   return signature;

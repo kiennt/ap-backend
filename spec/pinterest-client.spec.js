@@ -118,7 +118,7 @@ describe('PinterestClient', () => {
   });
 
   describe('getFeeds', () => {
-    it('should return list of fields', (done) => {
+    it('should return list of feeds', (done) => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('feeds-home.json'));
 
@@ -177,7 +177,7 @@ describe('PinterestClient', () => {
   });
 
   describe('getFollowingOfUser', () => {
-    it('should return a list of following when userId is valid', (done) => {
+    it('should return a list of followings when userId is valid', (done) => {
       spyOn(client, 'request').and.returnValue(
         fixtureAsync('user-following.json'));
 
