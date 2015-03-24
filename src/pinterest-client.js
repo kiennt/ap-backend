@@ -86,6 +86,18 @@ export default class PinterestClient {
       .then(JSON.parse).get('data');
   }
 
+  getFeeds(pageSize, bookMark) {
+    let fields = Fields.getFields('getFeeds');
+    let params = {
+      'fields': fields,
+      'page_size': pageSize
+    };
+    if (bookMark) {
+      params['book_mark'] = bookMark;
+    }
+    return this.request('GET', 'feeds/home/', params, {}).then(JSON.parse);
+  }
+
   getFollowersOfUser(userId, pageSize) {
     let fields = Fields.getFields('getFollowersOfUser');
     let params = {

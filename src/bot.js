@@ -11,11 +11,7 @@ export class Bot {
   }
 
   run() {
-    this.client.search('kiennt', 1, 'user').then((x) => {
-      console.log(x);
-    });
-
-    this.client.search('sex toy', 1, 'pin').then((x) => {
+    this.client.getFeeds(25).then((x) => {
       console.log(x);
     });
   }
