@@ -60,7 +60,8 @@ export default class HttpClient {
     httpMethod = (httpMethod || '').toUpperCase();
     let handler = HTTP_HANDLERS[httpMethod];
     if (!handler) {
-      return Promise.reject(new Errors.HttpMethodError(httpMethod));
+      return Promise.reject(
+        new Errors.HttpError(`Unknown HTTP Method - ${httpMethod}`));
     }
 
     let requestBody = {

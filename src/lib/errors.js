@@ -20,24 +20,20 @@ class BaseCustomError extends Error {
   }
 }
 
-class HttpMethodError extends BaseCustomError {
-  constructor(httpMethod) {
-    super(`Unknown HTTP Method - ${httpMethod.toUpperCase()}`);
-    this.method = httpMethod;
-  }
+class HttpError extends BaseCustomError {
 }
 
 // DISCUSS: Em đang suy nghĩ về cái tên này
 // HttpNetworkError thì ko cover được hết các case như mình gửi sai cấu trúc
 // VD: `options.uri is a required argument`
-class HttpRequestError extends BaseCustomError {
+class HttpRequestError extends HttpError {
   constructor(baseError) {
     super(baseError);
     this.cause = baseError;
   }
 }
 
-class HttpResponseError extends BaseCustomError {
+class HttpResponseError extends HttpError {
   constructor(response, body) {
     super(`${response.statusCode} - ${response.statusMessage}`);
     this.response = response;
@@ -46,7 +42,7 @@ class HttpResponseError extends BaseCustomError {
 }
 
 export default {
-  HttpMethodError: HttpMethodError,
+  HttpError: HttpError,
   HttpRequestError: HttpRequestError,
   HttpResponseError: HttpResponseError
 };

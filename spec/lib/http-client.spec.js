@@ -35,9 +35,10 @@ describe('HttpClient', () => {
     });
 
     describe('should reject with exact error classes when failed', () => {
-      it('should throw HttpMethodError with wrong HTTP method', (done) => {
+      it('should throw HttpError with wrong HTTP method', (done) => {
         client.request('FOO').catch((error) => {
-          expect(error).toEqual(jasmine.any(Errors.HttpMethodError));
+          expect(error).toEqual(jasmine.any(Errors.HttpError));
+          expect(error.constructor.name).toEqual('HttpError');
           done();
         });
       });
