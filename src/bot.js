@@ -9,6 +9,7 @@ export class Bot {
     switch (type) {
       case 'pinterest':
         this.client = new PinterestClient(accessToken, httpHeaders);
+        this.maxRetry = Math.floor(Math.random() * 4) + 1;
     }
   }
 
@@ -22,7 +23,7 @@ export class Bot {
   }
 
   perform(counter, bookmark) {
-    if (counter >= 5) {
+    if (counter >= this.maxRetry) {
       return 0;
     }
 
@@ -42,11 +43,9 @@ export class Bot {
           return Promise.resolve(items)
             .each((item) => this.performAPin(item))
             .return(body.bookmark);
-
         } else {
-          throw new Error('error');
+          throw new Error('data is null');
         }
-
       })
       .delay(5000)
       .then((nextBookmark) => this.perform(counter + 1, nextBookmark));
