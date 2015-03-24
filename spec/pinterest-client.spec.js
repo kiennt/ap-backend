@@ -117,6 +117,27 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('getFeeds', () => {
+    it('should return list of fields', (done) => {
+      spyOn(client, 'request').and.returnValue(
+        fixtureAsync('feeds-home.json'));
+
+      let fields = Fields.getFields('getFeeds');
+      let params = {
+        'fields': fields,
+        'page_size': 1
+      };
+      let url = 'feeds/home/';
+
+      client.getFeeds(1).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('321303754641945912');
+        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getFollowersOfUser', () => {
     it('should return a list of followers when userId is valid', (done) => {
       spyOn(client, 'request').and.returnValue(
