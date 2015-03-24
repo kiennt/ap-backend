@@ -1,8 +1,10 @@
 import _ from 'lodash';
+import Promise from 'bluebird';
 import request from 'request';
 
-import Promise from './promise';
-import Errors from './errors'
+import Errors from './errors';
+
+import '../exts/promise';
 
 
 const HTTP_HANDLERS = {

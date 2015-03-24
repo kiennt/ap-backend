@@ -1,6 +1,8 @@
-import Promise from './lib/promise';
+import Promise from 'bluebird';
+
 import httpHeaders from './config/http-headers';
 import { Bot } from './bot';
+
 
 function checkBot() {
   /*eslint-disable*/

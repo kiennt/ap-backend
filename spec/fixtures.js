@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import Promise from '../dist/lib/promise';
+import Promise from 'bluebird';
 
 
 let fixtureDir = path.join(__dirname, '../spec/fixture');
