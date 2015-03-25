@@ -11,7 +11,9 @@ const HTTP_HANDLERS = {
   GET: request.get,
   POST: request.post,
   PUT: request.put,
-  DELETE: request.delete
+  PATCH: request.patch,
+  DELETE: request.del,
+  HEAD: request.head
 };
 
 const DEFAULT_RETRY_CONFIGURATION = {
