@@ -1,16 +1,25 @@
+import _ from 'lodash';
+import Promise from 'bluebird';
+
 import PinterestClient from './pinterest-client';
 import Authentication from './lib/authentication';
 import HttpHeaders from './config/http-headers';
-import RandomUtil from './lib/random-util';
-import Promise from './lib/promise';
-import _ from 'lodash';
+
+import './exts/lodash';
+
 
 export class Bot {
   constructor(accessToken, httpHeaders, type) {
     switch (type) {
       case 'pinterest':
         this.client = new PinterestClient(accessToken, httpHeaders);
-        this.maxRetry = RandomUtil.randomMaxRetry(3, 5);
+        this.numberOfPages = _.random(3, 5);
+    }
+  }
+
+  performAnUser(user) {
+    if (_.randomBoolean()) {
+      return this.client.followUser(user.id);
     }
   }
 
@@ -18,14 +27,13 @@ export class Bot {
     return this.client.likeAPin(item.id)
       .then((status) => console.log(item.id))
       .catch(console.error)
-      .delay(RandomUtil.randomDelay(1, 2))
-      .then(() => this.client.followUser(item.pinner.id))
-      .delay(RandomUtil.randomDelay(2, 4));
+      .delay(_.random(3000, 10000))
+      .then(() => this.performAnUser(item.pinner))
+      .delay(_.random(7000, 15000));
   }
 
   perform(counter, bookmark) {
-    console.log(this.maxRetry);
-    if (counter >= this.maxRetry) {
+    if (counter >= this.numberOfPages) {
       return 0;
     }
 
@@ -35,12 +43,7 @@ export class Bot {
           let unlikedItems = _(body.data)
             .filter((item) => !item['liked_by_me'])
             .value();
-
-          let items = _(unlikedItems)
-            .sample(_.random(unlikedItems.length))
-            .value();
-
-          console.log(_(items).map((item) => item.id).value());
+          let items = _.sampleCollection(unlikedItems);
 
           return Promise.resolve(items)
             .each((item) => this.performAPin(item))
@@ -49,7 +52,7 @@ export class Bot {
           throw new Error('data is null');
         }
       })
-      .delay(RandomUtil.randomDelay(3, 5))
+      .delay(_.random(10000, 20000))
       .then((nextBookmark) => this.perform(counter + 1, nextBookmark));
   }
 
