@@ -72,7 +72,7 @@ export default class HttpClient {
       headers: headers
     };
 
-    let promisifiedHandler = Promise.promisify(handler);
+    let promisifiedHandler = Promise.promisify(handler, request);
     let singleRequest = () => {
       return promisifiedHandler(requestBody)
         .spread((response, body) => {
