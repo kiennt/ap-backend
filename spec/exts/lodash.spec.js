@@ -11,11 +11,11 @@ describe('lodash extension', () => {
       expect((result1.length >= 1)).toBe(true);
       expect((result1.length <= 10)).toBe(true);
 
-      let result2 = _.randomSample(collection, 0.4, 0.5);
+      let result2 = _.randomSample(collection, 40, 50);
       expect((result2.length >= 4)).toBe(true);
       expect((result2.length <= 5)).toBe(true);
 
-      let result3 = _.randomSample(collection, 0.6, 0.6);
+      let result3 = _.randomSample(collection, 60, 60);
       expect((result3.length === 6)).toBe(true);
     });
   });
