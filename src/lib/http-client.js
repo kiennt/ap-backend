@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import request from 'request';
 
 import Errors from './errors';
+import {HttpHandlersMixin} from '../mixins/http-handlers';
 
 import '../exts/promise';
 
@@ -97,3 +98,5 @@ export default class HttpClient {
     }
   }
 }
+
+_.extend(HttpClient.prototype, HttpHandlersMixin);

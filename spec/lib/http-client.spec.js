@@ -44,7 +44,7 @@ describe('HttpClient', () => {
       });
 
       it('should throw HttpRequestError with bad request structure', (done) => {
-        client.request('get').catch((error) => {
+        client.get().catch((error) => {
           expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
           expect(error.message).toBe('options.uri is a required argument');
           done();
@@ -52,7 +52,7 @@ describe('HttpClient', () => {
       });
 
       it('should throw HttpRequestError when not able to connect', (done) => {
-        client.request('get', 'http://localhost:6969/').catch((error) => {
+        client.get('http://localhost:6969/').catch((error) => {
           expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
           expect(error.cause.name).toBe('NetConnectNotAllowedError');
           done();
@@ -61,7 +61,7 @@ describe('HttpClient', () => {
 
       it('should throw HttpResponseError with bad HTTP StatusCode', (done) => {
         nock('http://test.com').get('/test').reply(404);
-        client.request('get', 'http://test.com/test').catch((error) => {
+        client.get('http://test.com/test').catch((error) => {
           expect(error).toEqual(jasmine.any(Errors.HttpResponseError));
           done();
         });
@@ -71,7 +71,7 @@ describe('HttpClient', () => {
     describe('request with valid method', () => {
       it('should return promise if GET request success', (done) => {
         nock('http://test.com').get('/test').reply(200, 'ok');
-        client.request('get', 'http://test.com/test').then((x) => {
+        client.get('http://test.com/test').then((x) => {
           expect(x).toBe('ok');
           done();
         });
@@ -79,7 +79,7 @@ describe('HttpClient', () => {
 
       it('should return promise if POST request success', (done) => {
         nock('http://test.com').post('/test', {foo: 'ABC'}).reply(200, 'ok');
-        client.request('post', 'http://test.com/test', {}, {foo: 'ABC'})
+        client.post('http://test.com/test', {}, {foo: 'ABC'})
           .then((x) => {
             expect(x).toBe('ok');
             done();
@@ -108,7 +108,7 @@ describe('HttpClient', () => {
 
       it('should retry with HttpRequestError', (done) => {
         spyOn(Promise.prototype, 'spread').and.callThrough();
-        client.request('get', 'http://localhost:6969/').catch((error) => {
+        client.get('http://localhost:6969/').catch((error) => {
           expect(error).toEqual(jasmine.any(Errors.HttpRequestError));
           let callCount = Promise.prototype.spread.calls.count();
           expect(callCount).toBe(1 + retryConfig.maxRetries);
@@ -119,7 +119,7 @@ describe('HttpClient', () => {
       it('should not retry with anything else', (done) => {
         nock('http://test.com').get('/test').reply(500);
         spyOn(Promise.prototype, 'spread').and.callThrough();
-        client.request('get', 'http://test.com/test').catch((error) => {
+        client.get('http://test.com/test').catch((error) => {
           expect(error).not.toEqual(jasmine.any(Errors.HttpRequestError));
           expect(Promise.prototype.spread.calls.count()).toBe(1);
           done();
