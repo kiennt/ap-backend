@@ -43,7 +43,10 @@ export class Bot {
           let unlikedItems = _(body.data)
             .filter((item) => !item['liked_by_me'])
             .value();
-          let items = _.sampleCollection(unlikedItems);
+          let items = _.randomSample(unlikedItems, 0.4, 0.8);
+
+          console.log(_(unlikedItems).map((item) => item.id).value());
+          console.log(_(items).map((item) => item.id).value());
 
           return Promise.resolve(items)
             .each((item) => this.performAPin(item))
