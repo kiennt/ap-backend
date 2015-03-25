@@ -1,15 +1,28 @@
-import _ from 'lodash';
+import lodash from 'lodash';
 
-_.randomBoolean = function randomBoolean() {
-  return Boolean(_.random(1));
-};
 
-_.randomSample = function randomSample(collection, min, max) {
+function randomBoolean() {
+  return Boolean(lodash.random(1));
+}
+
+function randomSample(collection, min, max) {
   min = min || 0;
   max = max || 100;
 
   let begin = Math.floor(min * collection.length / 100);
   let end = Math.floor(max * collection.length / 100);
 
-  return _.sample(collection, _.random(begin, end));
-};
+  return lodash.sample(collection, lodash.random(begin, end));
+}
+
+/*
+ * Add functions to both `lodash` and `lodash.prototype`
+ */
+lodash.mixin({
+  randomSample: randomSample
+});
+
+/*
+ * Add functions to `lodash` only
+ */
+lodash.randomBoolean = randomBoolean;
