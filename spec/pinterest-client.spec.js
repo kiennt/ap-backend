@@ -35,7 +35,7 @@ describe('PinterestClient', () => {
     let fullHeaders = _.clone(headers);
     fullHeaders.Authorization = `Bearer ${accessToken}`;
 
-    client.request('GET', relativeUrl, params, {});
+    client.get(relativeUrl, params, {});
     expect(client.httpClient.request).toHaveBeenCalledWith(
       'GET', fullUrl, params, expectedData, fullHeaders);
   });
@@ -44,7 +44,7 @@ describe('PinterestClient', () => {
     let text = 'this is comment';
 
     it('should return true when pinId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'post').and.returnValue(
         fixtureAsync('pin-comment.json'));
 
       let url = `pins/${validPinId}/comment/`;
@@ -52,13 +52,13 @@ describe('PinterestClient', () => {
 
       client.commentAPin(validPinId, text).then((x) => {
         expect(x).toBe(true);
-        expect(client.request).toHaveBeenCalledWith('POST', url, {}, data);
+        expect(client.post).toHaveBeenCalledWith(url, {}, data);
         done();
       });
     });
 
     it('should return false when pinId is invalid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'post').and.returnValue(
         fixtureAsync('pin-comment-invalid-pin-id.json'));
 
       let url = `pins/${validPinId}/comment/`;
@@ -73,20 +73,20 @@ describe('PinterestClient', () => {
 
   describe('followUser', () => {
     it('should return true when userId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'put').and.returnValue(
         fixtureAsync('user-follow.json'));
 
       let url = `users/${validUserId}/follow/`;
 
       client.followUser(validUserId).then((x) => {
         expect(x).toBe(true);
-        expect(client.request).toHaveBeenCalledWith('PUT', url, {}, {});
+        expect(client.put).toHaveBeenCalledWith(url, {}, {});
         done();
       });
     });
 
     it('should return false when userId is invalid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'put').and.returnValue(
         fixtureAsync('user-follow-invalid-user-id.json'));
 
       let url = `users/${validUserId}/follow/`;
@@ -100,7 +100,7 @@ describe('PinterestClient', () => {
 
   describe('getDetailOfPin', () => {
     it('should return detail of pin when pinId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('pin-detail.json'));
 
       let fields = Fields.getFields('getDetailOfPin');
@@ -111,7 +111,7 @@ describe('PinterestClient', () => {
 
       client.getDetailOfPin(validPinId).then((data) => {
         expect(data.id).toBe('494481234063127024');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -119,7 +119,7 @@ describe('PinterestClient', () => {
 
   describe('getFeeds', () => {
     it('should return list of feeds', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('feeds-home.json'));
 
       let fields = Fields.getFields('getFeeds');
@@ -132,7 +132,7 @@ describe('PinterestClient', () => {
       client.getFeeds(1).then((response) => {
         let data = response.data;
         expect(data[0].id).toBe('321303754641945912');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -140,7 +140,7 @@ describe('PinterestClient', () => {
 
   describe('getFollowersOfUser', () => {
     it('should return a list of followers when userId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('user-followers.json'));
 
       let fields = Fields.getFields('getFollowersOfUser');
@@ -152,13 +152,13 @@ describe('PinterestClient', () => {
 
       client.getFollowersOfUser(validUserId, 1).then((data) => {
         expect(data[0].id).toBe('355854945464877577');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
 
     it('should return request_id when userId is invalid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('user-followers-invalid-user-id.json'));
 
       let fields = Fields.getFields('getFollowersOfUser');
@@ -170,7 +170,7 @@ describe('PinterestClient', () => {
 
       client.getFollowersOfUser(invalidUserId, 1).then((data) => {
         expect(data['request_id']).toBe('598443295031');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -178,7 +178,7 @@ describe('PinterestClient', () => {
 
   describe('getFollowingOfUser', () => {
     it('should return a list of followings when userId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('user-following.json'));
 
       let fields = Fields.getFields('getFollowingOfUser');
@@ -190,13 +190,13 @@ describe('PinterestClient', () => {
 
       client.getFollowingOfUser(validUserId, 1).then((data) => {
         expect(data[0].id).toBe('355854945464877577');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
 
     it('should return request_id when userId is invalid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('user-following-invalid-user-id.json'));
 
       let fields = Fields.getFields('getFollowingOfUser');
@@ -208,7 +208,7 @@ describe('PinterestClient', () => {
 
       client.getFollowingOfUser(invalidUserId, 1).then((data) => {
         expect(data['request_id']).toBe('464710910159');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -216,7 +216,7 @@ describe('PinterestClient', () => {
 
   describe('getPinsOfUser', () => {
     it('should return list of pins of user when userId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('user-pins.json'));
 
       let pageSize = 25;
@@ -227,7 +227,7 @@ describe('PinterestClient', () => {
 
       client.getPinsOfUser(validUserId, pageSize).then((data) => {
         expect(data[0].id).toBe('164944405079105168');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -235,7 +235,7 @@ describe('PinterestClient', () => {
 
   describe('getRelatedPins', () => {
     it('should return list of related pins when pinId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('pin-related.json'));
 
       let pageSize = 1;
@@ -249,13 +249,13 @@ describe('PinterestClient', () => {
       client.getRelatedPins(validPinId, pageSize).then((response) => {
         let data = response.data;
         expect(data[0].id).toBe('373376625330854516');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
 
     it('should return list of related pins when pinId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'get').and.returnValue(
         fixtureAsync('pin-related.json'));
 
       let pageSize = 1;
@@ -271,7 +271,7 @@ describe('PinterestClient', () => {
       client.getRelatedPins(validPinId, pageSize, bookmark).then((response) => {
         let data = response.data;
         expect(data[0].id).toBe('373376625330854516');
-        expect(client.request).toHaveBeenCalledWith('GET', url, params, {});
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });
@@ -279,20 +279,20 @@ describe('PinterestClient', () => {
 
   describe('likeAPin', () => {
     it('should return true when pinId is valid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'put').and.returnValue(
         fixtureAsync('pin-like.json'));
 
       let url = `pins/${validPinId}/like/`;
 
       client.likeAPin(validPinId).then((x) => {
         expect(x).toBe(true);
-        expect(client.request).toHaveBeenCalledWith('PUT', url, {}, {});
+        expect(client.put).toHaveBeenCalledWith(url, {}, {});
         done();
       });
     });
 
     it('should return false when pinId is invalid', (done) => {
-      spyOn(client, 'request').and.returnValue(
+      spyOn(client, 'put').and.returnValue(
         fixtureAsync('pin-like-invalid-pin-id.json'));
 
       let url = `pins/${validPinId}/like/`;

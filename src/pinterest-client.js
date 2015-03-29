@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 
 import HttpClient from './lib/http-client';
 import Fields from './lib/fields';
+import {HttpHandlersMixin} from './mixins/http-handlers';
 
 
 const DOMAIN = 'https://api.pinterest.com/v3';
@@ -68,12 +69,12 @@ export default class PinterestClient {
     let data = {
       text: text
     };
-    return this.request('POST', `pins/${pinId}/comment/`, {}, data)
+    return this.post(`pins/${pinId}/comment/`, {}, data)
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
   followUser(userId) {
-    return this.request('PUT', `users/${userId}/follow/`, {}, {})
+    return this.put(`users/${userId}/follow/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
@@ -82,7 +83,7 @@ export default class PinterestClient {
     let params = {
       'fields': fields
     };
-    return this.request('GET', `pins/${pinId}/`, params, {})
+    return this.get(`pins/${pinId}/`, params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -95,7 +96,7 @@ export default class PinterestClient {
     if (bookmark) {
       params.bookmark = bookmark;
     }
-    return this.request('GET', 'feeds/home/', params, {}).then(JSON.parse);
+    return this.get('feeds/home/', params, {}).then(JSON.parse);
   }
 
   getFollowersOfUser(userId, pageSize) {
@@ -104,7 +105,7 @@ export default class PinterestClient {
       'fields': fields,
       'page_size': pageSize
     };
-    return this.request('GET', `users/${userId}/followers/`, params, {})
+    return this.get(`users/${userId}/followers/`, params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -114,7 +115,7 @@ export default class PinterestClient {
       'fields': fields,
       'page_size': pageSize
     };
-    return this.request('GET', `users/${userId}/following/`, params, {})
+    return this.get(`users/${userId}/following/`, params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -123,7 +124,7 @@ export default class PinterestClient {
     let params = {
       'fields': fields
     };
-    return this.request('GET', 'users/me/', params, {})
+    return this.get('users/me/', params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -131,7 +132,7 @@ export default class PinterestClient {
     let params = {
       'page_size': pageSize
     };
-    return this.request('GET', `users/${userId}/pins/`, params, {})
+    return this.get(`users/${userId}/pins/`, params, {})
       .then(JSON.parse).get('data');
   }
 
@@ -144,12 +145,12 @@ export default class PinterestClient {
     if (bookmark) {
       params.bookmark = bookmark;
     }
-    return this.request('GET', `pins/${pinId}/related/pin/`, params, {})
+    return this.get(`pins/${pinId}/related/pin/`, params, {})
       .then(JSON.parse);
   }
 
   likeAPin(pinId) {
-    return this.request('PUT', `pins/${pinId}/like/`, {}, {})
+    return this.put(`pins/${pinId}/like/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
@@ -164,7 +165,9 @@ export default class PinterestClient {
       params['add_refine[]'] = `${keyword}|typed`;
       params['term_meta[]'] = `${keyword}|typed`;
     }
-    return this.request('GET', getSearchPath(type), params, {})
+    return this.get(getSearchPath(type), params, {})
       .then(JSON.parse).get('data');
   }
 }
+
+_.extend(PinterestClient.prototype, HttpHandlersMixin);
