@@ -1,3 +1,5 @@
+const GET_AUTO_COMPLETE = 'user.follower_count,user.pin_count,board.owner()';
+
 const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
@@ -89,6 +91,7 @@ const SEARCH_TYPE_USER = 'fields  user.id,user.username,user.first_name,' +
   'user.pin_thumbnail_urls';
 
 const FIELDS = {
+  'getAutoCompleteText': GET_AUTO_COMPLETE,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFeeds': GET_FEEDS,
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,

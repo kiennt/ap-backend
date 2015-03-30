@@ -1,0 +1,105 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-4f587cb4",
+  "generated_at": "Mon, 30 Mar 2015 08:23:21 +0000",
+  "message": "OK",
+  "data": [
+    {
+      "vertical": "pins",
+      "tag": "recent_pin_searches",
+      "link": "/search/pins/?q=sex toy&rs=rs",
+      "query": "sex toy",
+      "type": "recent_pin_searches",
+      "id": "sex toy"
+    },
+    {
+      "vertical": "pins",
+      "tag": "recent_pin_searches",
+      "link": "/search/pins/?q=cvgg&rs=rs",
+      "query": "cvgg",
+      "type": "recent_pin_searches",
+      "id": "cvgg"
+    },
+    {
+      "vertical": "pins",
+      "tag": "recent_pin_searches",
+      "link": "/search/pins/?q=iphone&rs=rs",
+      "query": "iphone",
+      "type": "recent_pin_searches",
+      "id": "iphone"
+    },
+    {
+      "vertical": "pins",
+      "tag": "recent_pin_searches",
+      "link": "/search/pins/?q=test&rs=rs",
+      "query": "test",
+      "type": "recent_pin_searches",
+      "id": "test"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=kiennt&rs=rs",
+      "query": "kiennt",
+      "type": "recent_user_searches",
+      "id": "kiennt"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=dhdhdh&rs=rs",
+      "query": "dhdhdh",
+      "type": "recent_user_searches",
+      "id": "dhdhdh"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=dungnh&rs=rs",
+      "query": "dungnh",
+      "type": "recent_user_searches",
+      "id": "dungnh"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=kien&rs=rs",
+      "query": "kien",
+      "type": "recent_user_searches",
+      "id": "kien"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=novadev&rs=rs",
+      "query": "novadev",
+      "type": "recent_user_searches",
+      "id": "novadev"
+    },
+    {
+      "vertical": "users",
+      "tag": "recent_user_searches",
+      "link": "/search/users/?q=iphone&rs=rs",
+      "query": "iphone",
+      "type": "recent_user_searches",
+      "id": "iphone"
+    },
+    {
+      "vertical": "boards",
+      "tag": "recent_board_searches",
+      "link": "/search/boards/?q=ggg&rs=rs",
+      "query": "ggg",
+      "type": "recent_board_searches",
+      "id": "ggg"
+    },
+    {
+      "vertical": "boards",
+      "tag": "recent_board_searches",
+      "link": "/search/boards/?q=iphone&rs=rs",
+      "query": "iphone",
+      "type": "recent_board_searches",
+      "id": "iphone"
+    }
+  ]
+}
