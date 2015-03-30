@@ -170,19 +170,23 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
-  search(keyword, pageSize, type) {
+  search(keyword, pageSize, type, bookmark) {
+    let keywordWithPlus = keyword.replace(/ /g, '+');
     let params = {
-      'fields': getSearchAddFields(type),
+      'query': keywordWithPlus,
       'page_size': pageSize,
-      'query': `${keyword}`
+      'fields': getSearchAddFields(type)
     };
     if (type === SEARCH_TYPE.PIN) {
       params.asterix = true;
       params['add_refine[]'] = `${keyword}|typed`;
       params['term_meta[]'] = `${keyword}|typed`;
     }
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
     return this.get(getSearchPath(type), params, {})
-      .then(JSON.parse).get('data');
+      .then(JSON.parse);
   }
 }
 

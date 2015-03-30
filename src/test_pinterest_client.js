@@ -18,8 +18,15 @@ export default class TestPinterestClient {
   }
 
   run() {
-    this.client.getAutoCompleteText('').then((data) => {
-      console.log(data);
-    });
+    /*eslint-disable*/
+    let bookmark = 'b28xfDJiMGViNWJhNWJmZTRmOTk5ODIzOTQ5MGQxNGJmMTEyZTAzOGFhMzBjZDFiZTQ4ODdkNjAzMjE0Y2M5N2NmMmU=';
+    /*eslint-enable*/
+    this.client.search('daniel nguyen', 1, 'user', bookmark)
+      .then((content) => {
+        console.log(content);
+      })
+      .catch((exception) => {
+        console.log(exception);
+      });
   }
 }
