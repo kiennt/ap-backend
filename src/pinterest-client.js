@@ -78,6 +78,22 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
+  getAutoCompleteText(text) {
+    let fields = Fields.getFields('getAutoCompleteText');
+    let tag = 'recent_pin_searches,recent_user_searches,recent_board_searches';
+    let params = {
+      'num_recent_queries': 8,
+      'num_people': 10,
+      'num_autocompletes': 10,
+      'num_boards': 10,
+      'add_fields': fields,
+      'recent_queries_tags': tag,
+      'q': text
+    };
+    return this.get('search/autocomplete/', params, {})
+      .then(JSON.parse).get('data');
+  }
+
   getDetailOfPin(pinId) {
     let fields = Fields.getFields('getDetailOfPin');
     let params = {

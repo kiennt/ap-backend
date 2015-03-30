@@ -98,6 +98,33 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('getAutoCompleteText', () => {
+    it('should return list of users, pins, boards', (done) => {
+      spyOn(client, 'get').and.returnValue(
+        fixtureAsync('search-autocomplete.json'));
+
+      let fields = Fields.getFields('getAutoCompleteText');
+      let tag = 'recent_pin_searches,recent_user_searches,' +
+        'recent_board_searches';
+      let params = {
+        'num_recent_queries': 8,
+        'num_people': 10,
+        'num_autocompletes': 10,
+        'num_boards': 10,
+        'add_fields': fields,
+        'recent_queries_tags': tag,
+        'q': 'fuck'
+      };
+      let url = 'search/autocomplete/';
+
+      client.getAutoCompleteText('fuck').then((data) => {
+        expect(data[0].id).toBe('sex toy');
+        expect(client.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getDetailOfPin', () => {
     it('should return detail of pin when pinId is valid', (done) => {
       spyOn(client, 'get').and.returnValue(
