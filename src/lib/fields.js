@@ -35,7 +35,7 @@ const GET_FEEDS = 'pin.images[236x,736x],pin.id,pin.description,' +
   '150x150(ir.24),150x150(ir.48),300x300(ir.24),300x300(ir.48),600x],' +
   'pin.place_summary()';
 
-const GET_FOLLOWERS_OF_USER = 'fields user.id,user.username,user.first_name,' +
+const GET_FOLLOWERS_OF_USER = 'user.id,user.username,user.first_name,' +
   'user.last_name,user.full_name,user.gender,user.partner(),' +
   'user.image_medium_url,user.website_url,user.domain_verified,user.location,' +
   'user.explicitly_followed_by_me,user.implicitly_followed_by_me,' +
