@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 
 import httpHeaders from './config/http-headers';
-import { Bot } from './bot';
+import { Bot } from './bot/find-user';
 import TestPinterestApi from './test_pinterest_api';
 
 
