@@ -68,7 +68,7 @@ const SEARCH_TYPE_BOARD = 'board.id,board.url,board.name,' +
   'board.images[90x90],board.collaborated_by_me,board.is_collaborative,' +
   'board.followed_by_me,board.privacy,board.owner(),board.pin_count';
 
-const SEARCH_TYPE_PIN = 'fields pin.images[236x,736x],pin.id,pin.description,' +
+const SEARCH_TYPE_PIN = 'pin.images[236x,736x],pin.id,pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
   'pin.like_count,pin.repin_count,pin.comment_count,pin.view_tags,board.id,' +
   'board.url,board.name,board.category,board.created_at,board.layout,' +
@@ -83,7 +83,7 @@ const SEARCH_TYPE_PIN = 'fields pin.images[236x,736x],pin.id,pin.description,' +
   '150x150(ir.24),150x150(ir.48),300x300(ir.24),300x300(ir.48),600x],' +
   'pin.place_summary()';
 
-const SEARCH_TYPE_USER = 'fields  user.id,user.username,user.first_name,' +
+const SEARCH_TYPE_USER = 'user.id,user.username,user.first_name,' +
   'user.last_name,user.full_name,user.gender,user.partner(),' +
   'user.image_medium_url,user.website_url,user.domain_verified,user.location,' +
   'user.explicitly_followed_by_me,user.implicitly_followed_by_me,' +

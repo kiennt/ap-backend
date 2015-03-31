@@ -88,7 +88,7 @@ export default class PinterestClient {
       'num_boards': 10,
       'add_fields': fields,
       'recent_queries_tags': tag,
-      'q': text
+      'q': encodeURIComponent(text.toLowerCase())
     };
     return this.get('search/autocomplete/', params, {})
       .then(JSON.parse).get('data');
@@ -170,19 +170,23 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
-  search(keyword, pageSize, type) {
+  search(keyword, pageSize, type, bookmark) {
+    let keywordWithPlus = keyword.toLowerCase().replace(/ /g, '+');
     let params = {
-      'fields': getSearchAddFields(type),
+      'query': encodeURIComponent(keywordWithPlus),
       'page_size': pageSize,
-      'query': `${keyword}`
+      'fields': getSearchAddFields(type)
     };
     if (type === SEARCH_TYPE.PIN) {
       params.asterix = true;
       params['add_refine[]'] = `${keyword}|typed`;
       params['term_meta[]'] = `${keyword}|typed`;
     }
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
     return this.get(getSearchPath(type), params, {})
-      .then(JSON.parse).get('data');
+      .then(JSON.parse);
   }
 }
 
