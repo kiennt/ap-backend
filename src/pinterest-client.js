@@ -88,7 +88,7 @@ export default class PinterestClient {
       'num_boards': 10,
       'add_fields': fields,
       'recent_queries_tags': tag,
-      'q': text
+      'q': encodeURIComponent(text.toLowerCase())
     };
     return this.get('search/autocomplete/', params, {})
       .then(JSON.parse).get('data');
@@ -171,9 +171,9 @@ export default class PinterestClient {
   }
 
   search(keyword, pageSize, type, bookmark) {
-    let keywordWithPlus = keyword.replace(/ /g, '+');
+    let keywordWithPlus = keyword.toLowerCase().replace(/ /g, '+');
     let params = {
-      'query': keywordWithPlus,
+      'query': encodeURIComponent(keywordWithPlus),
       'page_size': pageSize,
       'fields': getSearchAddFields(type)
     };
