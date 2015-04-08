@@ -18,7 +18,7 @@ export default class TestPinterestClient {
   }
 
   run() {
-    this.client.getBoardOfMe().then((data) => {
+    this.client.getBoardsOfMe().then((data) => {
       console.log(data);
     });
   }

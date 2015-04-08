@@ -125,12 +125,12 @@ describe('PinterestClient', () => {
     });
   });
 
-  describe('getBoardOfMe', () => {
+  describe('getBoardsOfMe', () => {
     it('should return list of boards', (done) => {
       spyOn(client, 'get').and.returnValue(
         fixtureAsync('me-boards.json'));
 
-      let fields = Fields.getFields('getBoardOfMe');
+      let fields = Fields.getFields('getBoardsOfMe');
       let params = {
         'sort': 'alphabetical',
         'filter': 'all',
@@ -138,7 +138,7 @@ describe('PinterestClient', () => {
       };
       let url = 'users/me/boards';
 
-      client.getBoardOfMe().then((data) => {
+      client.getBoardsOfMe().then((data) => {
         expect(data[0].name).toBe('Endless love');
         expect(client.get).toHaveBeenCalledWith(url, params, {});
         done();
