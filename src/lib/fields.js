@@ -1,5 +1,9 @@
 const GET_AUTO_COMPLETE = 'user.follower_count,user.pin_count,board.owner()';
 
+const GET_BOARDS_OF_ME = 'board.id,board.url,board.name,board.category,' +
+  'board.created_at,board.layout,board.collaborator_invites_enabled,' +
+  'board.cover_images[60x60],board.is_collaborative,board.privacy';
+
 const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
@@ -92,6 +96,7 @@ const SEARCH_TYPE_USER = 'user.id,user.username,user.first_name,' +
 
 const FIELDS = {
   'getAutoCompleteText': GET_AUTO_COMPLETE,
+  'getBoardsOfMe': GET_BOARDS_OF_ME,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFeeds': GET_FEEDS,
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,

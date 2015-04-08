@@ -1,0 +1,81 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-67f53f35",
+  "generated_at": "Wed, 08 Apr 2015 07:39:40 +0000",
+  "message": "OK",
+  "data": [
+    {
+      "category": "art",
+      "is_collaborative": false,
+      "layout": "default",
+      "name": "Endless love",
+      "cover_images": {
+        "60x60": {
+          "url": "http://media-cache-ec0.pinimg.com/custom_covers/60x60/537265499235697514_1427194535.jpg",
+          "width": 60,
+          "height": 60
+        }
+      },
+      "privacy": "public",
+      "url": "/dxungngh/endless-love/",
+      "created_at": "Tue, 24 Mar 2015 10:53:45 +0000",
+      "id": "537265499235697514",
+      "collaborator_invites_enabled": true
+    },
+    {
+      "category": "home_decor",
+      "is_collaborative": false,
+      "layout": "default",
+      "name": "house",
+      "cover_images": {
+        "60x60": {
+          "url": "http://media-cache-ak0.pinimg.com/60x60/7a/25/f6/7a25f60d3ba05af0256bb8db2962d5c8.jpg",
+          "width": 60,
+          "height": 60
+        }
+      },
+      "privacy": "public",
+      "url": "/dxungngh/house/",
+      "created_at": "Wed, 08 Apr 2015 07:30:35 +0000",
+      "id": "537265499235702015",
+      "collaborator_invites_enabled": true
+    },
+    {
+      "category": null,
+      "is_collaborative": false,
+      "layout": "default",
+      "name": "Ideas for the House",
+      "cover_images": {
+        "60x60": {
+          "url": "http://media-cache-ec0.pinimg.com/60x60/82/d3/29/82d3296b6495d54a3f0593e295bb5d95.jpg",
+          "width": 60,
+          "height": 60
+        }
+      },
+      "privacy": "public",
+      "url": "/dxungngh/ideas-for-the-house/",
+      "created_at": "Mon, 09 Mar 2015 09:32:10 +0000",
+      "id": "537265499235693113",
+      "collaborator_invites_enabled": true
+    },
+    {
+      "category": null,
+      "is_collaborative": false,
+      "layout": "default",
+      "name": "My girls",
+      "cover_images": {
+        "60x60": {
+          "url": "http://media-cache-ak0.pinimg.com/60x60/2d/4b/c0/2d4bc0f8ee81efee63eea885b62fd419.jpg",
+          "width": 60,
+          "height": 60
+        }
+      },
+      "privacy": "public",
+      "url": "/dxungngh/my-girls/",
+      "created_at": "Tue, 24 Mar 2015 10:57:46 +0000",
+      "id": "537265499235697515",
+      "collaborator_invites_enabled": true
+    }
+  ]
+}
