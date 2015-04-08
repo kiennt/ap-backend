@@ -71,6 +71,27 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('createABoard', () => {
+    it('should return info of board', (done) => {
+      spyOn(client, 'put').and.returnValue(
+        fixtureAsync('board-create.json'));
+
+      let name = 'test';
+      let url = 'boards/';
+      let data = {
+        layout: 'default',
+        name: name,
+        privacy: 'public'
+      };
+
+      client.createABoard(name).then((x) => {
+        expect(x.id).toBe('537265499235702023');
+        expect(client.put).toHaveBeenCalledWith(url, {}, data);
+        done();
+      });
+    });
+  });
+
   describe('followUser', () => {
     it('should return true when userId is valid', (done) => {
       spyOn(client, 'put').and.returnValue(

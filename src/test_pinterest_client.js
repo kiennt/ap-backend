@@ -18,7 +18,7 @@ export default class TestPinterestClient {
   }
 
   run() {
-    this.client.getBoardsOfMe().then((data) => {
+    this.client.createABoard('this is nomal board').then((data) => {
       console.log(data);
     });
   }

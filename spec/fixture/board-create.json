@@ -1,0 +1,42 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-f3fcc508",
+  "generated_at": "Wed, 08 Apr 2015 08:29:21 +0000",
+  "message": "OK",
+  "data": {
+    "image_cover_url": null,
+    "viewer_invitation": null,
+    "images": null,
+    "id": "537265499235702023",
+    "description": "",
+    "category": null,
+    "layout": "default",
+    "collaborator_invites_enabled": true,
+    "privacy": "public",
+    "owner": {
+      "id": "537265567954947123"
+    },
+    "access": [
+      "write",
+      "delete"
+    ],
+    "follower_count": 6,
+    "followed_by_me": false,
+    "type": "board",
+    "is_collaborative": false,
+    "map_id": "pinterest.ijz1714i",
+    "recommendation_reason": null,
+    "pin_thumbnail_urls": [],
+    "collab_board_email": true,
+    "collaborator_count": 0,
+    "collaborated_by_me": false,
+    "pin_count": 0,
+    "name": "abc",
+    "url": "/dxungngh/abc/",
+    "created_at": "Wed, 08 Apr 2015 08:29:21 +0000",
+    "cover": null,
+    "debug": null,
+    "image_thumbnail_url": "http://media-cache-ec0.pinimg.com/upload/default_board_thumbnail_60.jpg"
+  }
+}
