@@ -73,6 +73,16 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
+  createABoard(name) {
+    let data = {
+      layout: 'default',
+      name: name,
+      privacy: 'public'
+    };
+    return this.put('boards/', {}, data)
+      .then(JSON.parse).get('data');
+  }
+
   followUser(userId) {
     return this.put(`users/${userId}/follow/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
