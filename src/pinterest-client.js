@@ -94,6 +94,17 @@ export default class PinterestClient {
       .then(JSON.parse).get('data');
   }
 
+  getBoardOfMe() {
+    let fields = Fields.getFields('getBoardOfMe');
+    let params = {
+      'sort': 'alphabetical',
+      'filter': 'all',
+      'fields': fields
+    };
+    return this.get('users/me/boards', params, {})
+      .then(JSON.parse).get('data');
+  }
+
   getDetailOfPin(pinId) {
     let fields = Fields.getFields('getDetailOfPin');
     let params = {
