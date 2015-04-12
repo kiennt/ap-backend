@@ -372,4 +372,21 @@ describe('PinterestClient', () => {
       });
     });
   });
+
+  describe('repin', () => {
+    it('should return result of repining when pinId is valid', (done) => {
+      spyOn(client, 'post').and.returnValue(
+        fixtureAsync('pin-repin.json'));
+
+      let boardId = '424816246039791020';
+      let description = `♡ Father's Day`;
+
+      client.repin('297870962830963512', boardId, description)
+        .then((data) => {
+          expect(data['POST:/v3/pins/297870962830963512/repin/'].status)
+            .toBe('success');
+          done();
+        });
+    });
+  });
 });

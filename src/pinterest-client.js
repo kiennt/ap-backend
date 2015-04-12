@@ -205,8 +205,6 @@ export default class PinterestClient {
     };
     let data = {requests: JSON.stringify([request])};
 
-    console.log(params);
-    console.log(data);
     return this.post('batch/', {}, data)
       .then(JSON.parse).get('data');
   }
