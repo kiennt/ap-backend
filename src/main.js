@@ -2,7 +2,7 @@ import Promise from 'bluebird';
 
 import httpHeaders from './config/http-headers';
 import { Bot } from './bot';
-import TestPinterestClient from './test_pinterest_client';
+import TestPinterestApi from './test_pinterest_api';
 
 
 function checkBot() {
@@ -42,10 +42,10 @@ function checkPromiseUntil() {
     .catch((err) => console.log('*** Error: ' + err));
 }
 
-function testPinterestClient() {
-  let test = new TestPinterestClient();
+function testPinterestApi() {
+  let test = new TestPinterestApi();
   test.run();
 }
 
-testPinterestClient();
+testPinterestApi();
 // checkBot();
