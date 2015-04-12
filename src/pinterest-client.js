@@ -206,7 +206,10 @@ export default class PinterestClient {
     let data = {requests: JSON.stringify([request])};
 
     return this.post('batch/', {}, data)
-      .then(JSON.parse).get('data');
+      .then(JSON.parse)
+      .get('data')
+      .get(`POST:/v3/pins/${pinId}/repin/`)
+      .get('data');
   }
 
   search(keyword, pageSize, type, bookmark) {

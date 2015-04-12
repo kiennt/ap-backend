@@ -383,8 +383,7 @@ describe('PinterestClient', () => {
 
       client.repin('297870962830963512', boardId, description)
         .then((data) => {
-          expect(data['POST:/v3/pins/297870962830963512/repin/'].status)
-            .toBe('success');
+          expect(data.id).toBe('424816177327298079');
           done();
         });
     });
