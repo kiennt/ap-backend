@@ -191,6 +191,29 @@ export default class PinterestClient {
       .then(validateResponse).then((content) => true, (error) => false);
   }
 
+  repin(pinId, boardId, description) {
+    let uri = `/v3/pins/${pinId}/repin/`;
+    let params = {
+      'share_twitter': 0,
+      'board_id': boardId,
+      'description': description
+    };
+    let request = [];
+    request[0] = {
+      method: 'POST',
+      uri: uri,
+      params: params
+    };
+
+    let data = {
+      request: request
+    };
+    console.log(params);
+    console.log(data);
+    return this.post('batch/', {}, {data})
+      .then(JSON.parse).get('data');
+  }
+
   search(keyword, pageSize, type, bookmark) {
     let keywordWithPlus = keyword.toLowerCase().replace(/ /g, '+');
     let params = {

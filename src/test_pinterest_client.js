@@ -18,8 +18,10 @@ export default class TestPinterestClient {
   }
 
   run() {
-    this.client.createABoard('this is nomal board').then((data) => {
-      console.log(data);
-    });
+    this.client
+      .repin(86623992809019884, 537265499235702033, 'old man')
+      .then((data) => {
+        console.log(data);
+      });
   }
 }
