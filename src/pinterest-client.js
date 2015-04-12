@@ -198,19 +198,16 @@ export default class PinterestClient {
       'board_id': boardId,
       'description': description
     };
-    let request = [];
-    request[0] = {
+    let request = {
       method: 'POST',
       uri: uri,
       params: params
     };
+    let data = {requests: JSON.stringify([request])};
 
-    let data = {
-      request: request
-    };
     console.log(params);
     console.log(data);
-    return this.post('batch/', {}, {data})
+    return this.post('batch/', {}, data)
       .then(JSON.parse).get('data');
   }
 
