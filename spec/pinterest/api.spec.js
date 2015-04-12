@@ -1,21 +1,21 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 
-import Fields from '../dist/lib/fields';
-import HttpClient from '../dist/lib/http-client';
-import PinterestClient from '../dist/pinterest-client';
-import httpHeaders from '../dist/config/http-headers';
-import {fixtureAsync} from './fixtures';
+import Fields from '../../dist/lib/fields';
+import HttpClient from '../../dist/lib/http-client';
+import PinterestApi from '../../dist/pinterest/api';
+import httpHeaders from '../../dist/config/http-headers';
+import {fixtureAsync} from '../fixtures';
 
 
-describe('PinterestClient', () => {
+describe('PinterestApi', () => {
   let validPinId = '83879611786469438';
   let invalidPinId = '83879611786469438111111100000111';
   let validUserId = '10414780296729982';
   let invalidUserId = '104147802967299821111111111';
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
-  let client = new PinterestClient(accessToken, headers);
+  let client = new PinterestApi(accessToken, headers);
 
   beforeAll(() => HttpClient.disableAutoRetry());
 

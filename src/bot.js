@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 
-import PinterestClient from './pinterest-client';
+import PinterestApi from './pinterest/api';
 import Authentication from './lib/authentication';
 import HttpHeaders from './config/http-headers';
 
@@ -12,19 +12,19 @@ export class Bot {
   constructor(accessToken, httpHeaders, type) {
     switch (type) {
       case 'pinterest':
-        this.client = new PinterestClient(accessToken, httpHeaders);
+        this.api = new PinterestApi(accessToken, httpHeaders);
         this.numberOfPages = _.random(3, 5);
     }
   }
 
   performAnUser(user) {
     if (_.randomBoolean()) {
-      return this.client.followUser(user.id);
+      return this.api.followUser(user.id);
     }
   }
 
   performAPin(item) {
-    return this.client.likeAPin(item.id)
+    return this.api.likeAPin(item.id)
       .then((status) => console.log(item.id))
       .catch(console.error)
       .delay(_.random(3000, 10000))
@@ -37,7 +37,7 @@ export class Bot {
       return 0;
     }
 
-    return this.client
+    return this.api
       .getFeeds(25, bookmark).then((body) => {
         if (body.data) {
           let unlikedItems = _(body.data)

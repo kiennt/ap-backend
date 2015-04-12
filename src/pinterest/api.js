@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import Promise from 'bluebird';
 
-import HttpClient from './lib/http-client';
-import Fields from './lib/fields';
-import {HttpHandlersMixin} from './mixins/http-handlers';
+import HttpClient from '../lib/http-client';
+import Fields from '../lib/fields';
+import {HttpHandlersMixin} from '../mixins/http-handlers';
 
 
 const DOMAIN = 'https://api.pinterest.com/v3';
@@ -49,7 +49,7 @@ function getSearchPath(type) {
   }
 }
 
-export default class PinterestClient {
+export default class PinterestApi {
   constructor(accessToken, httpHeaders) {
     this.accessToken = accessToken;
     this.httpHeaders = _.clone(httpHeaders);
@@ -232,4 +232,4 @@ export default class PinterestClient {
   }
 }
 
-_.extend(PinterestClient.prototype, HttpHandlersMixin);
+_.extend(PinterestApi.prototype, HttpHandlersMixin);
