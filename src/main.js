@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 import httpHeaders from './config/http-headers';
 import { Bot } from './bot/find-user';
 import TestPinterestApi from './test_pinterest_api';
+import Errors from './lib/errors';
 
 
 function checkBot() {
