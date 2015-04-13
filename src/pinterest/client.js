@@ -14,10 +14,6 @@ export default class PinterestClient {
     this.api = new PinterestApi(accessToken, httpHeaders);
   }
 
-  hello() {
-    console.log(10000);
-  }
-
   findAnUser(fullName, predicate) {
     let maxPage = _.random(5, 7);
     return this._autocompleteUser(fullName, predicate)
@@ -33,7 +29,6 @@ export default class PinterestClient {
       throw new AutocompleteNotFound(query);
     } else {
       let newQuery = query.slice(0, sliceIndex);
-      console.log(`* Autocomplete: '${newQuery}'`);
       return this.api.getAutoCompleteText(newQuery)
         .then((data) => _(data).filter('type', 'user').value())
         .then((data) => _(data).filter(predicate).value()[0])
@@ -41,7 +36,6 @@ export default class PinterestClient {
           if (result) {
             return result;
           } else {
-            console.log('=> Not found! Continue with next character!');
             return this._autocompleteUser(query, predicate, sliceIndex + 1);
           }
         });
@@ -50,7 +44,6 @@ export default class PinterestClient {
 
   _searchUser(query, predicate, maxPage, currentPage, bookmark) {
     currentPage = currentPage || 1;
-    console.log(`* Perform an user search with: '${query}' | ${bookmark}`);
     return this.api.search(query, 25, 'user', bookmark)
       .then((body) => {
         let result = _(body.data).filter(predicate).value()[0];
@@ -67,5 +60,12 @@ export default class PinterestClient {
           }
         }
       });
+  }
+
+  _errors() {
+    return {
+      AutocompleteNotFound: AutocompleteNotFound,
+      SearchNotFound: SearchNotFound
+    };
   }
 }
