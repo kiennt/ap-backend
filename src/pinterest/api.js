@@ -181,6 +181,18 @@ export default class PinterestApi {
       .then(JSON.parse);
   }
 
+  getUserLiked(userId, pageSize, bookmark) {
+    let params = {
+      'page_size': pageSize,
+      'fields': Fields.getFields('getUserLiked')
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`users/${userId}/pins/liked/`, params, {})
+      .then(JSON.parse);
+  }
+
   getFeeds(pageSize, bookmark) {
     let fields = Fields.getFields('getFeeds');
     let params = {
