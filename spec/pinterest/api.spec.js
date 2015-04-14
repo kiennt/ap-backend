@@ -305,6 +305,27 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getUserLiked', () => {
+    it('should return list of liked pins when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-liked.json'));
+
+      let fields = Fields.getFields('getUserLiked');
+      let params = {
+        'page_size': 25,
+        'fields': fields
+      };
+      let url = `users/${validUserId}/pins/liked/`;
+
+      api.getUserLiked(validUserId, 25).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('227713324885608216');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getUserPins', () => {
     it('should return list of pins of user when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(
