@@ -124,6 +124,16 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
+  getUserBoards(userId, pageSize) {
+    let fields = Fields.getFields('getUserBoards');
+    let params = {
+      'page_size': pageSize,
+      'fields': fields
+    };
+    return this.get(`users/${userId}/boards/`, params, {})
+      .then(JSON.parse).get('data');
+  }
+
   getUserInfo(userId) {
     let fields = Fields.getFields('getUserInfo');
     let params = {
