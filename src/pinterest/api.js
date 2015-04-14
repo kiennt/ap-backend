@@ -133,6 +133,18 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
+  getUserPins(userId, pageSize, bookmark) {
+    let params = {
+      'page_size': pageSize,
+      'fields': Fields.getFields('getUserPins')
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`users/${userId}/pins/`, params, {})
+      .then(JSON.parse);
+  }
+
   getFeeds(pageSize, bookmark) {
     let fields = Fields.getFields('getFeeds');
     let params = {
@@ -171,14 +183,6 @@ export default class PinterestApi {
       'fields': fields
     };
     return this.get('users/me/', params, {})
-      .then(JSON.parse).get('data');
-  }
-
-  getPinsOfUser(userId, pageSize) {
-    let params = {
-      'page_size': pageSize
-    };
-    return this.get(`users/${userId}/pins/`, params, {})
       .then(JSON.parse).get('data');
   }
 
