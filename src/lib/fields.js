@@ -35,19 +35,6 @@ const GET_FEEDS = 'pin.images[236x,736x],pin.id,pin.description,' +
   '150x150(ir.24),150x150(ir.48),300x300(ir.24),300x300(ir.48),600x],' +
   'pin.place_summary()';
 
-const GET_FOLLOWERS_OF_USER = 'user.id,user.username,user.first_name,' +
-  'user.last_name,user.full_name,user.gender,user.partner(),' +
-  'user.image_medium_url,user.website_url,user.domain_verified,user.location,' +
-  'user.explicitly_followed_by_me,user.implicitly_followed_by_me,' +
-  'user.blocked_by_me,user.pin_count,user.follower_count,' +
-  'user.pin_thumbnail_urls';
-
-const GET_FOLLOWING_OF_USER = 'user.implicitly_followed_by_me,' +
-  'user.blocked_by_me,' +
-  'user.follower_count,user.domain_verified,user.pin_thumbnail_urls,' +
-  'user.explicitly_followed_by_me,user.location,user.website_url,' +
-  'user.following_count';
-
 const GET_INFO_OF_ME = 'user.country,user.default_shipping(),' +
   'user.default_payment()';
 
@@ -71,6 +58,20 @@ const GET_USER_BOARDS = 'board.id,board.url,board.name,board.category,' +
   'board.image_cover_url,board.images[90x90],board.collaborated_by_me,' +
   'board.is_collaborative,board.followed_by_me,board.privacy,board.owner(),' +
   'board.pin_count';
+
+const GET_USER_FOLLOWERS = 'user.id,user.username,user.first_name,' +
+  'user.last_name,user.full_name,user.gender,user.partner(),' +
+  'user.image_medium_url,user.website_url,user.domain_verified,' +
+  'user.location,user.explicitly_followed_by_me,' +
+  'user.implicitly_followed_by_me,user.blocked_by_me,user.pin_count,' +
+  'user.follower_count,user.pin_thumbnail_urls';
+
+const GET_USER_FOLLOWING = 'user.id,user.username,user.first_name,' +
+  'user.last_name,user.full_name,user.gender,user.partner(),' +
+  'user.image_medium_url,user.website_url,user.domain_verified,' +
+  'user.location,user.explicitly_followed_by_me,' +
+  'user.implicitly_followed_by_me,user.blocked_by_me,user.pin_count,' +
+  'user.follower_count,user.pin_thumbnail_urls';
 
 const GET_USER_INFO = 'user.partner()';
 
@@ -122,10 +123,10 @@ const FIELDS = {
   'getBoardsOfMe': GET_BOARDS_OF_ME,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFeeds': GET_FEEDS,
-  'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
-  'getFollowingOfUser': GET_FOLLOWING_OF_USER,
   'getInfoOfMe': GET_INFO_OF_ME,
   'getUserBoards': GET_USER_BOARDS,
+  'getUserFollowers': GET_USER_FOLLOWERS,
+  'getUserFollowing': GET_USER_FOLLOWING,
   'getUserInfo': GET_USER_INFO,
   'getUserPins': GET_USER_PINS,
   'search.board': SEARCH_TYPE_BOARD,
