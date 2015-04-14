@@ -186,6 +186,26 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getUserBoards', () => {
+    it('should return list of boards when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-boards.json'));
+
+      let fields = Fields.getFields('getUserBoards');
+      let params = {
+        'page_size': 25,
+        'fields': fields
+      };
+      let url = `users/${validUserId}/boards/`;
+
+      api.getUserBoards(validUserId, 25).then((data) => {
+        expect(data[0].id).toBe('383932005672539796');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getUserInfo', () => {
     it('should return detail of user when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(

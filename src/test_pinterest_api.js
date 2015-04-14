@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .getUserPins('383932074391788460', 1, 'LT4zODM5MzE5MzY5NjAzOTk3Mzk6MToxfDY3NGEzYjA5OGEzY2E1YWE2YjYwZjAzYWU4ZjhkOWNkMDYyM2UxYzE1NTdjMDJjOGJmZmM4NGIyZWQ3ZThhNDU=')
+      .getUserBoards('383932074391788460', 1)
       .then((data) => {
         console.log(data);
       });
