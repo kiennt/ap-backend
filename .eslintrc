@@ -27,7 +27,8 @@
     "space-in-brackets": [2, "never"],
     "space-unary-ops": 2,
     "indent": [2, 2],
-    "no-mixed-spaces-and-tabs": [2]
+    "no-mixed-spaces-and-tabs": [2],
+    "no-underscore-dangle": 0
   },
   "env": {
     "node": true,
