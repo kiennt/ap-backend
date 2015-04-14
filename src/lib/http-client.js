@@ -8,14 +8,14 @@ import {HttpHandlersMixin} from '../mixins/http-handlers';
 import '../exts/promise';
 
 
-const HTTP_HANDLERS = {
+const HTTP_HANDLERS = _.mapValues({
   GET: request.get,
   POST: request.post,
   PUT: request.put,
   PATCH: request.patch,
   DELETE: request.del,
   HEAD: request.head
-};
+}, (handler) => Promise.promisify(handler, request));
 
 const DEFAULT_RETRY_CONFIGURATION = {
   maxRetries: 5,
@@ -75,9 +75,8 @@ export default class HttpClient {
       headers: headers
     };
 
-    let promisifiedHandler = Promise.promisify(handler, request);
     let singleRequest = () => {
-      return promisifiedHandler(requestBody)
+      return handler(requestBody)
         .spread((response, body) => {
           let statusCode = response.statusCode;
           if (isStatusCodeValid(statusCode)) {
