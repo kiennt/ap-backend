@@ -124,8 +124,8 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
-  getDetailOfUser(userId) {
-    let fields = Fields.getFields('getDetailOfUser');
+  getUserInfo(userId) {
+    let fields = Fields.getFields('getUserInfo');
     let params = {
       'add_fields': fields
     };

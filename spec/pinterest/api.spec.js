@@ -186,18 +186,18 @@ describe('PinterestApi', () => {
     });
   });
 
-  describe('getDetailOfUser', () => {
+  describe('getUserInfo', () => {
     it('should return detail of user when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-detail.json'));
+        fixtureAsync('user-info.json'));
 
-      let fields = Fields.getFields('getDetailOfUser');
+      let fields = Fields.getFields('getUserInfo');
       let params = {
         'add_fields': fields
       };
       let url = `users/${validUserId}/`;
 
-      api.getDetailOfUser(validUserId).then((data) => {
+      api.getUserInfo(validUserId).then((data) => {
         expect(data.id).toBe('383932074391788460');
         expect(api.get).toHaveBeenCalledWith(url, params, {});
         done();

@@ -19,7 +19,7 @@ export default class TestPinterestApi {
 
   run() {
     this.api
-      .getDetailOfUser('383932074391788460')
+      .getUserInfo('383932074391788460')
       .then((data) => {
         console.log(data);
       });

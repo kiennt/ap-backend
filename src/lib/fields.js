@@ -4,8 +4,6 @@ const GET_BOARDS_OF_ME = 'board.id,board.url,board.name,board.category,' +
   'board.created_at,board.layout,board.collaborator_invites_enabled,' +
   'board.cover_images[60x60],board.is_collaborative,board.privacy';
 
-const GET_DETAIL_OF_USER = 'user.partner()';
-
 const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
@@ -68,6 +66,8 @@ const GET_RELATED_PINS = 'pin.images[236x,736x],pin.id,pin.description,' +
   '150x150(ir.24),150x150(ir.48),300x300(ir.24),300x300(ir.48),600x],' +
   'pin.place_summary()';
 
+const GET_USER_INFO = 'user.partner()';
+
 const SEARCH_TYPE_BOARD = 'board.id,board.url,board.name,' +
   'board.category,board.created_at,board.layout,' +
   'board.collaborator_invites_enabled,board.image_cover_url,' +
@@ -100,11 +100,11 @@ const FIELDS = {
   'getAutoCompleteText': GET_AUTO_COMPLETE,
   'getBoardsOfMe': GET_BOARDS_OF_ME,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
-  'getDetailOfUser': GET_DETAIL_OF_USER,
   'getFeeds': GET_FEEDS,
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
   'getFollowingOfUser': GET_FOLLOWING_OF_USER,
   'getInfoOfMe': GET_INFO_OF_ME,
+  'getUserInfo': GET_USER_INFO,
   'search.board': SEARCH_TYPE_BOARD,
   'search.pin': SEARCH_TYPE_PIN,
   'search.user': SEARCH_TYPE_USER
