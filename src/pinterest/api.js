@@ -134,6 +134,32 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
+  getUserFollowers(userId, pageSize, bookmark) {
+    let fields = Fields.getFields('getUserFollowers');
+    let params = {
+      'fields': fields,
+      'page_size': pageSize
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`users/${userId}/followers/`, params, {})
+      .then(JSON.parse);
+  }
+
+  getUserFollowing(userId, pageSize, bookmark) {
+    let fields = Fields.getFields('getUserFollowing');
+    let params = {
+      'fields': fields,
+      'page_size': pageSize
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`users/${userId}/following/`, params, {})
+      .then(JSON.parse);
+  }
+
   getUserInfo(userId) {
     let fields = Fields.getFields('getUserInfo');
     let params = {
@@ -165,26 +191,6 @@ export default class PinterestApi {
       params.bookmark = bookmark;
     }
     return this.get('feeds/home/', params, {}).then(JSON.parse);
-  }
-
-  getFollowersOfUser(userId, pageSize) {
-    let fields = Fields.getFields('getFollowersOfUser');
-    let params = {
-      'fields': fields,
-      'page_size': pageSize
-    };
-    return this.get(`users/${userId}/followers/`, params, {})
-      .then(JSON.parse).get('data');
-  }
-
-  getFollowingOfUser(userId, pageSize) {
-    let fields = Fields.getFields('getFollowingOfUser');
-    let params = {
-      'fields': fields,
-      'page_size': pageSize
-    };
-    return this.get(`users/${userId}/following/`, params, {})
-      .then(JSON.parse).get('data');
   }
 
   getInfoOfMe() {

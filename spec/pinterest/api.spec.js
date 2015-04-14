@@ -206,6 +206,86 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getUserFollowers', () => {
+    it('should return a list of followers when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-followers.json'));
+
+      let fields = Fields.getFields('getUserFollowers');
+      let params = {
+        'fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${validUserId}/followers/`;
+
+      api.getUserFollowers(validUserId, 1).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('355854945464877577');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+
+    it('should return request_id when userId is invalid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-followers-invalid-user-id.json'));
+
+      let fields = Fields.getFields('getUserFollowers');
+      let params = {
+        'fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${invalidUserId}/followers/`;
+
+      api.getUserFollowers(invalidUserId, 1).then((response) => {
+        let data = response.data;
+        expect(data['request_id']).toBe('598443295031');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
+  describe('getUserFollowing', () => {
+    it('should return a list of followings when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-following.json'));
+
+      let fields = Fields.getFields('getUserFollowing');
+      let params = {
+        'fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${validUserId}/following/`;
+
+      api.getUserFollowing(validUserId, 1).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('355854945464877577');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+
+    it('should return request_id when userId is invalid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-following-invalid-user-id.json'));
+
+      let fields = Fields.getFields('getUserFollowing');
+      let params = {
+        'fields': fields,
+        'page_size': 1
+      };
+      let url = `users/${invalidUserId}/following/`;
+
+      api.getUserFollowing(invalidUserId, 1).then((response) => {
+        let data = response.data;
+        expect(data['request_id']).toBe('464710910159');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getUserInfo', () => {
     it('should return detail of user when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(
@@ -261,82 +341,6 @@ describe('PinterestApi', () => {
       api.getFeeds(1).then((response) => {
         let data = response.data;
         expect(data[0].id).toBe('321303754641945912');
-        expect(api.get).toHaveBeenCalledWith(url, params, {});
-        done();
-      });
-    });
-  });
-
-  describe('getFollowersOfUser', () => {
-    it('should return a list of followers when userId is valid', (done) => {
-      spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-followers.json'));
-
-      let fields = Fields.getFields('getFollowersOfUser');
-      let params = {
-        'fields': fields,
-        'page_size': 1
-      };
-      let url = `users/${validUserId}/followers/`;
-
-      api.getFollowersOfUser(validUserId, 1).then((data) => {
-        expect(data[0].id).toBe('355854945464877577');
-        expect(api.get).toHaveBeenCalledWith(url, params, {});
-        done();
-      });
-    });
-
-    it('should return request_id when userId is invalid', (done) => {
-      spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-followers-invalid-user-id.json'));
-
-      let fields = Fields.getFields('getFollowersOfUser');
-      let params = {
-        'fields': fields,
-        'page_size': 1
-      };
-      let url = `users/${invalidUserId}/followers/`;
-
-      api.getFollowersOfUser(invalidUserId, 1).then((data) => {
-        expect(data['request_id']).toBe('598443295031');
-        expect(api.get).toHaveBeenCalledWith(url, params, {});
-        done();
-      });
-    });
-  });
-
-  describe('getFollowingOfUser', () => {
-    it('should return a list of followings when userId is valid', (done) => {
-      spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-following.json'));
-
-      let fields = Fields.getFields('getFollowingOfUser');
-      let params = {
-        'fields': fields,
-        'page_size': 1
-      };
-      let url = `users/${validUserId}/following/`;
-
-      api.getFollowingOfUser(validUserId, 1).then((data) => {
-        expect(data[0].id).toBe('355854945464877577');
-        expect(api.get).toHaveBeenCalledWith(url, params, {});
-        done();
-      });
-    });
-
-    it('should return request_id when userId is invalid', (done) => {
-      spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-following-invalid-user-id.json'));
-
-      let fields = Fields.getFields('getFollowingOfUser');
-      let params = {
-        'fields': fields,
-        'page_size': 1
-      };
-      let url = `users/${invalidUserId}/following/`;
-
-      api.getFollowingOfUser(invalidUserId, 1).then((data) => {
-        expect(data['request_id']).toBe('464710910159');
         expect(api.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
