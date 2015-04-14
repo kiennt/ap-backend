@@ -186,6 +186,25 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getUserInfo', () => {
+    it('should return detail of user when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-info.json'));
+
+      let fields = Fields.getFields('getUserInfo');
+      let params = {
+        'add_fields': fields
+      };
+      let url = `users/${validUserId}/`;
+
+      api.getUserInfo(validUserId).then((data) => {
+        expect(data.id).toBe('383932074391788460');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getFeeds', () => {
     it('should return list of feeds', (done) => {
       spyOn(api, 'get').and.returnValue(

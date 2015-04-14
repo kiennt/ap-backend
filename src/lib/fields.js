@@ -66,6 +66,8 @@ const GET_RELATED_PINS = 'pin.images[236x,736x],pin.id,pin.description,' +
   '150x150(ir.24),150x150(ir.48),300x300(ir.24),300x300(ir.48),600x],' +
   'pin.place_summary()';
 
+const GET_USER_INFO = 'user.partner()';
+
 const SEARCH_TYPE_BOARD = 'board.id,board.url,board.name,' +
   'board.category,board.created_at,board.layout,' +
   'board.collaborator_invites_enabled,board.image_cover_url,' +
@@ -102,6 +104,7 @@ const FIELDS = {
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
   'getFollowingOfUser': GET_FOLLOWING_OF_USER,
   'getInfoOfMe': GET_INFO_OF_ME,
+  'getUserInfo': GET_USER_INFO,
   'search.board': SEARCH_TYPE_BOARD,
   'search.pin': SEARCH_TYPE_PIN,
   'search.user': SEARCH_TYPE_USER

@@ -19,7 +19,7 @@ export default class TestPinterestApi {
 
   run() {
     this.api
-      .repin('297870962830963512', '424816246039791020', `♡ Father's Day`)
+      .getUserInfo('383932074391788460')
       .then((data) => {
         console.log(data);
       });

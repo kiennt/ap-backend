@@ -48,5 +48,5 @@ function testPinterestApi() {
   test.run();
 }
 
-// testPinterestApi();
-checkBot();
+testPinterestApi();
+// checkBot();
