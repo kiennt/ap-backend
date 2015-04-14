@@ -205,6 +205,27 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getUserPins', () => {
+    it('should return list of pins of user when userId is valid', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('user-pins.json'));
+
+      let pageSize = 25;
+      let url = `users/${validUserId}/pins/`;
+      let params = {
+        'page_size': pageSize,
+        'fields': Fields.getFields('getUserPins')
+      };
+
+      api.getUserPins(validUserId, pageSize).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('164944405079105168');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        done();
+      });
+    });
+  });
+
   describe('getFeeds', () => {
     it('should return list of feeds', (done) => {
       spyOn(api, 'get').and.returnValue(
@@ -296,25 +317,6 @@ describe('PinterestApi', () => {
 
       api.getFollowingOfUser(invalidUserId, 1).then((data) => {
         expect(data['request_id']).toBe('464710910159');
-        expect(api.get).toHaveBeenCalledWith(url, params, {});
-        done();
-      });
-    });
-  });
-
-  describe('getPinsOfUser', () => {
-    it('should return list of pins of user when userId is valid', (done) => {
-      spyOn(api, 'get').and.returnValue(
-        fixtureAsync('user-pins.json'));
-
-      let pageSize = 25;
-      let url = `users/${validUserId}/pins/`;
-      let params = {
-        'page_size': pageSize
-      };
-
-      api.getPinsOfUser(validUserId, pageSize).then((data) => {
-        expect(data[0].id).toBe('164944405079105168');
         expect(api.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
