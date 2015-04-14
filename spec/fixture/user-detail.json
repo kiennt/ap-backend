@@ -1,0 +1,82 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-6e13443e",
+  "generated_at": "Tue, 14 Apr 2015 08:02:23 +0000",
+  "message": "OK",
+  "data": {
+    "impressum_url": null,
+    "last_name": "Wach",
+    "domain_verified": false,
+    "following_count": 25,
+    "image_medium_url": "http://media-cache-ak0.pinimg.com/avatars/monikawach50_1395561314_75.jpg",
+    "implicitly_followed_by_me": false,
+    "like_count": 253,
+    "has_password": true,
+    "full_name": "Monika Wach",
+    "partner": null,
+    "image_small_url": "http://media-cache-ak0.pinimg.com/avatars/monikawach50_1395561314_30.jpg",
+    "gplus_url": null,
+    "id": "383932074391788460",
+    "first_name": "Monika",
+    "domain_url": null,
+    "personalize_from_offsite_browsing": false,
+    "show_impressum": null,
+    "explicitly_followed_by_me": true,
+    "twitter_url": null,
+    "location": "",
+    "indexed": true,
+    "is_partner": false,
+    "followed_by_me": true,
+    "type": "user",
+    "image_large_url": "http://media-cache-ak0.pinimg.com/avatars/monikawach50_1395561314_140.jpg",
+    "board_count": 122,
+    "username": "monikawach50",
+    "repins_from": [],
+    "is_default_image": false,
+    "facebook_url": "https://www.facebook.com/monika.wach.50",
+    "pin_thumbnail_urls": [
+      "http://media-cache-ak0.pinimg.com/75x75/43/a8/7c/43a87c24f24c72468156ee7f87f93264.jpg",
+      "http://media-cache-ec0.pinimg.com/75x75/fb/b4/25/fbb42539354c7bb9f6bcea7537235ba5.jpg",
+      "http://media-cache-ec0.pinimg.com/75x75/a7/fe/b7/a7feb70357d0b078059c2c07800fdcb3.jpg",
+      "http://media-cache-ak0.pinimg.com/75x75/18/63/ec/1863ec49611c07ed8e42ac16d5293377.jpg",
+      "http://media-cache-ak0.pinimg.com/75x75/1e/f7/1e/1ef71e95d2d4e1c83b593b6704308e92.jpg"
+    ],
+    "pins": [],
+    "latest_category": [
+      {
+        "token": "diy_crafts",
+        "display": "Hobbies & Crafts"
+      },
+      {
+        "token": "weddings",
+        "display": "Weddings"
+      },
+      {
+        "token": "design",
+        "display": "Design"
+      },
+      {
+        "token": "photography",
+        "display": "Photography"
+      },
+      {
+        "token": "travel",
+        "display": "Travel"
+      }
+    ],
+    "pin_count": 12487,
+    "ads_customize_from_conversion": true,
+    "about": "",
+    "followed_boards": [],
+    "email_verified": true,
+    "created_at": "Sun, 23 Mar 2014 07:55:13 +0000",
+    "low_engagement_board_count": 100,
+    "tag": null,
+    "website_url": null,
+    "gender": "female",
+    "debug": null,
+    "follower_count": 148,
+    "blocked_by_me": false
+  }
+}

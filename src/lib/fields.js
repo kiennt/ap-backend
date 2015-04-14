@@ -4,6 +4,8 @@ const GET_BOARDS_OF_ME = 'board.id,board.url,board.name,board.category,' +
   'board.created_at,board.layout,board.collaborator_invites_enabled,' +
   'board.cover_images[60x60],board.is_collaborative,board.privacy';
 
+const GET_DETAIL_OF_USER = 'user.partner()';
+
 const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
@@ -98,6 +100,7 @@ const FIELDS = {
   'getAutoCompleteText': GET_AUTO_COMPLETE,
   'getBoardsOfMe': GET_BOARDS_OF_ME,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
+  'getDetailOfUser': GET_DETAIL_OF_USER,
   'getFeeds': GET_FEEDS,
   'getFollowersOfUser': GET_FOLLOWERS_OF_USER,
   'getFollowingOfUser': GET_FOLLOWING_OF_USER,
