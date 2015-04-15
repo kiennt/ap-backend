@@ -225,4 +225,54 @@ describe('PinterestClient', () => {
         .then(done);
     });
   });
+
+  describe('_openPin', () => {
+    let pinId = 1;
+    let fakePin = {id: 1};
+    let fakeRelatedPins = {data: [{id: 1}]};
+
+    it('should return object when pinId is valid', (done) => {
+      spyOn(client.api, 'getDetailOfPin').and.returnValue(
+        Promise.resolve(fakePin)
+      );
+      spyOn(client.api, 'getRelatedPins').and.returnValue(
+        Promise.resolve(fakeRelatedPins)
+      );
+
+      client._openPin(pinId)
+        .then((result) => {
+          let expectedResult = {
+            pin: fakePin,
+            relatedPins: fakeRelatedPins.data
+          };
+          expect(result).toEqual(expectedResult);
+          expect(client.api.getDetailOfPin).toHaveBeenCalledWith(pinId);
+          expect(client.api.getRelatedPins).toHaveBeenCalledWith(pinId, 25);
+        })
+        .catch((e) => {
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+
+    it('should throw error when getting error', (done) => {
+      spyOn(client.api, 'getDetailOfPin').and.returnValue(
+        Promise.resolve(fakePin)
+      );
+      spyOn(client.api, 'getRelatedPins').and.returnValue(
+        Promise.reject('error')
+      );
+
+      client._openPin(pinId)
+        .then(() => {
+          fail('Should not success');
+        })
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(errors.CanNotOpenPin));
+          expect(client.api.getDetailOfPin).toHaveBeenCalledWith(pinId);
+          expect(client.api.getRelatedPins).toHaveBeenCalledWith(pinId, 25);
+        })
+        .then(done);
+    });
+  });
 });
