@@ -177,11 +177,14 @@ describe('PinterestClient', () => {
       );
 
       client.openUserPage(userId)
-        .then(({userInfo, boards, pins, likedPins}) => {
-          expect(userInfo.id).toBe(fakeUserInfo.id);
-          expect(boards[0].id).toBe(fakeBoards[0].id);
-          expect(pins[0].id).toBe(fakePins.data[0].id);
-          expect(likedPins[0].id).toBe(fakeLikedPins.data[0].id);
+        .then((result) => {
+          let expectedResult = {
+            userInfo: fakeUserInfo,
+            boards: fakeBoards,
+            pins: fakePins.data,
+            likedPins: fakeLikedPins.data
+          };
+          expect(result).toEqual(expectedResult);
 
           expect(client.api.getUserInfo).toHaveBeenCalledWith(userId);
           expect(client.api.getUserBoards).toHaveBeenCalledWith(userId, 25);
@@ -209,7 +212,9 @@ describe('PinterestClient', () => {
       );
 
       client.openUserPage(userId)
-        .then(() => {})
+        .then(() => {
+          fail('Should not success');
+        })
         .catch((error) => {
           expect(error).toEqual(jasmine.any(errors.CanNotOpenUser));
           expect(client.api.getUserInfo).toHaveBeenCalledWith(userId);
