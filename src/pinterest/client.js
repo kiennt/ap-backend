@@ -7,6 +7,7 @@ import PinterestApi from './api';
 
 let AutocompleteNotFound = customError('AutocompleteNotFound');
 let SearchNotFound = customError('SearchNotFound');
+let CanNotOpenUser = customError('CanNotOpenUser');
 
 
 export default class PinterestClient {
@@ -20,6 +21,22 @@ export default class PinterestClient {
       .catch(AutocompleteNotFound, (error) => {
         return Promise.delay(this, _.random(100, 2000))
           .then(() => this._searchUser(fullName, predicate, maxPage));
+      });
+  }
+
+  openUserPage(userId) {
+    let promises = [
+      this.api.getUserInfo(userId),
+      this.api.getUserBoards(userId, 25),
+      this.api.getUserPins(userId, 25).get('data'),
+      this.api.getUserLiked(userId, 25).get('data')
+    ];
+    return Promise.all(promises)
+      .spread((userInfo, boards, pins, likedPins) => {
+        return {userInfo, boards, pins, likedPins};
+      })
+      .catch((error) => {
+        throw new CanNotOpenUser(userId);
       });
   }
 
@@ -65,7 +82,8 @@ export default class PinterestClient {
   _errors() {
     return {
       AutocompleteNotFound,
-      SearchNotFound
+      SearchNotFound,
+      CanNotOpenUser
     };
   }
 }

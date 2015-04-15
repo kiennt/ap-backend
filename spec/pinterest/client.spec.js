@@ -154,4 +154,75 @@ describe('PinterestClient', () => {
       });
     });
   });
+
+  describe('openUserPage', () => {
+    let userId = 1;
+    let fakeUserInfo = {id: 1};
+    let fakeBoards = [{id: 1}];
+    let fakePins = {data: [{id: 1}]};
+    let fakeLikedPins = {data: [{id: 1}]};
+
+    it('should return object when userId is valid', (done) => {
+      spyOn(client.api, 'getUserInfo').and.returnValue(
+        Promise.resolve(fakeUserInfo)
+      );
+      spyOn(client.api, 'getUserBoards').and.returnValue(
+        Promise.resolve(fakeBoards)
+      );
+      spyOn(client.api, 'getUserPins').and.returnValue(
+        Promise.resolve(fakePins)
+      );
+      spyOn(client.api, 'getUserLiked').and.returnValue(
+        Promise.resolve(fakeLikedPins)
+      );
+
+      client.openUserPage(userId)
+        .then((result) => {
+          let expectedResult = {
+            userInfo: fakeUserInfo,
+            boards: fakeBoards,
+            pins: fakePins.data,
+            likedPins: fakeLikedPins.data
+          };
+          expect(result).toEqual(expectedResult);
+
+          expect(client.api.getUserInfo).toHaveBeenCalledWith(userId);
+          expect(client.api.getUserBoards).toHaveBeenCalledWith(userId, 25);
+          expect(client.api.getUserPins).toHaveBeenCalledWith(userId, 25);
+          expect(client.api.getUserLiked).toHaveBeenCalledWith(userId, 25);
+        })
+        .catch((e) => {
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+
+    it('should throw error when getting error', (done) => {
+      spyOn(client.api, 'getUserInfo').and.returnValue(
+        Promise.resolve(fakeUserInfo)
+      );
+      spyOn(client.api, 'getUserBoards').and.returnValue(
+        Promise.resolve(fakeBoards)
+      );
+      spyOn(client.api, 'getUserPins').and.returnValue(
+        Promise.resolve(fakePins)
+      );
+      spyOn(client.api, 'getUserLiked').and.returnValue(
+        Promise.reject('error')
+      );
+
+      client.openUserPage(userId)
+        .then(() => {
+          fail('Should not success');
+        })
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(errors.CanNotOpenUser));
+          expect(client.api.getUserInfo).toHaveBeenCalledWith(userId);
+          expect(client.api.getUserBoards).toHaveBeenCalledWith(userId, 25);
+          expect(client.api.getUserPins).toHaveBeenCalledWith(userId, 25);
+          expect(client.api.getUserLiked).toHaveBeenCalledWith(userId, 25);
+        })
+        .then(done);
+    });
+  });
 });
