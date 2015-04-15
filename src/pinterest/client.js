@@ -25,27 +25,20 @@ export default class PinterestClient {
   }
 
   openUserPage(userId) {
-    return this.api
-      .getUserInfo(userId)
-      .then((userInfo) => {
-        return Promise.resolve(userInfo);
-      })
-      .then((userInfo) => {
-        return this.api.getUserBoards(userId, 25).then((boards) => {
-          return Promise.resolve({userInfo, boards});
-        });
-      })
-      .then(({userInfo, boards}) => {
-        return this.api.getUserPins(userId, 25).then((response) => {
-          let pins = response.data;
-          return Promise.resolve({userInfo, boards, pins});
-        });
-      })
-      .then(({userInfo, boards, pins}) => {
-        return this.api.getUserLiked(userId, 25).then((response) => {
-          let likedPins = response.data;
-          return Promise.resolve({userInfo, boards, pins, likedPins});
-        });
+    let promises = [
+      this.api.getUserInfo(userId),
+      this.api.getUserBoards(userId, 25),
+      this.api.getUserPins(userId, 25).get('data'),
+      this.api.getUserLiked(userId, 25).get('data')
+    ];
+    return Promise.all(promises)
+      .spread((userInfo, boards, pins, likedPins) => {
+        return {
+          'user_info': userInfo,
+          'boards': boards,
+          'pins': pins,
+          'liked_pins': likedPins
+        };
       })
       .catch((error) => {
         throw new CanNotOpenUser(userId);
