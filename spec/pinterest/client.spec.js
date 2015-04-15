@@ -10,6 +10,7 @@ describe('PinterestClient', () => {
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
+  let errors = client._errors();
 
   beforeAll(() => spyOn(Promise, 'delay').and.returnValue(Promise.resolve()));
 
@@ -22,9 +23,8 @@ describe('PinterestClient', () => {
     beforeAll(() => spyOn(_, 'random').and.returnValue(maxPage));
 
     it('should go search when autocomplete not found', (done) => {
-      let AutocompleteNotFound = client._errors().AutocompleteNotFound;
       spyOn(client, '_autocompleteUser')
-        .and.returnValue(Promise.reject(new AutocompleteNotFound()));
+        .and.returnValue(Promise.reject(new errors.AutocompleteNotFound()));
       spyOn(client, '_searchUser').and.returnValue(Promise.resolve());
       client.findAnUser(query, predicate)
         .then(() => {
@@ -58,7 +58,7 @@ describe('PinterestClient', () => {
         client._autocompleteUser(query, predicate)
           .then(() => fail('Should not success'))
           .catch((error) => {
-            expect(error.name).toBe('AutocompleteNotFound');
+            expect(error).toEqual(jasmine.any(errors.AutocompleteNotFound));
             let stub = client.api.getAutoCompleteText;
             expect(stub.calls.count(), query.length + 1);
             for (let i = 0, n = query.length; i <= n; i++) {
@@ -98,7 +98,7 @@ describe('PinterestClient', () => {
         client._searchUser(query, predicate, maxPage)
           .then(() => fail('Should not success'))
           .catch((error) => {
-            expect(error.name).toBe('SearchNotFound');
+            expect(error).toEqual(jasmine.any(errors.SearchNotFound));
             expect(client.api.search.calls.count(), 1);
             expect(client.api.search)
               .toHaveBeenCalledWith(query, 25, 'user', undefined);
@@ -117,7 +117,7 @@ describe('PinterestClient', () => {
         client._searchUser(query, predicate, maxPage)
           .then(() => fail('Should not success'))
           .catch((error) => {
-            expect(error.name).toBe('SearchNotFound');
+            expect(error).toEqual(jasmine.any(errors.SearchNotFound));
             let stub = client.api.search;
             expect(stub.calls.count(), maxPage);
             expect(stub).toHaveBeenCalledWith(query, 25, 'user', undefined);

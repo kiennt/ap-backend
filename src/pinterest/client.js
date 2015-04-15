@@ -64,8 +64,8 @@ export default class PinterestClient {
 
   _errors() {
     return {
-      AutocompleteNotFound: AutocompleteNotFound,
-      SearchNotFound: SearchNotFound
+      AutocompleteNotFound,
+      SearchNotFound
     };
   }
 }
