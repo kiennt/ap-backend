@@ -33,12 +33,7 @@ export default class PinterestClient {
     ];
     return Promise.all(promises)
       .spread((userInfo, boards, pins, likedPins) => {
-        return {
-          'user_info': userInfo,
-          'boards': boards,
-          'pins': pins,
-          'liked_pins': likedPins
-        };
+        return {userInfo, boards, pins, likedPins};
       })
       .catch((error) => {
         throw new CanNotOpenUser(userId);
