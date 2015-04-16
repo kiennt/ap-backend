@@ -25,13 +25,13 @@ describe('lodash extension', () => {
 
   describe('normalizedString', () => {
     it('should return normalized string', () => {
-      let str = 'aa__bB_CC';
+      let str = 'aa__bb_CC';
       let result = _.normalizedString(str);
       expect(result).toBe('Aa Bb Cc');
     });
-    it('should return undefined', () => {
+    it('should return empty string', () => {
       let result = _.normalizedString(undefined);
-      expect(result).toBe(undefined);
+      expect(result).toBe('');
     });
   });
 

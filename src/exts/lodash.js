@@ -13,11 +13,9 @@ function isSimilarString(str1, str2) {
 
 function normalizedString(str) {
   if (str) {
-    str = str.toLowerCase();
-    str = changeCase.titleCase(str);
-    return str;
+    return changeCase.titleCase(str);
   }
-  return undefined;
+  return '';
 }
 
 function randomBoolean() {
