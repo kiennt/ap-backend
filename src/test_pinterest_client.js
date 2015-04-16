@@ -11,7 +11,7 @@ import './exts/lodash';
 export default class TestPinterestClient {
   constructor() {
     /*eslint-disable*/
-    let accessToken = 'MTQzMTYwMjo0MjQ4MTYzMTQ3NTkwMTAwMjk6OTIyMzM3MjAzNjg1NDc3NTgwNzoxfDE0Mjg4MjI1ODE6MC0tODIxZmVjYzg2NWNlYThmMmNmYzE0YWIzNTIwMGFlMTU=';
+    let accessToken = 'MTQzMTYwMjo1MzcyNjU1Njc5NTQ5NDcxMjM6OTIyMzM3MjAzNjg1NDc3NTgwNzoxfDE0MjcyNzk0Njc6MC0tMTlhNGFhMWFmZTJmNmIxODE1NjgzM2U5YjZjZDgwYjg=';
     /*eslint-enable*/
     let headers = HttpHeaders.randomHeaders();
     this.client = new PinterestClient(accessToken, headers);
@@ -20,7 +20,7 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      ._openPin('26106872817690902')
+      .repin('74309462577973085')
       .then((data) => {
         console.log(data);
       });

@@ -41,6 +41,31 @@ export default class PinterestClient {
       });
   }
 
+  repin(pinId) {
+    let pinDetail = this._openPin(pinId);
+    return pinDetail
+    .then(({pin, relatedPins}) => {
+      return this.api.getBoardsOfMe().then((boards) => {
+        return Promise.resolve({pin, boards});
+      });
+    })
+    .delay(_.random(20000, 200000))
+    .then(({pin, boards}) => {
+      let chosendBoard = _(boards).find((board) => {
+        if (board.name === pin.board.name) {
+          return board;
+        }
+      });
+      if (chosendBoard) {
+        return this.api.repin(pinId, chosendBoard.id, pin.description);
+      } else {
+        return this.api.createABoard(pin.board.name).then((board) => {
+          return this.api.repin(pinId, board.id, pin.description);
+        });
+      }
+    });
+  }
+
   _autocompleteUser(query, predicate, sliceIndex) {
     sliceIndex = sliceIndex || 0;
     if (sliceIndex > query.length) {
