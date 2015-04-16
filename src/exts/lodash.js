@@ -1,18 +1,20 @@
 import lodash from 'lodash';
+import changeCase from 'change-case';
 
 
 function isSimilarString(str1, str2) {
   if (!str1 || !str2) {
     return false;
   }
-  str1 = str1.replace('_', ' ').toLowerCase();
-  str2 = str2.replace('_', ' ').toLowerCase();
+  str1 = changeCase.titleCase(str1.toLowerCase());
+  str2 = changeCase.titleCase(str2.toLowerCase());
   return (str1 === str2);
 }
 
 function normalizedString(str) {
   if (str) {
-    str = str.replace('_', ' ').toLowerCase();
+    str = str.toLowerCase();
+    str = changeCase.titleCase(str);
     return str;
   }
   return undefined;

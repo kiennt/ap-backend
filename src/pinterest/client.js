@@ -56,16 +56,18 @@ export default class PinterestClient {
             _.isSimilarString(board.name, pin.board.name));
         });
         if (chosenBoard) {
-          return this.api.repin(pinId, chosenBoard.id, pin.description);
+          return chosenBoard;
         } else {
           let boardName = _.normalizedString(pin.board.category);
           if (!boardName) {
             boardName = pin.board.name;
           }
-          return this.api.createABoard(boardName).then((board) => {
-            return this.api.repin(pinId, board.id, pin.description);
-          });
+          return this.api.createABoard(boardName);
         }
+      })
+      .then((board) => {
+        let pin = pinDetail.value().pin;
+        return this.api.repin(pinId, board.id, pin.description);
       });
   }
 

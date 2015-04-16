@@ -22,4 +22,31 @@ describe('lodash extension', () => {
       expect(result4.length).toBe(5);
     });
   });
+
+  describe('normalizedString', () => {
+    it('should return normalized string', () => {
+      let str = 'aa__bB_CC';
+      let result = _.normalizedString(str);
+      expect(result).toBe('Aa Bb Cc');
+    });
+    it('should return undefined', () => {
+      let result = _.normalizedString(undefined);
+      expect(result).toBe(undefined);
+    });
+  });
+
+  describe('isSimilarString', () => {
+    it('should return true', () => {
+      let str1 = 'Aa_Bb_Cc';
+      let str2 = 'AA BB CC';
+      let result = _.isSimilarString(str1, str2);
+      expect(result).toBe(true);
+    });
+    it('should return false', () => {
+      let str1 = 'Aa_bBb_Cc';
+      let str2 = 'AA BB CC';
+      let result = _.isSimilarString(str1, str2);
+      expect(result).toBe(false);
+    });
+  });
 });
