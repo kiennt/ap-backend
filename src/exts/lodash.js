@@ -1,6 +1,23 @@
 import lodash from 'lodash';
 
 
+function isSimilarString(str1, str2) {
+  if (!str1 || !str2) {
+    return false;
+  }
+  str1 = str1.replace('_', ' ').toLowerCase();
+  str2 = str2.replace('_', ' ').toLowerCase();
+  return (str1 === str2);
+}
+
+function normalizedString(str) {
+  if (str) {
+    str = str.replace('_', ' ').toLowerCase();
+    return str;
+  }
+  return undefined;
+}
+
 function randomBoolean() {
   return Boolean(lodash.random(1));
 }
@@ -25,4 +42,6 @@ lodash.mixin({
 /*
  * Add functions to `lodash` only
  */
+lodash.isSimilarString = isSimilarString;
+lodash.normalizedString = normalizedString;
 lodash.randomBoolean = randomBoolean;

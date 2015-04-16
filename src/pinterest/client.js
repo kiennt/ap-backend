@@ -4,6 +4,8 @@ import Promise from 'bluebird';
 import {customError} from '../lib/errors'
 import PinterestApi from './api';
 
+import '../exts/lodash';
+
 
 let AutocompleteNotFound = customError('AutocompleteNotFound');
 let SearchNotFound = customError('SearchNotFound');
@@ -43,27 +45,28 @@ export default class PinterestClient {
 
   repin(pinId) {
     let pinDetail = this._openPin(pinId);
-    return pinDetail
-    .then(({pin, relatedPins}) => {
-      return this.api.getBoardsOfMe().then((boards) => {
-        return Promise.resolve({pin, boards});
-      });
-    })
-    .delay(_.random(20000, 200000))
-    .then(({pin, boards}) => {
-      let chosendBoard = _(boards).find((board) => {
-        if (board.name === pin.board.name) {
-          return board;
+    let myBoards = pinDetail.then(() => this.api.getBoardsOfMe());
+
+    return myBoards
+      .delay(_.random(20000, 200000))
+      .then((boards) => {
+        let pin = pinDetail.value().pin;
+        let chosenBoard = _(boards).find((board) => {
+          return (_.isSimilarString(board.name, pin.board.category) ||
+            _.isSimilarString(board.name, pin.board.name));
+        });
+        if (chosenBoard) {
+          return this.api.repin(pinId, chosenBoard.id, pin.description);
+        } else {
+          let boardName = _.normalizedString(pin.board.category);
+          if (!boardName) {
+            boardName = pin.board.name;
+          }
+          return this.api.createABoard(boardName).then((board) => {
+            return this.api.repin(pinId, board.id, pin.description);
+          });
         }
       });
-      if (chosendBoard) {
-        return this.api.repin(pinId, chosendBoard.id, pin.description);
-      } else {
-        return this.api.createABoard(pin.board.name).then((board) => {
-          return this.api.repin(pinId, board.id, pin.description);
-        });
-      }
-    });
   }
 
   _autocompleteUser(query, predicate, sliceIndex) {
