@@ -186,6 +186,31 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getExperiments', () => {
+    it('should return experiments', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('experiments-normal.json'));
+
+      let url = 'gatekeeper/experiments/';
+      api.getExperiments().then((data) => {
+        expect(data.host).toBe('ngapi2-df891bf4');
+        expect(api.get).toHaveBeenCalledWith(url, {}, {});
+        done();
+      });
+    });
+    it('should return experiments of Android', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('experiments-android.json'));
+
+      let url = 'experiences/platform/ANDROID/';
+      api.getExperiments(true).then((data) => {
+        expect(data.host).toBe('ngapi2-27c99d77');
+        expect(api.get).toHaveBeenCalledWith(url, {}, {});
+        done();
+      });
+    });
+  });
+
   describe('getUserBoards', () => {
     it('should return list of boards when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(
