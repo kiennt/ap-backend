@@ -193,7 +193,6 @@ describe('PinterestApi', () => {
 
       let url = 'gatekeeper/experiments/';
       api.getExperiments().then((data) => {
-        expect(data.host).toBe('ngapi2-df891bf4');
         expect(api.get).toHaveBeenCalledWith(url, {}, {});
         done();
       });
@@ -204,7 +203,6 @@ describe('PinterestApi', () => {
 
       let url = 'experiences/platform/ANDROID/';
       api.getExperiments(true).then((data) => {
-        expect(data.host).toBe('ngapi2-27c99d77');
         expect(api.get).toHaveBeenCalledWith(url, {}, {});
         done();
       });
