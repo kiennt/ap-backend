@@ -48,7 +48,7 @@ export default class PinterestClient {
     let myBoards = pinDetail.then(() => this.api.getBoardsOfMe());
 
     return myBoards
-      .delay(_.random(20000, 200000))
+      .delay(_.random(20000, 100000))
       .then((boards) => {
         let pin = pinDetail.value().pin;
         let chosenBoard = _(boards).find((board) => {
@@ -68,9 +68,6 @@ export default class PinterestClient {
       .then((board) => {
         let pin = pinDetail.value().pin;
         return this.api.repin(pinId, board.id, pin.description);
-      })
-      .catch((error) => {
-        throw error;
       });
   }
 

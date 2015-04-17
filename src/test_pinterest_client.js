@@ -20,7 +20,7 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .repin('361484307566721491')
+      .repin('184014334751035588')
       .then((data) => {
         console.log(data);
       });

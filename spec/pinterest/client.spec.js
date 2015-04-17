@@ -275,4 +275,98 @@ describe('PinterestClient', () => {
         .then(done);
     });
   });
+
+  describe('repin', () => {
+    let pinId = 1;
+    let fakePin = {
+      id: 1,
+      board: {
+        id: 11,
+        name: 'this is test name',
+        category: 'this is test category'
+      },
+      description: 'this is description'
+    };
+    let fakeRelatedPins = {data: [{id: 1}]};
+
+    it('should repin to board with id 1122', (done) => {
+      let fakeBoards = [{
+        id: 1122,
+        name: 'this is test name',
+        category: 'this is test category'
+      }];
+
+      spyOn(_, 'random').and.returnValue(
+        Promise.resolve(100)
+      );
+      spyOn(client, '_openPin').and.returnValue(
+        Promise.resolve({pin: fakePin, relatedPins: fakeRelatedPins})
+      );
+      spyOn(client.api, 'getBoardsOfMe').and.returnValue(
+        Promise.resolve(fakeBoards)
+      );
+      spyOn(client.api, 'repin').and.returnValue(
+        Promise.resolve('success')
+      );
+
+      client.repin(pinId)
+        .then((result) => {
+          expect(result).toEqual('success');
+          expect(_.random).toHaveBeenCalledWith(20000, 100000);
+          expect(client._openPin).toHaveBeenCalledWith(pinId);
+          expect(client.api.getBoardsOfMe).toHaveBeenCalled();
+          expect(client.api.repin)
+            .toHaveBeenCalledWith(pinId, 1122, fakePin.description);
+        })
+        .catch((e) => {
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+
+    it('should create a new board to repin', (done) => {
+      let wrongBoards = [{
+        id: 1122,
+        name: 'this is OTHER name',
+        category: 'this is OTHER category'
+      }];
+
+      spyOn(_, 'random').and.returnValue(
+        Promise.resolve(100)
+      );
+      spyOn(client, '_openPin').and.returnValue(
+        Promise.resolve({pin: fakePin, relatedPins: fakeRelatedPins})
+      );
+      spyOn(client.api, 'getBoardsOfMe').and.returnValue(
+        Promise.resolve(wrongBoards)
+      );
+      spyOn(client.api, 'createABoard').and.returnValue(
+        Promise.resolve({
+          id: 1123,
+          name: 'this is new category',
+          category: ''
+        })
+      );
+      spyOn(client.api, 'repin').and.returnValue(
+        Promise.resolve('success')
+      );
+
+      client.repin(pinId)
+        .then((result) => {
+          expect(result).toEqual('success');
+          expect(_.random).toHaveBeenCalledWith(20000, 100000);
+          expect(client._openPin).toHaveBeenCalledWith(pinId);
+          expect(client.api.getBoardsOfMe).toHaveBeenCalled();
+          expect(client.api.createABoard)
+            .toHaveBeenCalledWith('This Is Test Category');
+          expect(client.api.repin)
+            .toHaveBeenCalledWith(pinId, 1123, fakePin.description);
+        })
+        .catch((e) => {
+          console.log(e);
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+  });
 });

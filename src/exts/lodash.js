@@ -1,20 +1,16 @@
 import lodash from 'lodash';
 import changeCase from 'change-case';
 
-
-const SPECIAL_CHARACTERS = ['_', ',', ' ', '\'', '"', '-'];
+/*eslint-disable*/
+const SPECIAL_REGEX = /[\`\~\!\@\#\$\%\^\&\*\(\)\;\:\'\"\[\]\{\}\\\|\,\.\/\<\>\?\-\_\=\+\ ]/g;
+/*eslint-enable*/
 
 function isSimilarString(str1, str2) {
   if (!str1 || !str2) {
     return false;
   }
-  SPECIAL_CHARACTERS.forEach((char) => {
-    let re = new RegExp(char, 'g');
-    str1 = str1.replace(re, '');
-    str2 = str2.replace(re, '');
-  });
-  str1 = str1.toLowerCase();
-  str2 = str2.toLowerCase();
+  str1 = str1.replace(SPECIAL_REGEX, '').toLowerCase();
+  str2 = str2.replace(SPECIAL_REGEX, '').toLowerCase();
   return (str1 === str2);
 }
 
