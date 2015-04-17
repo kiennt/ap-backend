@@ -12,7 +12,15 @@ describe('PinterestClient', () => {
   let client = new PinterestClient(accessToken, headers);
   let errors = client._errors();
 
-  beforeAll(() => spyOn(Promise, 'delay').and.returnValue(Promise.resolve()));
+  beforeAll(() => {
+    spyOn(Promise, 'delay').and.callFake(function (value, time) {
+      value = (time === undefined) ? undefined : value;
+      return Promise.resolve(value);
+    });
+    spyOn(Promise.prototype, 'delay').and.callFake(function () {
+      return Promise.resolve(this);
+    });
+  });
 
   describe('findAnUser', () => {
     let maxPage = 3;
@@ -296,9 +304,6 @@ describe('PinterestClient', () => {
         category: 'this is test category'
       }];
 
-      spyOn(_, 'random').and.returnValue(
-        Promise.resolve(100)
-      );
       spyOn(client, '_openPin').and.returnValue(
         Promise.resolve({pin: fakePin, relatedPins: fakeRelatedPins})
       );
@@ -312,7 +317,6 @@ describe('PinterestClient', () => {
       client.repin(pinId)
         .then((result) => {
           expect(result).toEqual('success');
-          expect(_.random).toHaveBeenCalledWith(20000, 100000);
           expect(client._openPin).toHaveBeenCalledWith(pinId);
           expect(client.api.getBoardsOfMe).toHaveBeenCalled();
           expect(client.api.repin)
@@ -331,9 +335,6 @@ describe('PinterestClient', () => {
         category: 'this is OTHER category'
       }];
 
-      spyOn(_, 'random').and.returnValue(
-        Promise.resolve(100)
-      );
       spyOn(client, '_openPin').and.returnValue(
         Promise.resolve({pin: fakePin, relatedPins: fakeRelatedPins})
       );
@@ -354,7 +355,6 @@ describe('PinterestClient', () => {
       client.repin(pinId)
         .then((result) => {
           expect(result).toEqual('success');
-          expect(_.random).toHaveBeenCalledWith(20000, 100000);
           expect(client._openPin).toHaveBeenCalledWith(pinId);
           expect(client.api.getBoardsOfMe).toHaveBeenCalled();
           expect(client.api.createABoard)
