@@ -4,6 +4,8 @@ import Promise from 'bluebird';
 import {customError} from '../lib/errors'
 import PinterestApi from './api';
 
+import '../exts/lodash';
+
 
 let AutocompleteNotFound = customError('AutocompleteNotFound');
 let SearchNotFound = customError('SearchNotFound');
@@ -38,6 +40,34 @@ export default class PinterestClient {
       })
       .catch((error) => {
         throw new CanNotOpenUser(userId);
+      });
+  }
+
+  repin(pinId) {
+    let pinDetail = this._openPin(pinId);
+    let myBoards = pinDetail.then(() => this.api.getBoardsOfMe());
+
+    return myBoards
+      .delay(_.random(20000, 100000))
+      .then((boards) => {
+        let pin = pinDetail.value().pin;
+        let chosenBoard = _(boards).find((board) => {
+          return (_.isSimilarString(board.name, pin.board.category) ||
+            _.isSimilarString(board.name, pin.board.name));
+        });
+        if (chosenBoard) {
+          return chosenBoard;
+        } else {
+          let boardName = _.normalizedString(pin.board.category);
+          if (!boardName) {
+            boardName = pin.board.name;
+          }
+          return this.api.createABoard(boardName);
+        }
+      })
+      .then((board) => {
+        let pin = pinDetail.value().pin;
+        return this.api.repin(pinId, board.id, pin.description);
       });
   }
 

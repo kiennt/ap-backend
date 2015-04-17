@@ -1,5 +1,22 @@
 import lodash from 'lodash';
+import changeCase from 'change-case';
 
+/*eslint-disable*/
+const SPECIAL_REGEX = /[\`\~\!\@\#\$\%\^\&\*\(\)\;\:\'\"\[\]\{\}\\\|\,\.\/\<\>\?\-\_\=\+\ ]/g;
+/*eslint-enable*/
+
+function isSimilarString(str1, str2) {
+  if (!str1 || !str2) {
+    return false;
+  }
+  str1 = str1.replace(SPECIAL_REGEX, '').toLowerCase();
+  str2 = str2.replace(SPECIAL_REGEX, '').toLowerCase();
+  return (str1 === str2);
+}
+
+function normalizedString(str) {
+  return changeCase.titleCase(str);
+}
 
 function randomBoolean() {
   return Boolean(lodash.random(1));
@@ -25,4 +42,6 @@ lodash.mixin({
 /*
  * Add functions to `lodash` only
  */
+lodash.isSimilarString = isSimilarString;
+lodash.normalizedString = normalizedString;
 lodash.randomBoolean = randomBoolean;
