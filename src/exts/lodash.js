@@ -2,20 +2,24 @@ import lodash from 'lodash';
 import changeCase from 'change-case';
 
 
+const SPECIAL_CHARACTERS = ['_', ',', ' ', '\'', '"', '-'];
+
 function isSimilarString(str1, str2) {
   if (!str1 || !str2) {
     return false;
   }
-  str1 = changeCase.titleCase(str1.toLowerCase());
-  str2 = changeCase.titleCase(str2.toLowerCase());
+  SPECIAL_CHARACTERS.forEach((char) => {
+    let re = new RegExp(char, 'g');
+    str1 = str1.replace(re, '');
+    str2 = str2.replace(re, '');
+  });
+  str1 = str1.toLowerCase();
+  str2 = str2.toLowerCase();
   return (str1 === str2);
 }
 
 function normalizedString(str) {
-  if (str) {
-    return changeCase.titleCase(str);
-  }
-  return '';
+  return changeCase.titleCase(str);
 }
 
 function randomBoolean() {

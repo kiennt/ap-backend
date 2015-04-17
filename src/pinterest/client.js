@@ -68,6 +68,9 @@ export default class PinterestClient {
       .then((board) => {
         let pin = pinDetail.value().pin;
         return this.api.repin(pinId, board.id, pin.description);
+      })
+      .catch((error) => {
+        throw error;
       });
   }
 

@@ -25,7 +25,7 @@ describe('lodash extension', () => {
 
   describe('normalizedString', () => {
     it('should return normalized string', () => {
-      let str = 'aa__bb_CC';
+      let str = 'aa__--bb_--,\\CC';
       let result = _.normalizedString(str);
       expect(result).toBe('Aa Bb Cc');
     });
@@ -37,7 +37,7 @@ describe('lodash extension', () => {
 
   describe('isSimilarString', () => {
     it('should return true', () => {
-      let str1 = 'Aa_Bb_Cc';
+      let str1 = 'aa__--bb_--C_C';
       let str2 = 'AA BB CC';
       let result = _.isSimilarString(str1, str2);
       expect(result).toBe(true);
