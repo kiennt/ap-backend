@@ -1,0 +1,298 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-df891bf4",
+  "generated_at": "Fri, 17 Apr 2015 09:00:59 +0000",
+  "message": "OK",
+  "data": {
+    "dormant-facebook-ads": {
+      "group": "enabled",
+      "key": "dormant-facebook-ads"
+    },
+    "update-your-browser-email": {
+      "group": "enabled",
+      "key": "update-your-browser-email"
+    },
+    "linkquality_link_selection_grid_level": {
+      "group": "rollout_1",
+      "key": "linkquality_link_selection_grid_level"
+    },
+    "ads_search_holdout": {
+      "group": "control_prime",
+      "key": "ads_search_holdout"
+    },
+    "pinnability_ff_longterm_controlb": {
+      "group": "control",
+      "key": "pinnability_ff_longterm_controlb"
+    },
+    "pinnability_ff_longterm_controla": {
+      "group": "enabled",
+      "key": "pinnability_ff_longterm_controla"
+    },
+    "pinvitational_ph_dismissable_nag": {
+      "group": "enabled",
+      "key": "pinvitational_ph_dismissable_nag"
+    },
+    "test_experiment_dsafd": {
+      "group": "enabled",
+      "key": "test_experiment_dsafd"
+    },
+    "editorial_ctas": {
+      "group": "search",
+      "key": "editorial_ctas"
+    },
+    "search_pin_board_pinner_android": {
+      "group": "control",
+      "key": "search_pin_board_pinner_android"
+    },
+    "android_new_perf_logging": {
+      "persisted": true,
+      "group": "enabled",
+      "key": "android_new_perf_logging"
+    },
+    "notif-waiting": {
+      "group": "enabled",
+      "key": "notif-waiting"
+    },
+    "board_reorder_experiment": {
+      "group": "enabled",
+      "key": "board_reorder_experiment"
+    },
+    "discovery_q2_2014": {
+      "persisted": true,
+      "group": "s2_enabled",
+      "key": "discovery_q2_2014"
+    },
+    "france-pinpicks-life-hacks-email-": {
+      "group": "enabled",
+      "key": "france-pinpicks-life-hacks-email-"
+    },
+    "ads_targeting_variants": {
+      "group": "positive_action",
+      "key": "ads_targeting_variants"
+    },
+    "android_default_profile_tab": {
+      "group": "mixed",
+      "key": "android_default_profile_tab"
+    },
+    "ios_business_signup": {
+      "group": "create_with_business_link",
+      "key": "ios_business_signup"
+    },
+    "browser_button_vaishali": {
+      "group": "enabled",
+      "key": "browser_button_vaishali"
+    },
+    "valentine_network_story": {
+      "group": "enabled",
+      "key": "valentine_network_story"
+    },
+    "chunyan_webclient_test2": {
+      "group": "control",
+      "key": "chunyan_webclient_test2"
+    },
+    "interest_recommendations_new_user_email": {
+      "group": "control",
+      "key": "interest_recommendations_new_user_email"
+    },
+    "related_pins_closeup": {
+      "persisted": true,
+      "group": "enabled",
+      "key": "related_pins_closeup"
+    },
+    "search_frontier_blend": {
+      "group": "enabled_blend_ordered",
+      "key": "search_frontier_blend"
+    },
+    "new_biz_onboarding_emails": {
+      "group": "enabled",
+      "key": "new_biz_onboarding_emails"
+    },
+    "email_limited_login_hold_out_new_users": {
+      "group": "enabled",
+      "key": "email_limited_login_hold_out_new_users"
+    },
+    "notif_v2_only_android": {
+      "group": "enabled",
+      "key": "notif_v2_only_android"
+    },
+    "interest_recommendations_email": {
+      "group": "enabled",
+      "key": "interest_recommendations_email"
+    },
+    "invite_reminder_emails": {
+      "group": "enabled2",
+      "key": "invite_reminder_emails"
+    },
+    "example_simple_email_experiment": {
+      "group": "control",
+      "key": "example_simple_email_experiment"
+    },
+    "android_board_follow_edu": {
+      "group": "control",
+      "key": "android_board_follow_edu"
+    },
+    "news_v2": {
+      "group": "enabled_news_disabled_push",
+      "key": "news_v2"
+    },
+    "search_i18n_desc": {
+      "group": "enabled",
+      "key": "search_i18n_desc"
+    },
+    "search_boost_salient_color": {
+      "group": "control",
+      "key": "search_boost_salient_color"
+    },
+    "android_discover_design_refresh": {
+      "group": "enabled",
+      "key": "android_discover_design_refresh"
+    },
+    "pin_to_pin_navboost_production_2": {
+      "persisted": true,
+      "group": "rollout",
+      "key": "pin_to_pin_navboost_production_2"
+    },
+    "android_search_my_pin": {
+      "group": "enabled",
+      "key": "android_search_my_pin"
+    },
+    "more_boards_to_follow": {
+      "group": "enabled2",
+      "key": "more_boards_to_follow"
+    },
+    "smartfeed_following_pinnability_longterm": {
+      "group": "rollout",
+      "key": "smartfeed_following_pinnability_longterm"
+    },
+    "smartfeed_adjust_pfy2": {
+      "group": "treatment_decay",
+      "key": "smartfeed_adjust_pfy2"
+    },
+    "android_profile_follow_edu": {
+      "group": "control",
+      "key": "android_profile_follow_edu"
+    },
+    "android_preinstall_telefonica2": {
+      "group": "control",
+      "key": "android_preinstall_telefonica2"
+    },
+    "pin_create_email": {
+      "group": "enabled",
+      "key": "pin_create_email"
+    },
+    "android_widget": {
+      "group": "control",
+      "key": "android_widget"
+    },
+    "android_newpin_notification": {
+      "persisted": true,
+      "group": "control",
+      "key": "android_newpin_notification"
+    },
+    "hotmail_inviter_web": {
+      "group": "control",
+      "key": "hotmail_inviter_web"
+    },
+    "board_search_derived_annotations": {
+      "group": "enabled",
+      "key": "board_search_derived_annotations"
+    },
+    "send-a-pin-receipt": {
+      "group": "enabled",
+      "key": "send-a-pin-receipt"
+    },
+    "search_find_your_pins_ios": {
+      "group": "enabled",
+      "key": "search_find_your_pins_ios"
+    },
+    "ads_average_campaign_score": {
+      "group": "control",
+      "key": "ads_average_campaign_score"
+    },
+    "android-update-notification": {
+      "group": "enabled",
+      "key": "android-update-notification"
+    },
+    "network_story": {
+      "group": "enabled_with_badging",
+      "key": "network_story"
+    },
+    "pintopin-recommendation-visual-reranking": {
+      "group": "control",
+      "key": "pintopin-recommendation-visual-reranking"
+    },
+    "android_persistent_follow_button": {
+      "group": "fixed_to_top",
+      "key": "android_persistent_follow_button"
+    },
+    "pinvitational_multi_queue": {
+      "group": "2_days",
+      "key": "pinvitational_multi_queue"
+    },
+    "related_pins_v2": {
+      "group": "navboost_v2_enabled_25_150_100",
+      "key": "related_pins_v2"
+    },
+    "new_welcome_series9": {
+      "group": "enabled",
+      "key": "new_welcome_series9"
+    },
+    "test_test_test": {
+      "group": "control",
+      "key": "test_test_test"
+    },
+    "search_rewrite_query": {
+      "group": "enabled_with_stem_1",
+      "key": "search_rewrite_query"
+    },
+    "ads_in_multiple_cpm_slots_prime": {
+      "group": "enabled",
+      "key": "ads_in_multiple_cpm_slots_prime"
+    },
+    "pinnability_for_pfy": {
+      "group": "rollout",
+      "key": "pinnability_for_pfy"
+    },
+    "place_board_v2": {
+      "group": "control",
+      "key": "place_board_v2"
+    },
+    "one_click_follow": {
+      "group": "rollout",
+      "key": "one_click_follow"
+    },
+    "ab_dashboard_hide_results": {
+      "group": "validate_failed",
+      "key": "ab_dashboard_hide_results"
+    },
+    "digest_v01_related_interests_experiment2": {
+      "group": "enabled",
+      "key": "digest_v01_related_interests_experiment2"
+    },
+    "duplicate_aware_blender_experiment": {
+      "group": "reserve",
+      "key": "duplicate_aware_blender_experiment"
+    },
+    "picked_for_you_feed_no_classifier": {
+      "group": "enabled",
+      "key": "picked_for_you_feed_no_classifier"
+    },
+    "pin_buddy_notification_2": {
+      "group": "rollout",
+      "key": "pin_buddy_notification_2"
+    },
+    "fb_auto_login_length2": {
+      "group": "enabled",
+      "key": "fb_auto_login_length2"
+    },
+    "chunyan_webclient_test": {
+      "group": "control",
+      "key": "chunyan_webclient_test"
+    },
+    "ludo_test2": {
+      "group": "enabled",
+      "key": "ludo_test2"
+    }
+  }
+}

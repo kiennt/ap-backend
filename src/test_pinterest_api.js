@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .getUserLiked('383932074391788460', 1, 'LT40NzQ2MzcyNDgyMDQ0NTk0NTA6MToxfDA4MzgyNDNiODJiZDBkZWZiNTQxOTc1OGFlMmYwOTMzNjQwOGYwYWNkYzgzODkxNGI4M2RlZDc0ODFiYWVhOWQ=')
+      .getExperiments(true)
       .then((data) => {
         console.log(data);
       });

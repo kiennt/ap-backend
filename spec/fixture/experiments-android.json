@@ -1,0 +1,66 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-27c99d77",
+  "generated_at": "Fri, 17 Apr 2015 09:00:59 +0000",
+  "message": "OK",
+  "data": {
+    "20000": {
+      "display_data": {},
+      "triggerable_placed_exps": [],
+      "experience_id": 30000,
+      "type": 1,
+      "id": "20000:30000",
+      "cacheable_resources": []
+    },
+    "20008": {
+      "display_data": {},
+      "triggerable_placed_exps": [],
+      "experience_id": 1,
+      "type": 0,
+      "id": "20008:1",
+      "cacheable_resources": [
+        "http://mobile-assets.pinterest.com/android/edu/4.0/android-home-feed-example-1.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/4.0/android-home-feed-example-2.jpg"
+      ]
+    },
+    "20003": {
+      "display_data": {},
+      "triggerable_placed_exps": [],
+      "experience_id": 1,
+      "type": 0,
+      "id": "20003:1",
+      "cacheable_resources": [
+        "http://mobile-assets.pinterest.com/android/edu/android-board-greenhouse.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-board-recipe.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-board-follow-example-1.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-board-follow-example-2.jpg"
+      ]
+    },
+    "20004": {
+      "display_data": {},
+      "triggerable_placed_exps": [],
+      "experience_id": 1,
+      "type": 0,
+      "id": "20004:1",
+      "cacheable_resources": [
+        "http://mobile-assets.pinterest.com/android/edu/android-profile-keith.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-board-style.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-profile-ash.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-profile-follow-example-1.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/android-profile-follow-example-2.jpg"
+      ]
+    },
+    "20005": {
+      "display_data": {},
+      "triggerable_placed_exps": [],
+      "experience_id": 1,
+      "type": 0,
+      "id": "20005:1",
+      "cacheable_resources": [
+        "http://mobile-assets.pinterest.com/android/edu/4.0/android-repin-example-1.jpg",
+        "http://mobile-assets.pinterest.com/android/edu/4.0/android-repin-example-2.jpg"
+      ]
+    }
+  }
+}

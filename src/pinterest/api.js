@@ -124,6 +124,14 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
+  getExperiments(hasPlatform) {
+    if (hasPlatform) {
+      return this.get('experiences/platform/ANDROID/', {}, {}).then(JSON.parse);
+    } else {
+      return this.get('gatekeeper/experiments/', {}, {}).then(JSON.parse);
+    }
+  }
+
   getUserBoards(userId, pageSize) {
     let fields = Fields.getFields('getUserBoards');
     let params = {
