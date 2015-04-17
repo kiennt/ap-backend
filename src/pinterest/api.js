@@ -132,6 +132,11 @@ export default class PinterestApi {
     }
   }
 
+  getNotifications() {
+    return this.get('maia/notifications/counts/', {}, {})
+      .then(JSON.parse).get('data');
+  }
+
   getUserBoards(userId, pageSize) {
     let fields = Fields.getFields('getUserBoards');
     let params = {

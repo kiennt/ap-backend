@@ -209,6 +209,20 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getNotifications', () => {
+    it('should return notifications count', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('notifications-count.json'));
+
+      let url = 'maia/notifications/counts/';
+      api.getNotifications().then((data) => {
+        expect(data.messages).toBe(0);
+        expect(api.get).toHaveBeenCalledWith(url, {}, {});
+        done();
+      });
+    });
+  });
+
   describe('getUserBoards', () => {
     it('should return list of boards when userId is valid', (done) => {
       spyOn(api, 'get').and.returnValue(
