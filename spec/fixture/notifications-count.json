@@ -1,0 +1,12 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-2f07517f",
+  "generated_at": "Fri, 17 Apr 2015 09:01:00 +0000",
+  "message": "OK",
+  "data": {
+    "messages": 0,
+    "user": 0,
+    "network": 0
+  }
+}

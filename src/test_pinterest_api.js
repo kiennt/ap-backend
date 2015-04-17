@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .getExperiments(true)
+      .getNotifications()
       .then((data) => {
         console.log(data);
       });
