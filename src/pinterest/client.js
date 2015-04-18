@@ -9,6 +9,7 @@ import '../exts/lodash';
 
 let AutocompleteNotFound = customError('AutocompleteNotFound');
 let SearchNotFound = customError('SearchNotFound');
+let CanNotOpenApp = customError('CanNotOpenApp');
 let CanNotOpenPin = customError('CanNotOpenPin');
 let CanNotOpenUser = customError('CanNotOpenUser');
 
@@ -24,6 +25,27 @@ export default class PinterestClient {
       .catch(AutocompleteNotFound, (error) => {
         return Promise.delay(this, _.random(100, 2000))
           .then(() => this._searchUser(fullName, predicate, maxPage));
+      });
+  }
+
+  openApp() {
+    let promisesExp = [
+      this.api.getExperiments(),
+      this.api.getExperiments(true)
+    ];
+    let experiments = Promise.all(promisesExp);
+
+    let notifications = experiments.then(() => {
+      return this.api.getNotifications();
+    }).then(() => {
+      return this.api.getNotifications();
+    });
+    return notifications
+      .then(() => {
+        return this.api.getFeeds(25);
+      })
+      .catch((error) => {
+        throw new CanNotOpenApp();
       });
   }
 
@@ -128,6 +150,7 @@ export default class PinterestClient {
     return {
       AutocompleteNotFound,
       SearchNotFound,
+      CanNotOpenApp,
       CanNotOpenPin,
       CanNotOpenUser
     };
