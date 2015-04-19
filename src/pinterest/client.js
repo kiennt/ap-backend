@@ -29,23 +29,13 @@ export default class PinterestClient {
   }
 
   openApp() {
-    let promisesExp = [
-      this.api.getExperiments(),
-      this.api.getExperiments(true)
-    ];
-    let experiments = Promise.all(promisesExp);
-
-    let notifications = experiments.then(() => {
-      return this.api.getNotifications();
-    }).then(() => {
-      return this.api.getNotifications();
-    });
-    return notifications
-      .then(() => {
-        return this.api.getFeeds(25);
-      })
+    return Promise
+      .all([this.api.getExperiments(), this.api.getExperiments(true)])
+      .then(() => this.api.getNotifications())
+      .then(() => this.api.getNotifications())
+      .then(() => this.api.getFeeds(25))
       .catch((error) => {
-        throw new CanNotOpenApp();
+        throw new CanNotOpenApp(error);
       });
   }
 
