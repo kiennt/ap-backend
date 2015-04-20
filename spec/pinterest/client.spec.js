@@ -363,8 +363,57 @@ describe('PinterestClient', () => {
             .toHaveBeenCalledWith(pinId, 1123, fakePin.description);
         })
         .catch((e) => {
-          console.log(e);
           fail('Should not throw error');
+        })
+        .then(done);
+    });
+  });
+
+  describe('openApp', () => {
+    let fakeExp = 'fakeExp';
+    let fakeNotifications = 'fakeNotifications';
+    let fakeFeeds = [{id: 1}, {id: 2}];
+    it('should return list of feeds', (done) => {
+      spyOn(client.api, 'getExperiments').and.returnValue(
+        Promise.resolve(fakeExp)
+      );
+      spyOn(client.api, 'getNotifications').and.returnValue(
+        Promise.resolve(fakeNotifications)
+      );
+      spyOn(client.api, 'getFeeds').and.returnValue(
+        Promise.resolve(fakeFeeds)
+      );
+
+      client.openApp()
+        .then((result) => {
+          expect(result).toEqual(fakeFeeds);
+          expect(client.api.getExperiments).toHaveBeenCalled();
+          expect(client.api.getNotifications).toHaveBeenCalled();
+          expect(client.api.getFeeds).toHaveBeenCalledWith(25);
+        })
+        .catch((e) => {
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+    it('should return error', (done) => {
+      spyOn(client.api, 'getExperiments').and.returnValue(
+        Promise.resolve(fakeExp)
+      );
+      spyOn(client.api, 'getNotifications').and.returnValue(
+        Promise.reject('error')
+      );
+      spyOn(client.api, 'getFeeds').and.returnValue(
+        Promise.resolve(fakeFeeds)
+      );
+
+      client.openApp()
+        .then((result) => {
+        })
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(errors.CanNotOpenApp));
+          expect(client.api.getExperiments).toHaveBeenCalled();
+          expect(client.api.getNotifications).toHaveBeenCalled();
         })
         .then(done);
     });
