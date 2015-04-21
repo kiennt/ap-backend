@@ -20,7 +20,7 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .openApp()
+      .likePin(488148047087266684)
       .then((data) => {
         console.log(data);
       });

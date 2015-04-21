@@ -418,4 +418,29 @@ describe('PinterestClient', () => {
         .then(done);
     });
   });
+
+  describe('likePin', () => {
+    let fakePin = {
+      id: 1
+    };
+    it('should return true', (done) => {
+      spyOn(client.api, 'likeAPin').and.returnValue(
+        Promise.resolve(true)
+      );
+      spyOn(client, '_openPin').and.returnValue(
+        Promise.resolve(fakePin)
+      );
+
+      client.likePin(1)
+        .then((result) => {
+          expect(result).toEqual(true);
+          expect(client.api.likeAPin).toHaveBeenCalledWith(1);
+          expect(client._openPin).toHaveBeenCalledWith(1);
+        })
+        .catch((e) => {
+          fail('Should not throw error');
+        })
+        .then(done);
+    });
+  });
 });
