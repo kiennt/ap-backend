@@ -236,7 +236,7 @@ export default class PinterestApi {
     if (bookmark) {
       params.bookmark = bookmark;
     }
-    return this.get(`boards/${boardId}/pins`, params, {}).then(JSON.parse);
+    return this.get(`boards/${boardId}/pins/`, params, {}).then(JSON.parse);
   }
 
   getRelatedPins(pinId, pageSize, bookmark) {

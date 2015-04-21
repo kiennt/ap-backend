@@ -229,7 +229,7 @@ describe('PinterestApi', () => {
       spyOn(api, 'get').and.returnValue(
         fixtureAsync('board-pins.json'));
 
-      let url = `boards/${validBoardId}/pins`;
+      let url = `boards/${validBoardId}/pins/`;
       let fields = Fields.getFields('getPinsOfBoard');
       let params = {
         'fields': fields,
