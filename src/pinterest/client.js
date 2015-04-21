@@ -28,6 +28,10 @@ export default class PinterestClient {
       });
   }
 
+  likePin(pinId) {
+    return this._openPin(pinId).then(() => this.api.likeAPin(pinId));
+  }
+
   openApp() {
     return Promise
       .all([this.api.getExperiments(), this.api.getExperiments(true)])
