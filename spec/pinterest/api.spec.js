@@ -497,6 +497,46 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('_batch', () => {
+    it('should return array', (done) => {
+      spyOn(api, 'post').and.returnValue(
+        fixtureAsync('batch.json'));
+
+      let url = 'batch/';
+      let requests = [{
+          method: 'GET',
+          uri: `/v3/boards/`
+        }, {
+          method: 'GET',
+          uri: `/v3/boards/pins/`
+        }
+      ];
+
+      api._batch(requests).then((data) => {
+        expect(data[0].status).toBe('fail');
+        expect(data[1].status).toBe('success');
+        expect(api.post).toHaveBeenCalledWith(
+          url, {}, {requests: JSON.stringify(requests)});
+        done();
+      });
+    });
+  });
+
+  describe('openBoard', () => {
+    it('should return array', (done) => {
+      spyOn(api, '_batch').and.returnValue(
+        fixtureAsync('board-open.json').then(JSON.parse)
+      );
+
+      api.openBoard(1).then(({boardDetail, pins}) => {
+        expect(boardDetail.category).toBe('sex');
+        expect(pins.data[0].id).toBe(11);
+        expect(api._batch).toHaveBeenCalled();
+        done();
+      });
+    });
+  });
+
   describe('repin', () => {
     it('should return result of repining when pinId is valid', (done) => {
       spyOn(api, 'post').and.returnValue(

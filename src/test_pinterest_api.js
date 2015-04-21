@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .getPinsOfBoard(155937274536657481, 25, 'LT4xNTU5MzcyMDU4MTcxOTY5NDQ6MjU6MjV8NzZhODk5MTM3NzBjNmMzZjA5ODk3MDcxZmFkYjVmZjFhMzM5NjFkZTEyYzUzOTgxNjFlNTZlMTExMDdiNGZiNw==')
+      .openBoard(155937274536657481)
       .then((data) => {
         console.log(data);
       });

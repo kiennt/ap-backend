@@ -4,6 +4,14 @@ const GET_BOARDS_OF_ME = 'board.id,board.url,board.name,board.category,' +
   'board.created_at,board.layout,board.collaborator_invites_enabled,' +
   'board.cover_images[60x60],board.is_collaborative,board.privacy';
 
+const GET_DETAIL_OF_BOARD = 'board.id,board.url,board.name,board.category,' +
+  'board.created_at,board.layout,board.collaborator_invites_enabled,' +
+  'board.image_cover_url,board.images[90x90],user.id,user.username,' +
+  'user.first_name,user.last_name,user.full_name,user.gender,user.partner(),' +
+  'user.image_medium_url,board.description,board.is_collaborative,' +
+  'board.collaborator_count,board.followed_by_me,board.collaborated_by_me,' +
+  'board.owner(),board.pin_count';
+
 const GET_DETAIL_OF_PIN = 'pin.images[136x136,736x],pin.id,' +
   'pin.description,' +
   'pin.image_medium_url,pin.image_medium_size_pixels,pin.created_at,' +
@@ -154,6 +162,7 @@ const SEARCH_TYPE_USER = 'user.id,user.username,user.first_name,' +
 const FIELDS = {
   'getAutoCompleteText': GET_AUTO_COMPLETE,
   'getBoardsOfMe': GET_BOARDS_OF_ME,
+  'getDetailOfBoard': GET_DETAIL_OF_BOARD,
   'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFeeds': GET_FEEDS,
   'getInfoOfMe': GET_INFO_OF_ME,
