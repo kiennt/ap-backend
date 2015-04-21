@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "code": 0,
+  "host": "ngapi2-91874dc3",
+  "generated_at": "Tue, 21 Apr 2015 09:06:01 +0000",
+  "message": "OK",
+  "data": {
+    "GET:/v3/boards/": {
+      "status": "fail"
+    },
+    "GET:/v3/boards/pins/": {
+      "status": "success"
+    }
+  }
+}

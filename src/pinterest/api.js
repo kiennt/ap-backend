@@ -65,6 +65,18 @@ export default class PinterestApi {
       httpMethod, absolutePath, params, data, this.httpHeaders);
   }
 
+  _batch(requests) {
+    let data = {requests: JSON.stringify(requests)};
+    return this.post('batch/', {}, data)
+      .then(JSON.parse)
+      .get('data')
+      .then((data) => {
+        return _(requests)
+          .map((req) => data[`${req.method}:${req.uri}`])
+          .value();
+      });
+  }
+
   commentAPin(pinId, text) {
     let data = {
       text: text
@@ -255,6 +267,37 @@ export default class PinterestApi {
   likeAPin(pinId) {
     return this.put(`pins/${pinId}/like/`, {}, {})
       .then(validateResponse).then((content) => true, (error) => false);
+  }
+
+  openBoard(boardId) {
+    let requests = [{
+        method: 'GET',
+        uri: `/v3/boards/${boardId}/`,
+        params: {fields: Fields.getFields('getDetailOfBoard')}
+      }, {
+        method: 'GET',
+        uri: `/v3/boards/${boardId}/collaborators/invites/me/`
+      }, {
+        method: 'GET',
+        uri: `/v3/boards/${boardId}/pins/`,
+        params: {fields: Fields.getFields('getPinsOfBoard')}
+      }, {
+        method: 'GET',
+        uri: '/v3/experiences/',
+        params: {
+          'extra_context': {'board_id': boardId},
+          'placement_ids': '20003'
+        }
+      }
+    ];
+    return this
+      ._batch(requests)
+      .spread((boardDetail, collaborators, pins, experiences) => {
+        return {
+          boardDetail: boardDetail.data,
+          pins: pins
+        };
+      });
   }
 
   repin(pinId, boardId, description) {
