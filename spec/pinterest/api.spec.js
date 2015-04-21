@@ -9,6 +9,7 @@ import {fixtureAsync} from '../fixtures';
 
 
 describe('PinterestApi', () => {
+  let validBoardId = '155937274536657481';
   let validPinId = '83879611786469438';
   let invalidPinId = '83879611786469438111111100000111';
   let validUserId = '10414780296729982';
@@ -218,6 +219,26 @@ describe('PinterestApi', () => {
       api.getNotifications().then((data) => {
         expect(data.messages).toBe(0);
         expect(api.get).toHaveBeenCalledWith(url, {}, {});
+        done();
+      });
+    });
+  });
+
+  describe('getPinsOfBoard', () => {
+    it('should return list of pins of board', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('board-pins.json'));
+
+      let url = `boards/${validBoardId}/pins/`;
+      let fields = Fields.getFields('getPinsOfBoard');
+      let params = {
+        'fields': fields,
+        'pageSize': 25
+      };
+      api.getPinsOfBoard(validBoardId, 25).then((response) => {
+        let data = response.data;
+        expect(data[0].id).toBe('155937205824405341');
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
         done();
       });
     });

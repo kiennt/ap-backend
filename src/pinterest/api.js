@@ -227,6 +227,18 @@ export default class PinterestApi {
       .then(JSON.parse).get('data');
   }
 
+  getPinsOfBoard(boardId, pageSize, bookmark) {
+    let fields = Fields.getFields('getPinsOfBoard');
+    let params = {
+      'fields': fields,
+      'pageSize': pageSize
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`boards/${boardId}/pins/`, params, {}).then(JSON.parse);
+  }
+
   getRelatedPins(pinId, pageSize, bookmark) {
     let fields = Fields.getFields('getRelatedPins');
     let params = {
