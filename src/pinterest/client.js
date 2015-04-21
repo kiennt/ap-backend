@@ -19,6 +19,40 @@ export default class PinterestClient {
     this.api = new PinterestApi(accessToken, httpHeaders);
   }
 
+  browseBoard(boardId, maxPage, fn) {
+    let boardDetail;
+    let shouldExit = false;
+    let done = () => shouldExit = true;
+
+    let browse = (currentPage, bookmark) => {
+      let pinsSource, nextBookmark;
+      if (!bookmark) {
+        pinsSource = this.api.openBoard(boardId)
+          .then((result) => {
+            boardDetail = result.boardDetail;
+            return result.pins;
+          });
+      } else {
+        pinsSource = this.api.getPinsOfBoard(boardId, 25, bookmark);
+      }
+
+      pinsSource
+        .then((body) => {
+          nextBookmark = body.bookmark;
+          return fn(boardDetail, body.data, done);
+        })
+        .then(() => {
+          shouldExit = shouldExit || (
+            nextBookmark === bookmark || currentPage >= maxPage);
+          if (!shouldExit) {
+            return Promise.delay(this, _.random(5000, 10000))
+              .then(() => browse(currentPage + 1, nextBookmark));
+          }
+        });
+    };
+    return browse(1, undefined);
+  }
+
   findAnUser(fullName, predicate) {
     let maxPage = _.random(5, 7);
     return this._autocompleteUser(fullName, predicate)
