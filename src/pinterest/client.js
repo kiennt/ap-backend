@@ -19,38 +19,30 @@ export default class PinterestClient {
     this.api = new PinterestApi(accessToken, httpHeaders);
   }
 
-  browseBoard(boardId, maxPage, fn) {
+  browseBoard(boardId, maxPage, perform) {
     let boardDetail;
-    let shouldExit = false;
-    let done = () => shouldExit = true;
+    let isDone = false;
+    let done = () => isDone = true;
 
     let browse = (currentPage, bookmark) => {
-      let pinsSource, nextBookmark;
-      if (!bookmark) {
-        pinsSource = this.api.openBoard(boardId)
-          .then((result) => {
-            boardDetail = result.boardDetail;
-            return result.pins;
-          });
-      } else {
-        pinsSource = this.api.getPinsOfBoard(boardId, 25, bookmark);
-      }
+      let pinsSource = bookmark
+        ? this.api.getPinsOfBoard(boardId, 25, bookmark)
+        : this.api.openBoard(boardId)
+            .tap((result) => boardDetail = result.boardDetail)
+            .get('pins');
 
+      // DISCUSS: Đang suy nghĩ về việc mình có nên đẩy boardDetail lên ko?
       pinsSource
+        .tap((body) => perform(boardDetail, body.data, done))
         .then((body) => {
-          nextBookmark = body.bookmark;
-          return fn(boardDetail, body.data, done);
-        })
-        .then(() => {
-          shouldExit = shouldExit || (
-            nextBookmark === bookmark || currentPage >= maxPage);
-          if (!shouldExit) {
+          let nextBookmark = body.bookmark;
+          if (!isDone && nextBookmark !== bookmark && currentPage < maxPage) {
             return Promise.delay(this, _.random(5000, 10000))
               .then(() => browse(currentPage + 1, nextBookmark));
           }
         });
     };
-    return browse(1, undefined);
+    return browse(1);
   }
 
   findAnUser(fullName, predicate) {
