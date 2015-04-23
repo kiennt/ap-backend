@@ -20,20 +20,17 @@ export default class PinterestClient {
   }
 
   browseBoard(boardId, maxPage, perform) {
-    let boardDetail;
     let isDone = false;
     let done = () => isDone = true;
 
     let browse = (currentPage, bookmark) => {
       let pinsSource = bookmark
         ? this.api.getPinsOfBoard(boardId, 25, bookmark)
-        : this.api.openBoard(boardId)
-            .tap((result) => boardDetail = result.boardDetail)
-            .get('pins');
+        : this.api.openBoard(boardId).get('pins');
 
       // DISCUSS: Đang suy nghĩ về việc mình có nên đẩy boardDetail lên ko?
       pinsSource
-        .tap((body) => perform(boardDetail, body.data, done))
+        .tap((body) => perform(body.data, done))
         .then((body) => {
           let nextBookmark = body.bookmark;
           if (!isDone && nextBookmark !== bookmark && currentPage < maxPage) {
