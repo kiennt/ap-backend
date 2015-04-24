@@ -20,7 +20,7 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .browseBoard('424816246039528614', 2, (pins, done) => {
+      .browseBoard('424816246039528614', 1000, (pins, done) => {
         console.log(_(pins).map('id').value());
         console.log(pins[0]);
       });

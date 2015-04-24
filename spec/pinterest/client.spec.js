@@ -4,6 +4,7 @@ import Promise from 'bluebird';
 import PinterestClient from '../../dist/pinterest/client';
 import PinterestApi from '../../dist/pinterest/api';
 import httpHeaders from '../../dist/config/http-headers';
+import {customError} from '../../dist/lib/errors';
 
 
 describe('PinterestClient', () => {
@@ -19,6 +20,87 @@ describe('PinterestClient', () => {
     });
     spyOn(Promise.prototype, 'delay').and.callFake(function () {
       return Promise.resolve(this);
+    });
+  });
+
+  describe('browseBoard', () => {
+    let boardId = 123;
+    let maxPage = 3;
+
+    beforeEach(() => {
+      spyOn(client.api, 'openBoard').and.returnValue(
+        Promise.resolve({pins: {
+          bookmark: 1,
+          data: [0]
+        }}));
+    });
+
+    it('should go through exact maxPage', (done) => {
+      spyOn(client.api, 'getPinsOfBoard').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark + 1,
+          data: [bookmark]
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseBoard(boardId, maxPage, spy)
+        .then(() => {
+          expect(client.api.openBoard).toHaveBeenCalledWith(boardId);
+          expect(client.api.getPinsOfBoard.calls.count()).toBe(2);
+          expect(spy.calls.count()).toBe(maxPage);
+          for (let i = 0; i < maxPage; i++) {
+            expect(spy).toHaveBeenCalledWith([i], jasmine.any(Function));
+            if (i > 0) {
+              expect(client.api.getPinsOfBoard).toHaveBeenCalledWith(
+                boardId, 25, i);
+            }
+          }
+        })
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end when bookmark is unchanged', (done) => {
+      spyOn(client.api, 'getPinsOfBoard').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseBoard(boardId, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(2))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end immediately when done is called', (done) => {
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((x, done) => done());
+
+      client.browseBoard(boardId, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(1))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should reject when a page fail', (done) => {
+      let SampleError = customError('SampleError');
+
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((x, y) => {
+        throw new SampleError('Hello');
+      });
+
+      client.browseBoard(boardId, maxPage, spy)
+        .then(() => fail('Should not success'))
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(SampleError));
+          expect(spy.calls.count(), 1);
+        })
+        .then(done);
     });
   });
 
