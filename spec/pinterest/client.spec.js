@@ -104,7 +104,7 @@ describe('PinterestClient', () => {
     });
   });
 
-  describe('browseFeeds', () => {
+  describe('browseMoreFeeds', () => {
     let firstBookmark = 'firstBookmark';
     let maxPage = 3;
 
@@ -117,7 +117,7 @@ describe('PinterestClient', () => {
       });
 
       let spy = jasmine.createSpy('spy');
-      client.browseFeeds(1, maxPage, spy)
+      client.browseMoreFeeds(1, maxPage, spy)
         .then(() => {
           expect(client.api.getFeeds.calls.count()).toBe(3);
           expect(spy.calls.count()).toBe(maxPage);
@@ -138,7 +138,7 @@ describe('PinterestClient', () => {
       });
 
       let spy = jasmine.createSpy('spy');
-      client.browseFeeds(1, maxPage, spy)
+      client.browseMoreFeeds(1, maxPage, spy)
         .then(() => expect(spy.calls.count()).toBe(1))
         .catch((e) => fail('Should not fail'))
         .then(done);
@@ -155,7 +155,7 @@ describe('PinterestClient', () => {
       let spy = jasmine.createSpy(spy);
       spy.and.callFake((data, done) => done());
 
-      client.browseFeeds(1, maxPage, spy)
+      client.browseMoreFeeds(1, maxPage, spy)
         .then(() => expect(spy.calls.count()).toBe(1))
         .catch((e) => fail('Should not fail'))
         .then(done);
@@ -175,7 +175,7 @@ describe('PinterestClient', () => {
         throw new SampleError('Hello');
       });
 
-      client.browseFeeds(1, maxPage, spy)
+      client.browseMoreFeeds(1, maxPage, spy)
         .then(() => fail('Should not success'))
         .catch((error) => {
           expect(error).toEqual(jasmine.any(SampleError));

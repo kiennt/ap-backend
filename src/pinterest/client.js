@@ -44,7 +44,7 @@ export default class PinterestClient {
     return browse(1);
   }
 
-  browseFeeds(bookmark, maxPage, perform) {
+  browseMoreFeeds(bookmark, maxPage, perform) {
     let isDone = false;
     let done = function() {
       isDone = true;

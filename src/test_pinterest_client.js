@@ -22,10 +22,10 @@ export default class TestPinterestClient {
     this.client
       .openApp()
       .then((body) => {
-        return Promise.resolve(body.bookmark);
+        return body.bookmark;
       })
       .then((bookmark) => {
-        this.client.browseFeeds(bookmark, 2, (feeds, done) => {
+        this.client.browseMoreFeeds(bookmark, 2, (feeds, done) => {
           console.log(_(feeds).map('id').value());
           console.log(feeds[0]);
           done();
