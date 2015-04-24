@@ -44,6 +44,29 @@ export default class PinterestClient {
     return browse(1);
   }
 
+  browseFeeds(bookmark, maxPage, perform) {
+    let isDone = false;
+    let done = function() {
+      isDone = true;
+    };
+
+    let browse = (currentPage, bookmark) => {
+      let feedsSource = this.api.getFeeds(25, bookmark);
+
+      return feedsSource
+        .tap((body) => perform(body.data, done))
+        .then((body) => {
+          let nextBookmark = body.bookmark;
+          let isDataLeft = nextBookmark && (nextBookmark !== bookmark);
+          if (!isDone && isDataLeft && currentPage < maxPage) {
+            return Promise.delay(this, _.random(5000, 10000))
+              .then(() => browse(currentPage + 1, nextBookmark));
+          }
+        });
+    };
+    return browse(1, bookmark);
+  }
+
   findAnUser(fullName, predicate) {
     let maxPage = _.random(5, 7);
     return this._autocompleteUser(fullName, predicate)

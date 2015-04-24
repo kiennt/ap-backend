@@ -20,10 +20,16 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .browseBoard('424816246039528614', 1000, (pins, done) => {
-        console.log(_(pins).map('id').value());
-        console.log(pins[0]);
+      .openApp()
+      .then((body) => {
+        return Promise.resolve(body.bookmark);
+      })
+      .then((bookmark) => {
+        this.client.browseFeeds(bookmark, 2, (feeds, done) => {
+          console.log(_(feeds).map('id').value());
+          console.log(feeds[0]);
+          done();
+        });
       });
-    /*eslint-enable*/
   }
 }
