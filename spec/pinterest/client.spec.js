@@ -105,7 +105,6 @@ describe('PinterestClient', () => {
   });
 
   describe('browseMoreFeeds', () => {
-    let firstBookmark = 'firstBookmark';
     let maxPage = 3;
 
     it('should go through exact maxPage', (done) => {
