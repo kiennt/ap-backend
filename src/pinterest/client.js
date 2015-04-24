@@ -19,6 +19,31 @@ export default class PinterestClient {
     this.api = new PinterestApi(accessToken, httpHeaders);
   }
 
+  browseBoard(boardId, maxPage, perform) {
+    let isDone = false;
+    let done = function() {
+      isDone = true;
+    };
+
+    let browse = (currentPage, bookmark) => {
+      let pinsSource = bookmark
+        ? this.api.getPinsOfBoard(boardId, 25, bookmark)
+        : this.api.openBoard(boardId).get('pins');
+
+      return pinsSource
+        .tap((body) => perform(body.data, done))
+        .then((body) => {
+          let nextBookmark = body.bookmark;
+          let isDataLeft = nextBookmark && (nextBookmark !== bookmark);
+          if (!isDone && isDataLeft && currentPage < maxPage) {
+            return Promise.delay(this, _.random(5000, 10000))
+              .then(() => browse(currentPage + 1, nextBookmark));
+          }
+        });
+    };
+    return browse(1);
+  }
+
   findAnUser(fullName, predicate) {
     let maxPage = _.random(5, 7);
     return this._autocompleteUser(fullName, predicate)
@@ -129,7 +154,8 @@ export default class PinterestClient {
           return result;
         } else {
           let nextBookmark = body.bookmark;
-          if (nextBookmark === bookmark || currentPage >= maxPage) {
+          let isDataLeft = nextBookmark && (nextBookmark !== bookmark);
+          if (!isDataLeft || currentPage >= maxPage) {
             throw new SearchNotFound([query, maxPage]);
           } else {
             return Promise.delay(this, _.random(2000, 4000))
