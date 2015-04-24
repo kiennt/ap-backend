@@ -104,6 +104,86 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('browseMoreFeeds', () => {
+    let maxPage = 3;
+
+    it('should go through exact maxPage', (done) => {
+      spyOn(client.api, 'getFeeds').and.callFake((pageSize, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark + 1,
+          data: [bookmark]
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseMoreFeeds(1, maxPage, spy)
+        .then(() => {
+          expect(client.api.getFeeds.calls.count()).toBe(3);
+          expect(spy.calls.count()).toBe(maxPage);
+          for (let i = 1; i < maxPage; i++) {
+            expect(client.api.getFeeds).toHaveBeenCalledWith(25, i);
+          }
+        })
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end when bookmark is unchanged', (done) => {
+      spyOn(client.api, 'getFeeds').and.callFake((pageSize, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseMoreFeeds(1, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(1))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end immediately when done is called', (done) => {
+      spyOn(client.api, 'getFeeds').and.callFake((pageSize, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((data, done) => done());
+
+      client.browseMoreFeeds(1, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(1))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should reject when a feed fail', (done) => {
+      let SampleError = customError('SampleError');
+      spyOn(client.api, 'getFeeds').and.callFake((pageSize, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((x, y) => {
+        throw new SampleError('Hello');
+      });
+
+      client.browseMoreFeeds(1, maxPage, spy)
+        .then(() => fail('Should not success'))
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(SampleError));
+          expect(spy.calls.count(), 1);
+        })
+        .then(done);
+    });
+  });
+
   describe('findAnUser', () => {
     let maxPage = 3;
     let query = 'Nova';
