@@ -26,9 +26,7 @@ export default class TestPinterestClient {
       })
       .then((bookmark) => {
         this.client.browseMoreFeeds(bookmark, 2, (feeds, done) => {
-          console.log(_(feeds).map('id').value());
-          console.log(feeds[0]);
-          done();
+          console.log(feeds);
         });
       });
   }
