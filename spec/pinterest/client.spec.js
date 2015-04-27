@@ -11,7 +11,7 @@ describe('PinterestClient', () => {
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
-  let errors = client._errors();
+  let errors = PinterestClient.Errors;
 
   beforeAll(() => {
     spyOn(Promise, 'delay').and.callFake(function (value, time) {

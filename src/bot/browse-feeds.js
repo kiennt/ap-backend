@@ -31,7 +31,7 @@ export class Bot {
         .then((result) => {
           console.log('repin', feed.id, result);
         })
-        .catch(this.client._errors().PinExisted, (e) => console.log(e));
+        .catch(PinterestClient.Errors.PinExisted, (e) => console.log(e));
     }
   }
 

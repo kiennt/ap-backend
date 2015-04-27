@@ -127,7 +127,7 @@ export default class PinterestClient {
         return {userInfo, boards, pins, likedPins};
       })
       .catch((error) => {
-        throw new CanNotOpenUser(userId);
+        throw new CanNotOpenUser(error, {userId});
       });
   }
 
@@ -194,7 +194,7 @@ export default class PinterestClient {
         return {pin, relatedPins};
       })
       .catch((error) => {
-        throw new CanNotOpenPin(pinId);
+        throw new CanNotOpenPin(error, {pinId});
       });
   }
 
@@ -218,15 +218,13 @@ export default class PinterestClient {
         }
       });
   }
-
-  _errors() {
-    return {
-      AutocompleteNotFound,
-      SearchNotFound,
-      CanNotOpenApp,
-      CanNotOpenPin,
-      CanNotOpenUser,
-      PinExisted
-    };
-  }
 }
+
+PinterestClient.Errors = {
+  AutocompleteNotFound,
+  SearchNotFound,
+  CanNotOpenApp,
+  CanNotOpenPin,
+  CanNotOpenUser,
+  PinExisted
+};
