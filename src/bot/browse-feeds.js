@@ -16,22 +16,34 @@ export class Bot {
     }
   }
 
+  processAFeed(feed) {
+    let choice = _.random(1, 4);
+    if (choice === 1) {
+      return this.client
+        .likePin(feed.id)
+        .then((result) => {
+          console.log('like', feed.id, result);
+        });
+    } else {
+      return this.client
+        .repin(feed.id)
+        .then((result) => {
+          console.log('repin', feed.id, result);
+        });
+    }
+  }
+
   processFeeds(feeds) {
-    let unlikedFeeds = _(feeds)
-      .filter((feed) => !feeds['liked_by_me'])
+    let availableFeeds = _(feeds)
+      .filter((feed) => !feed['liked_by_me'])
+      .filter((feed) => !feed['pinned_to_board'])
       .value();
-    let chosenFeeds = _.randomSample(unlikedFeeds, 20, 40);
+    let chosenFeeds = _.randomSample(availableFeeds, 20, 40);
     console.log(_(chosenFeeds).map((feed) => feed.id).value());
 
-    return Promise.resolve(chosenFeeds)
-      .each((feed) => {
-        return this.client
-          .likePin(feed.id)
-          .then((result) => {
-            console.log(feed.id, result);
-          })
-          .delay(5000, 10000);
-      });
+    return Promise.resolve(chosenFeeds).each((feed) => {
+      return this.processAFeed(feed).delay(5000, 10000);
+    });
   }
 
   run() {
