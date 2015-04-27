@@ -54,14 +54,12 @@ export class Bot {
       .then((body) => {
         let firstFeeds = body.data;
         let bookmark = body.bookmark;
-        return this.processFeeds(firstFeeds)
-          .delay(3000, 10000)
-          .then(() => bookmark);
+        return this.processFeeds(firstFeeds).then(() => bookmark);
       })
       .then((bookmark) => {
         return this.client
           .browseMoreFeeds(bookmark, numberOfPages, (feeds, done) => {
-            return this.processFeeds(feeds).delay(3000, 10000);
+            return this.processFeeds(feeds);
           });
       })
       .catch((exception) => {
