@@ -45,7 +45,28 @@ export default class PinterestClient {
     return browse(1);
   }
 
-  browseMoreFeeds(bookmark, maxPage, perform) {
+  browseMoreUserPins(originalBookmark, userId, maxPage, perform) {
+    let isDone = false;
+    let done = function() {
+      isDone = true;
+    };
+
+    let browse = (currentPage, bookmark) => {
+      return this.api.getUserPins(userId, 25, bookmark)
+        .tap((body) => perform(body.data, done))
+        .then((body) => {
+          let nextBookmark = body.bookmark;
+          let isDataLeft = nextBookmark && (nextBookmark !== bookmark);
+          if (!isDone && isDataLeft && currentPage < maxPage) {
+            return Promise.delay(this, _.random(5000, 10000))
+              .then(() => browse(currentPage + 1, nextBookmark));
+          }
+        });
+    };
+    return browse(1, originalBookmark);
+  }
+
+  browseMoreFeeds(originalBookmark, maxPage, perform) {
     let isDone = false;
     let done = function() {
       isDone = true;
@@ -65,7 +86,7 @@ export default class PinterestClient {
           }
         });
     };
-    return browse(1, bookmark);
+    return browse(1, originalBookmark);
   }
 
   findAnUser(fullName, predicate) {
