@@ -4,6 +4,7 @@ import Promise from 'bluebird';
 import PinterestClient from '../pinterest/client';
 import Authentication from '../lib/authentication';
 import HttpHeaders from '../config/http-headers';
+import {customError} from '../lib/errors';
 
 import '../exts/lodash';
 
@@ -17,8 +18,8 @@ export class Bot {
   }
 
   processAFeed(feed) {
-    let isLiked = _.randomBoolean(22, 78);
-    if (isLiked) {
+    let willLike = _.randomBoolean(22, 78);
+    if (willLike) {
       return this.client
         .likePin(feed.id)
         .then((result) => {
@@ -30,18 +31,13 @@ export class Bot {
         .then((result) => {
           console.log('repin', feed.id, result);
         })
-        .catch((exception) => {
-          if (exception.name !== 'PinIsRepined') {
-            throw exception;
-          }
-          console.log('PinIsRepined', feed.id);
-        });
+        .catch(this.client._errors().PinIsRepined, (e) => console.log(e));
     }
   }
 
   processFeeds(feeds) {
     let availableFeeds = _(feeds)
-      .filter((feed) => !feed['liked_by_me'])
+      .filter('liked_by_me', false)
       .value();
     let chosenFeeds = _.randomSample(availableFeeds, 20, 40);
     console.log(_(chosenFeeds).map((feed) => feed.id).value());
