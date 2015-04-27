@@ -118,7 +118,7 @@ export default class PinterestClient {
       .tap((boards) => {
         let pin = pinDetail.value().pin;
         if (pin['pinned_to_board']) {
-          throw new PinIsRepined(pin);
+          throw new PinExisted(pin);
         }
       })
       .delay(_.random(10000, 60000))
