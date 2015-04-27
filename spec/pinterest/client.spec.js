@@ -449,13 +449,14 @@ describe('PinterestClient', () => {
   describe('repin', () => {
     let pinId = 1;
     let fakePin = {
-      id: 1,
-      board: {
+      'id': 1,
+      'board': {
         id: 11,
         name: 'this is test name',
         category: 'this is test category'
       },
-      description: 'this is description'
+      'pinned_to_board': null,
+      'description': 'this is description'
     };
     let fakeRelatedPins = {data: [{id: 1}]};
 

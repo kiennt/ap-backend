@@ -1,7 +1,7 @@
 import Promise from 'bluebird';
 
 import httpHeaders from './config/http-headers';
-import { Bot } from './bot/find-user';
+import { Bot } from './bot/browse-feeds';
 import TestPinterestApi from './test_pinterest_api';
 import TestPinterestClient from './test_pinterest_client';
 import Errors from './lib/errors';
@@ -55,5 +55,5 @@ function testPinterestClient() {
 }
 
 // testPinterestApi();
-// checkBot();
-testPinterestClient();
+checkBot();
+// testPinterestClient();
