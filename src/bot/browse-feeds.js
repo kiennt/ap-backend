@@ -17,8 +17,8 @@ export class Bot {
   }
 
   processAFeed(feed) {
-    let choice = _.random(1, 4);
-    if (choice === 1) {
+    let isLiked = _.randomBoolean(22, 78);
+    if (isLiked) {
       return this.client
         .likePin(feed.id)
         .then((result) => {
@@ -29,6 +29,12 @@ export class Bot {
         .repin(feed.id)
         .then((result) => {
           console.log('repin', feed.id, result);
+        })
+        .catch((exception) => {
+          if (exception.name !== 'PinIsRepined') {
+            throw exception;
+          }
+          console.log('PinIsRepined', feed.id);
         });
     }
   }
@@ -36,7 +42,6 @@ export class Bot {
   processFeeds(feeds) {
     let availableFeeds = _(feeds)
       .filter((feed) => !feed['liked_by_me'])
-      .filter((feed) => !feed['pinned_to_board'])
       .value();
     let chosenFeeds = _.randomSample(availableFeeds, 20, 40);
     console.log(_(chosenFeeds).map((feed) => feed.id).value());
@@ -58,9 +63,10 @@ export class Bot {
           .then(() => bookmark);
       })
       .then((bookmark) => {
-        this.client.browseMoreFeeds(bookmark, numberOfPages, (feeds, done) => {
-          return this.processFeeds(feeds).delay(3000, 10000);
-        });
+        return this.client
+          .browseMoreFeeds(bookmark, numberOfPages, (feeds, done) => {
+            return this.processFeeds(feeds).delay(3000, 10000);
+          });
       })
       .catch((exception) => {
         console.log(exception);

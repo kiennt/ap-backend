@@ -12,6 +12,7 @@ let SearchNotFound = customError('SearchNotFound');
 let CanNotOpenApp = customError('CanNotOpenApp');
 let CanNotOpenPin = customError('CanNotOpenPin');
 let CanNotOpenUser = customError('CanNotOpenUser');
+let PinIsRepined = customError('PinIsRepined');
 
 
 export default class PinterestClient {
@@ -112,7 +113,13 @@ export default class PinterestClient {
     let myBoards = pinDetail.then(() => this.api.getBoardsOfMe());
 
     return myBoards
-      .delay(_.random(20000, 100000))
+      .tap((boards) => {
+        let pin = pinDetail.value().pin;
+        if (pin['pinned_to_board']) {
+          throw new PinIsRepined(pin);
+        }
+      })
+      .delay(_.random(10000, 60000))
       .then((boards) => {
         let pin = pinDetail.value().pin;
         let chosenBoard = _(boards).find((board) => {
@@ -195,7 +202,8 @@ export default class PinterestClient {
       SearchNotFound,
       CanNotOpenApp,
       CanNotOpenPin,
-      CanNotOpenUser
+      CanNotOpenUser,
+      PinIsRepined
     };
   }
 }

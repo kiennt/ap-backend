@@ -18,8 +18,13 @@ function normalizedString(str) {
   return changeCase.titleCase(str);
 }
 
-function randomBoolean() {
-  return Boolean(lodash.random(1));
+function randomBoolean(trueRatio, falseRatio) {
+  if (trueRatio === undefined || falseRatio === undefined) {
+    return Boolean(lodash.random(1));
+  } else {
+    let rolledNumber = lodash.random(trueRatio + falseRatio - 1);
+    return (rolledNumber < trueRatio);
+  }
 }
 
 function randomSample(collection, min, max) {
