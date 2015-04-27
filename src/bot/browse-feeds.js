@@ -31,7 +31,7 @@ export class Bot {
         .then((result) => {
           console.log('repin', feed.id, result);
         })
-        .catch(this.client._errors().PinIsRepined, (e) => console.log(e));
+        .catch(this.client._errors().PinExisted, (e) => console.log(e));
     }
   }
 
@@ -43,7 +43,7 @@ export class Bot {
     console.log(_(chosenFeeds).map((feed) => feed.id).value());
 
     return Promise.resolve(chosenFeeds).each((feed) => {
-      return this.processAFeed(feed).delay(5000, 10000);
+      return this.processAFeed(feed);
     });
   }
 

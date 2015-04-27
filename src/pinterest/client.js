@@ -12,7 +12,7 @@ let SearchNotFound = customError('SearchNotFound');
 let CanNotOpenApp = customError('CanNotOpenApp');
 let CanNotOpenPin = customError('CanNotOpenPin');
 let CanNotOpenUser = customError('CanNotOpenUser');
-let PinIsRepined = customError('PinIsRepined');
+let PinExisted = customError('PinExisted');
 
 
 export default class PinterestClient {
@@ -78,7 +78,9 @@ export default class PinterestClient {
   }
 
   likePin(pinId) {
-    return this._openPin(pinId).then(() => this.api.likeAPin(pinId));
+    return this._openPin(pinId)
+      .then(() => this.api.likeAPin(pinId))
+      .delay(3000, 10000);
   }
 
   openApp() {
@@ -203,7 +205,7 @@ export default class PinterestClient {
       CanNotOpenApp,
       CanNotOpenPin,
       CanNotOpenUser,
-      PinIsRepined
+      PinExisted
     };
   }
 }
