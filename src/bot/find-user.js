@@ -24,13 +24,15 @@ export class Bot {
   }
 
   run() {
-    this.client.findAnUser(targetQuery, predicate)
+    this.client.openApp()
+      .then(() => this.client.findAnUser(targetQuery, predicate))
       .then((user) => {
-        // We found the user by using appropriate behaviors
-        // There's no risk about it
-        console.log(user);
+        return this.client.openUserPage(user.id)
+          .then(({userInfo, boards, pins, likedPins}) => {
+            console.log(userInfo.followed_by_me);
+          });
       })
-      .catch((e) => e.name === 'SearchNotFound',
+      .catch(PinterestClient.Errors.SearchNotFound,
         (e) => console.error('Can not found with any ways'));
   }
 }

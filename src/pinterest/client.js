@@ -45,7 +45,28 @@ export default class PinterestClient {
     return browse(1);
   }
 
-  browseMoreFeeds(bookmark, maxPage, perform) {
+  browseMoreUserPins(originalBookmark, userId, maxPage, perform) {
+    let isDone = false;
+    let done = function() {
+      isDone = true;
+    };
+
+    let browse = (currentPage, bookmark) => {
+      return this.api.getUserPins(userId, 25, bookmark)
+        .tap((body) => perform(body.data, done))
+        .then((body) => {
+          let nextBookmark = body.bookmark;
+          let isDataLeft = nextBookmark && (nextBookmark !== bookmark);
+          if (!isDone && isDataLeft && currentPage < maxPage) {
+            return Promise.delay(this, _.random(5000, 10000))
+              .then(() => browse(currentPage + 1, nextBookmark));
+          }
+        });
+    };
+    return browse(1, originalBookmark);
+  }
+
+  browseMoreFeeds(originalBookmark, maxPage, perform) {
     let isDone = false;
     let done = function() {
       isDone = true;
@@ -65,7 +86,7 @@ export default class PinterestClient {
           }
         });
     };
-    return browse(1, bookmark);
+    return browse(1, originalBookmark);
   }
 
   findAnUser(fullName, predicate) {
@@ -106,7 +127,7 @@ export default class PinterestClient {
         return {userInfo, boards, pins, likedPins};
       })
       .catch((error) => {
-        throw new CanNotOpenUser(userId);
+        throw new CanNotOpenUser(error, {userId});
       });
   }
 
@@ -173,7 +194,7 @@ export default class PinterestClient {
         return {pin, relatedPins};
       })
       .catch((error) => {
-        throw new CanNotOpenPin(pinId);
+        throw new CanNotOpenPin(error, {pinId});
       });
   }
 
@@ -197,15 +218,13 @@ export default class PinterestClient {
         }
       });
   }
-
-  _errors() {
-    return {
-      AutocompleteNotFound,
-      SearchNotFound,
-      CanNotOpenApp,
-      CanNotOpenPin,
-      CanNotOpenUser,
-      PinExisted
-    };
-  }
 }
+
+PinterestClient.Errors = {
+  AutocompleteNotFound,
+  SearchNotFound,
+  CanNotOpenApp,
+  CanNotOpenPin,
+  CanNotOpenUser,
+  PinExisted
+};

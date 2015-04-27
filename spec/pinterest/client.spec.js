@@ -11,7 +11,7 @@ describe('PinterestClient', () => {
   let accessToken = 'this_is_access_token';
   let headers = httpHeaders.randomHeaders();
   let client = new PinterestClient(accessToken, headers);
-  let errors = client._errors();
+  let errors = PinterestClient.Errors;
 
   beforeAll(() => {
     spyOn(Promise, 'delay').and.callFake(function (value, time) {
@@ -104,6 +104,88 @@ describe('PinterestClient', () => {
     });
   });
 
+  describe('browseMoreUserPins', () => {
+    let userId = 123456789;
+    let maxPage = 3;
+
+    it('should go through exact maxPage', (done) => {
+      spyOn(client.api, 'getUserPins').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark + 1,
+          data: [bookmark]
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseMoreUserPins(1, userId, maxPage, spy)
+        .then(() => {
+          expect(client.api.getUserPins.calls.count()).toBe(3);
+          expect(spy.calls.count()).toBe(maxPage);
+          for (let i = 1; i < maxPage; i++) {
+            expect(client.api.getUserPins).toHaveBeenCalledWith(
+              userId, 25, i);
+          }
+        })
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end when bookmark is unchanged', (done) => {
+      spyOn(client.api, 'getUserPins').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy('spy');
+      client.browseMoreUserPins(1, userId, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(1))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should end immediately when done is called', (done) => {
+      spyOn(client.api, 'getUserPins').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((data, done) => done());
+
+      client.browseMoreUserPins(1, userId, maxPage, spy)
+        .then(() => expect(spy.calls.count()).toBe(1))
+        .catch((e) => fail('Should not fail'))
+        .then(done);
+    });
+
+    it('should reject when a page fail', (done) => {
+      let SampleError = customError('SampleError');
+      spyOn(client.api, 'getUserPins').and.callFake((x, y, bookmark) => {
+        return Promise.resolve({
+          bookmark: bookmark,
+          data: []
+        });
+      });
+
+      let spy = jasmine.createSpy(spy);
+      spy.and.callFake((x, y) => {
+        throw new SampleError('Hello');
+      });
+
+      client.browseMoreUserPins(1, userId, maxPage, spy)
+        .then(() => fail('Should not success'))
+        .catch((error) => {
+          expect(error).toEqual(jasmine.any(SampleError));
+          expect(spy.calls.count(), 1);
+        })
+        .then(done);
+    });
+  });
+
   describe('browseMoreFeeds', () => {
     let maxPage = 3;
 
@@ -160,7 +242,7 @@ describe('PinterestClient', () => {
         .then(done);
     });
 
-    it('should reject when a feed fail', (done) => {
+    it('should reject when a page fail', (done) => {
       let SampleError = customError('SampleError');
       spyOn(client.api, 'getFeeds').and.callFake((pageSize, bookmark) => {
         return Promise.resolve({
