@@ -42,6 +42,18 @@ describe('lodash extension', () => {
       let result = _.isSimilarString(str1, str2);
       expect(result).toBe(true);
     });
+    it('should return true', () => {
+      let str1 = 'aa__--bb_--C_C';
+      let str2 = 'aaaaAA BB CC   ccc';
+      let result = _.isSimilarString(str1, str2);
+      expect(result).toBe(true);
+    });
+    it('should return true', () => {
+      let str1 = 'aa__--bb_--C_Cddd';
+      let str2 = 'AA BB CC';
+      let result = _.isSimilarString(str1, str2);
+      expect(result).toBe(true);
+    });
     it('should return false', () => {
       let str1 = 'Aa_bBb_Cc';
       let str2 = 'AA BB CC';

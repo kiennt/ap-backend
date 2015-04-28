@@ -11,7 +11,7 @@ function isSimilarString(str1, str2) {
   }
   str1 = str1.replace(SPECIAL_REGEX, '').toLowerCase();
   str2 = str2.replace(SPECIAL_REGEX, '').toLowerCase();
-  return (str1 === str2);
+  return (str1.indexOf(str2) >= 0 || str2.indexOf(str1) >= 0);
 }
 
 function normalizedString(str) {
