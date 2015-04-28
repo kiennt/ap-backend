@@ -141,7 +141,8 @@ export default class PinterestClient {
       .then((board) => {
         let pin = pinDetail.value().pin;
         return this.api.repin(pinId, board.id, pin.description);
-      });
+      })
+      .delay(2000, 5000);
   }
 
   _autocompleteUser(query, predicate, sliceIndex) {
