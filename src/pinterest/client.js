@@ -79,7 +79,7 @@ export default class PinterestClient {
 
   likePin(pinId) {
     return this._openPin(pinId)
-      .delay(10000, 30000)
+      .delay(_.random(10000, 30000))
       .then(() => this.api.likeAPin(pinId));
   }
 
