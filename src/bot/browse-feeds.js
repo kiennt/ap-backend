@@ -43,7 +43,7 @@ export class Bot {
     console.log(_(chosenFeeds).map((feed) => feed.id).value());
 
     return Promise.resolve(chosenFeeds).each((feed) => {
-      return this.processAFeed(feed);
+      return this.processAFeed(feed).delay(2000, 5000);
     });
   }
 

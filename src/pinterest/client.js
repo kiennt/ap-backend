@@ -79,8 +79,8 @@ export default class PinterestClient {
 
   likePin(pinId) {
     return this._openPin(pinId)
-      .then(() => this.api.likeAPin(pinId))
-      .delay(10000, 30000);
+      .delay(10000, 30000)
+      .then(() => this.api.likeAPin(pinId));
   }
 
   openApp() {
@@ -141,8 +141,7 @@ export default class PinterestClient {
       .then((board) => {
         let pin = pinDetail.value().pin;
         return this.api.repin(pinId, board.id, pin.description);
-      })
-      .delay(2000, 5000);
+      });
   }
 
   _autocompleteUser(query, predicate, sliceIndex) {
