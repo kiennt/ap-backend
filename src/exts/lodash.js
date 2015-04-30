@@ -2,19 +2,20 @@ import lodash from 'lodash';
 import changeCase from 'change-case';
 
 /*eslint-disable*/
-const SPECIAL_REGEX = /[\`\~\!\@\#\$\%\^\&\*\(\)\;\:\'\"\[\]\{\}\\\|\,\.\/\<\>\?\-\_\=\+\ ]/g;
+const SPECIAL_REGEX = /[\`\~\!\@\#\$\%\^\&\*\(\)\;\:\'\"\[\]\{\}\\\|\,\.\/\<\>\?\=]/g;
 /*eslint-enable*/
 
 function isSimilarString(str1, str2) {
   if (!str1 || !str2) {
     return false;
   }
-  str1 = str1.replace(SPECIAL_REGEX, '').toLowerCase();
-  str2 = str2.replace(SPECIAL_REGEX, '').toLowerCase();
+  str1 = normalizedString(str1);
+  str2 = normalizedString(str2);
   return (str1.indexOf(str2) >= 0 || str2.indexOf(str1) >= 0);
 }
 
 function normalizedString(str) {
+  str = (str || '').replace(SPECIAL_REGEX, '').toLowerCase();
   return changeCase.titleCase(str);
 }
 

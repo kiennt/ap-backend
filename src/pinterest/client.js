@@ -3,6 +3,7 @@ import Promise from 'bluebird';
 
 import {customError} from '../lib/errors'
 import PinterestApi from './api';
+import Naming from './naming';
 
 import '../exts/lodash';
 
@@ -125,13 +126,14 @@ export default class PinterestClient {
       .then((boards) => {
         let pin = pinDetail.value().pin;
         let chosenBoard = _(boards).find((board) => {
-          return (_.isSimilarString(board.name, pin.board.category) ||
+          return (Naming.getCategoryKey(board.name) === pin.board.category ||
+            _.isSimilarString(board.name, pin.board.category) ||
             _.isSimilarString(board.name, pin.board.name));
         });
         if (chosenBoard) {
           return chosenBoard;
         } else {
-          let boardName = _.normalizedString(pin.board.category);
+          let boardName = Naming.getCategoryName(pin.board.category);
           if (!boardName) {
             boardName = pin.board.name;
           }

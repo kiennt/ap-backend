@@ -25,9 +25,9 @@ describe('lodash extension', () => {
 
   describe('normalizedString', () => {
     it('should return normalized string', () => {
-      let str = 'aa__--bb_--,\\CC';
+      let str = 'aa__++bb\'b_--,\\CC++D';
       let result = _.normalizedString(str);
-      expect(result).toBe('Aa Bb Cc');
+      expect(result).toBe('Aa Bbb Cc D');
     });
     it('should return empty string', () => {
       let result = _.normalizedString(undefined);
@@ -37,28 +37,20 @@ describe('lodash extension', () => {
 
   describe('isSimilarString', () => {
     it('should return true', () => {
-      let str1 = 'aa__--bb_--C_C';
-      let str2 = 'AA BB CC';
-      let result = _.isSimilarString(str1, str2);
-      expect(result).toBe(true);
+      let result1 = _.isSimilarString('animal_pets', 'Animal & Pets');
+      expect(result1).toBeTruthy();
+
+      let result2 = _.isSimilarString('womens-fashion', 'Women\'s fashion');
+      expect(result2).toBeTruthy();
+
+      let result3 = _.isSimilarString(
+        'Hello-world+this-i\'s_nova', 'heLlo wOrld tHiS is nova');
+      expect(result3).toBeTruthy();
     });
-    it('should return true', () => {
-      let str1 = 'aa__--bb_--C_C';
-      let str2 = 'aaaaAA BB CC   ccc';
-      let result = _.isSimilarString(str1, str2);
-      expect(result).toBe(true);
-    });
-    it('should return true', () => {
-      let str1 = 'aa__--bb_--C_Cddd';
-      let str2 = 'AA BB CC';
-      let result = _.isSimilarString(str1, str2);
-      expect(result).toBe(true);
-    });
+
     it('should return false', () => {
-      let str1 = 'Aa_bBb_Cc';
-      let str2 = 'AA BB CC';
-      let result = _.isSimilarString(str1, str2);
-      expect(result).toBe(false);
+      let result = _.isSimilarString('Men Fashion', 'Women Fashion');
+      expect(result).toBeFalsy();
     });
   });
 });

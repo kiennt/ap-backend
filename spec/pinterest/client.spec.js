@@ -521,7 +521,7 @@ describe('PinterestClient', () => {
           expect(client._openPin).toHaveBeenCalledWith(pinId);
           expect(client.api.getBoardsOfMe).toHaveBeenCalled();
           expect(client.api.createABoard)
-            .toHaveBeenCalledWith('This Is Test Category');
+            .toHaveBeenCalledWith('this is test name');
           expect(client.api.repin)
             .toHaveBeenCalledWith(pinId, 1123, fakePin.description);
         })
