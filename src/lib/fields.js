@@ -1,3 +1,5 @@
+const GET_CATEGORY_FEEDS = 'pin.id,pin.description,pin.board()';
+
 const GET_AUTO_COMPLETE = 'user.follower_count,user.pin_count,board.owner()';
 
 const GET_BOARDS_OF_ME = 'board.id,board.url,board.name,board.category,' +
@@ -160,6 +162,7 @@ const SEARCH_TYPE_USER = 'user.id,user.username,user.first_name,' +
   'user.pin_thumbnail_urls';
 
 const FIELDS = {
+  'getCategoryFeeds': GET_CATEGORY_FEEDS,
   'getAutoCompleteText': GET_AUTO_COMPLETE,
   'getBoardsOfMe': GET_BOARDS_OF_ME,
   'getDetailOfBoard': GET_DETAIL_OF_BOARD,
