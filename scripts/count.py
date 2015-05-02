@@ -1,5 +1,4 @@
-# coding=utf-8
-
+import os
 import sys
 import json
 import utils
@@ -7,19 +6,28 @@ from collections import Counter
 
 
 tag = sys.argv[1]
-source_file = '%s.dat' % tag
-destination_file = '%s.dict' % tag
+source_file = '../data/%s.dat' % tag
+destination_file = '../data/%s.dict' % tag
 
-with open(source_file, 'r') as f:
-    raw_str = f.read()
+try:
+    with open(source_file, 'r') as f:
+        raw_str = utils.normalize_array_string(f.read())
+except Exception:
+    # print '----- %s' % source_file
+    os._exit(1)
+
+print '----- COUNTING ::: %s -----' % tag
+
 data = json.loads(raw_str)
 
-print 'Number of tests:', len(data)
-
+print 'Number of Samples: %s' % utils.maybe_warning(len(data))
 
 counter = Counter()
 for e in data:
     utils.count_words(utils.tokenize(e['text']), counter)
+
+print 'Number of Words: %s' % len(counter)
+print
 
 total_word_counts = sum(counter.values())
 

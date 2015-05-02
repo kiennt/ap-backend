@@ -4,9 +4,31 @@ import unicodedata
 from collections import Counter
 
 
+NEEDED_SAMPLES = 10000
+
 word_regex = re.compile(ur'\W+', re.UNICODE)
 table = dict.fromkeys(i for i in xrange(sys.maxunicode)
                       if unicodedata.category(unichr(i)).startswith('P'))
+
+
+def normalize_array_string(text):
+    text = text.strip()
+    if not text.startswith('['):
+        text = '[' + text
+    if not text.endswith(']'):
+        if text.endswith(','):
+            text = text[:-1] + ']'
+        else:
+            text = text + ']'
+    return text
+
+
+def maybe_warning(number):
+    message = '>>>>> NEED MORE !!!'
+    if number < NEEDED_SAMPLES:
+        return '%s %s' % (number, message)
+    else:
+        return number
 
 
 def remove_punctuation(s):

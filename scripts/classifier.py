@@ -17,7 +17,7 @@ def init():
     print '***** INIT *****'
     print
 
-    with open('knowledge.dat', 'r') as f:
+    with open('../data/knowledge.dat', 'r') as f:
         data = json.loads(f.read())
 
     # Unpack data
@@ -70,4 +70,4 @@ def classify(text):
                    key=lambda x: results[x], reverse=True)
     print '----- RESULT -----'
     for i in s_cat:
-        print '%s: %.4f' % (categories[i].ljust(20), results[i])
+        print '%s: %.4f' % (categories[i].ljust(15), results[i])
