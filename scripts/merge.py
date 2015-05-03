@@ -2,7 +2,7 @@ import os.path
 import json
 
 input_file = '../data/%s.dict'
-output_file = '../data/knowledge.dat'
+output_file = '../data/KNOWLEDGE'
 
 BASE_CATEGORIES = [
     'animals', 'architecture', 'art', 'cars_motorcycles', 'celebrities',

@@ -25,7 +25,7 @@ export default class TestPinterestClient {
       .openApp()
       .then((data) => {
         this.client
-          .browseCategoryFeeds(CATEGORY, 10000, (feeds, done) => {
+          .browseCategoryFeeds(CATEGORY, 100, (feeds, done) => {
             feeds.forEach((feed) => {
               let data = {
                 id: feed.id,
