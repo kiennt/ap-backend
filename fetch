@@ -1,0 +1,38 @@
+echo "----- START FETCHING -----"
+
+### (node dist/main.js animals >> data/animals.dat) &
+### (node dist/main.js architecture >> data/architecture.dat) &
+(node dist/main.js art >> data/art.dat) &
+(node dist/main.js cars_motorcycles >> data/cars_motorcycles.dat) &
+(node dist/main.js celebrities >> data/celebrities.dat) &
+### (node dist/main.js diy_crafts >> data/diy_crafts.dat) &
+(node dist/main.js design >> data/design.dat) &
+(node dist/main.js education >> data/education.dat) &
+(node dist/main.js film_music_books >> data/film_music_books.dat) &
+### (node dist/main.js food_drink >> data/food_drink.dat) &
+(node dist/main.js gardening >> data/gardening.dat) &
+(node dist/main.js geek >> data/geek.dat) &
+### (node dist/main.js hair_beauty >> data/hair_beauty.dat) &
+# (node dist/main.js health_fitness >> data/health_fitness.dat) &
+# (node dist/main.js history >> data/history.dat) &
+# (node dist/main.js holidays_events >> data/holidays_events.dat) &
+# (node dist/main.js home_decor >> data/home_decor.dat) &
+# (node dist/main.js humor >> data/humor.dat) &
+# (node dist/main.js illustrations_posters >> data/illustrations_posters.dat) &
+### (node dist/main.js kids >> data/kids.dat) &
+# (node dist/main.js mens_fashion >> data/mens_fashion.dat) &
+### (node dist/main.js outdoors >> data/outdoors.dat) &
+# (node dist/main.js photography >> data/photography.dat) &
+# (node dist/main.js products >> data/products.dat) &
+# (node dist/main.js quotes >> data/quotes.dat) &
+# (node dist/main.js science_nature >> data/science_nature.dat) &
+### (node dist/main.js sports >> data/sports.dat) &
+# (node dist/main.js tattoos >> data/tattoos.dat) &
+# (node dist/main.js technology >> data/technology.dat) &
+### (node dist/main.js travel >> data/travel.dat) &
+# (node dist/main.js weddings >> data/weddings.dat) &
+# (node dist/main.js womens_fashion >> data/womens_fashion.dat) &
+# (node dist/main.js other >> data/other.dat) &
+
+wait
+echo "----- DONE FETCHING ROUND -----"

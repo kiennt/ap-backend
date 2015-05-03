@@ -32,3 +32,5 @@ spec-dist
 *.sublime*
 
 src/bot.js
+
+*.pyc

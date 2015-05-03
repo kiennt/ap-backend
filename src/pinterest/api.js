@@ -77,6 +77,19 @@ export default class PinterestApi {
       });
   }
 
+  getCategoryFeeds(category, pageSize, bookmark) {
+    let fields = Fields.getFields('getCategoryFeeds');
+    let params = {
+      'fields': fields,
+      'page_size': pageSize
+    };
+    if (bookmark) {
+      params.bookmark = bookmark;
+    }
+    return this.get(`feeds/${category}/`, params, {})
+      .then(JSON.parse);
+  }
+
   commentAPin(pinId, text) {
     let data = {
       text: text

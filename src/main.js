@@ -55,5 +55,5 @@ function testPinterestClient() {
 }
 
 // testPinterestApi();
-checkBot();
-// testPinterestClient();
+// checkBot();
+testPinterestClient();
