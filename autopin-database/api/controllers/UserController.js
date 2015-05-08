@@ -14,14 +14,28 @@ module.exports = {
     var randomHeader = headers.randomHeaders();
     authentication.getAccessToken(user.email, user.password, randomHeader)
       .then(function(data) {
-        User.create(user, function(err, newUser) {
-          if (err) {
+        User.create(user)
+          .then(function(newUser) {
+            var account = {
+              email: newUser.email,
+              accessToken: data['access_token'],
+              user: newUser.id
+            };
+            Account.create(account)
+              .then(function(newAccount) {
+                return res.send({'auth_key': newUser.authKey});
+              })
+              .catch(function(err) {
+                sails.log.error(err);
+                res.status(401);
+                return res.send({error: 'Something is wrong. Please check username and password again'});
+              });
+          })
+          .catch(function(err) {
             sails.log.error(err);
             res.status(400);
             return res.send({error: 'Email already exist'});
-          };
-          return res.send({'auth_key': newUser.authKey});
-        });
+          });
       })
       .catch(function(err) {
         sails.log.error(err);

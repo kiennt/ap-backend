@@ -22,11 +22,14 @@ module.exports = {
     },
     authKey: {
       type: 'string'
+    },
+    accounts: {
+      collection: 'Account'
     }
   },
 
   beforeCreate: function (user, cb) {
-    user.password = encryptePassword(user.password);
+    user.password = encryptPassword(user.password);
     var authKey = CryptoJS.HmacSHA256(user.email + user.password, SECRET);
     user.authKey = authKey.toString(CryptoJS.enc.Hex);
     sails.log.info('create user', user);
