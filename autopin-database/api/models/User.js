@@ -26,11 +26,15 @@ module.exports = {
   },
 
   beforeCreate: function (user, cb) {
-    var newPassword = CryptoJS.HmacSHA256(user.password, SECRET);
-    var authKey = CryptoJS.HmacSHA256(user.email + newPassword, SECRET);
-    user.password = newPassword.toString(CryptoJS.enc.Hex);
+    user.password = encryptePassword(user.password);
+    var authKey = CryptoJS.HmacSHA256(user.email + user.password, SECRET);
     user.authKey = authKey.toString(CryptoJS.enc.Hex);
     sails.log.info('create user', user);
     cb();
   }
+};
+
+encryptePassword = function (password) {
+  var encryptedPassword = CryptoJS.HmacSHA256(password, SECRET);
+  return encryptedPassword.toString(CryptoJS.enc.Hex);
 };
