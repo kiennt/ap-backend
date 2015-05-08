@@ -15,11 +15,11 @@ module.exports = {
     user.email = user.email.toLowerCase();
     user.password = StringService.encryptString(user.password);
     User.findOne(user)
-      .then(function(foundUser) {
-        if (!foundUser) {
+      .then(function(userFound) {
+        if (!userFound) {
           ErrorService.respondError(res, 401, 'Wrong username and password', err);
         }
-        return res.send({'auth_key': foundUser.authKey});
+        return res.send({'auth_key': userFound.authKey});
       })
       .catch(function(err) {
         ErrorService.respondError(res, 401, 'Wrong username and password', err);
@@ -40,7 +40,6 @@ module.exports = {
               accessToken: data['access_token'],
               user: newUser.id
             };
-            console.log(account);
             Account.create(account)
               .then(function(newAccount) {
                 return res.send({'auth_key': newUser.authKey});
