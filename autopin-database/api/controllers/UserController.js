@@ -11,10 +11,12 @@ var headers = require('../../../dist/config/http-headers');
 
 module.exports = {
   signin: function(req, res) {
-    var user = req.body;
-    user.email = user.email.toLowerCase();
-    user.password = StringService.encryptString(user.password);
-    User.findOne(user)
+    var postData = req.body;
+    var query = {
+      email: postData.email.toLowerCase(),
+      password: StringService.encryptString(postData.password)
+    };
+    User.findOne(query)
       .then(function(userFound) {
         if (!userFound) {
           res.error(401, 'Wrong username and password');
@@ -28,8 +30,11 @@ module.exports = {
   },
 
   signup: function(req, res) {
-    var user = req.body;
-    user.email = user.email.toLowerCase();
+    var postData = req.body;
+    var user = {
+      email: postData.email.toLowerCase(),
+      password: postData.password
+    };
     var randomHeader = headers.randomHeaders();
     authentication.getAccessToken(user.email, user.password, randomHeader)
       .then(function(data) {
