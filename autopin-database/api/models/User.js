@@ -37,6 +37,6 @@ module.exports = {
 };
 
 encryptString = function (str) {
-  var encryptedString= CryptoJS.HmacSHA256(str, SECRET);
+  var encryptedString = CryptoJS.HmacSHA256(str, SECRET);
   return encryptedString.toString(CryptoJS.enc.Hex);
 };

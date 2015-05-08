@@ -27,21 +27,23 @@ module.exports = {
                 return res.send({'auth_key': newUser.authKey});
               })
               .catch(function(err) {
-                returnResponseError(res, err, 400, 'Something is wrong. Please check username and password again');
+                respondError(res, 400, 'Something is wrong. Please check username and password again', err);
               });
           })
           .catch(function(err) {
-            returnResponseError(res, err, 400, 'Email already exist');
+            respondError(res, 400, 'Email already exist', err);
           });
       })
       .catch(function(err) {
-        returnResponseError(res, err, 401, 'Can not login to Pinterest. Please check username and password again');
+        respondError(res, 401, 'Can not login to Pinterest. Please check username and password again', err);
       });
   }
 };
 
-returnResponseError = function(res, err, code, message) {
-  sails.log.error(err);
+respondError = function(res, code, message, err) {
+  if (!err) {
+    sails.log.error(err);
+  }
   res.status(code);
   return res.send({error: message});
 };

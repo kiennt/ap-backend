@@ -23,7 +23,7 @@ module.exports = {
     repinsCount: {
       type: 'integer'
     },
-    followingCount: {
+    followsCount: {
       type: 'integer'
     },
     commentsCount: {
@@ -33,7 +33,7 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-    packet: {
+    package: {
       type: 'integer',
       defaultsTo: 0
     },
