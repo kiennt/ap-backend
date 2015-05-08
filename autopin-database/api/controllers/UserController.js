@@ -12,6 +12,9 @@ var headers = require('../../../dist/config/http-headers');
 module.exports = {
   signin: function(req, res) {
     var postData = req.body;
+    if (!postData.email || !postData.password) {
+      return res.error(401, 'Wrong username and password');
+    };
     var query = {
       email: postData.email.toLowerCase(),
       password: StringService.encryptString(postData.password)
@@ -19,7 +22,7 @@ module.exports = {
     User.findOne(query)
       .then(function(userFound) {
         if (!userFound) {
-          res.error(401, 'Wrong username and password');
+          return res.error(401, 'Wrong username and password');
         } else {
           return res.send({'auth_key': userFound.authKey});
         }
@@ -31,6 +34,9 @@ module.exports = {
 
   signup: function(req, res) {
     var postData = req.body;
+    if (!postData.email || !postData.password) {
+      return res.error(401, 'Wrong username and password');
+    };
     var user = {
       email: postData.email.toLowerCase(),
       password: postData.password
@@ -51,15 +57,15 @@ module.exports = {
                 return res.send({'auth_key': newUser.authKey});
               })
               .catch(function(err) {
-                res.error(400, 'Something is wrong. Please check username and password again', err);
+                return res.error(400, 'Something is wrong. Please check username and password again', err);
               });
           })
           .catch(function(err) {
-            res.error(400, 'Email already exist', err);
+            return res.error(400, 'Email already exist', err);
           });
       })
       .catch(function(err) {
-        res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
+        return res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
       });
   }
 };

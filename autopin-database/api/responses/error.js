@@ -5,5 +5,5 @@ module.exports = function(code, message, err) {
     sails.log.error(err);
   }
   res.status(code);
-  return res.send({error: message});
+  return res.json({error: message});
 };
