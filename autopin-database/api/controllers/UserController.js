@@ -17,12 +17,13 @@ module.exports = {
     User.findOne(user)
       .then(function(userFound) {
         if (!userFound) {
-          ErrorService.respondError(res, 401, 'Wrong username and password', err);
+          res.error(401, 'Wrong username and password');
+        } else {
+          return res.send({'auth_key': userFound.authKey});
         }
-        return res.send({'auth_key': userFound.authKey});
       })
       .catch(function(err) {
-        ErrorService.respondError(res, 401, 'Wrong username and password', err);
+        res.error(401, 'Wrong username and password', err);
       });
   },
 
@@ -45,15 +46,15 @@ module.exports = {
                 return res.send({'auth_key': newUser.authKey});
               })
               .catch(function(err) {
-                ErrorService.respondError(res, 400, 'Something is wrong. Please check username and password again', err);
+                res.error(400, 'Something is wrong. Please check username and password again', err);
               });
           })
           .catch(function(err) {
-            ErrorService.respondError(res, 400, 'Email already exist', err);
+            res.error(400, 'Email already exist', err);
           });
       })
       .catch(function(err) {
-        ErrorService.respondError(res, 401, 'Can not login to Pinterest. Please check username and password again', err);
+        res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
       });
   }
 };
