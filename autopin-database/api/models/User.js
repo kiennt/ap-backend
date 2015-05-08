@@ -34,7 +34,7 @@ module.exports = {
   }
 };
 
-encryptePassword = function (password) {
+encryptPassword = function (password) {
   var encryptedPassword = CryptoJS.HmacSHA256(password, SECRET);
   return encryptedPassword.toString(CryptoJS.enc.Hex);
 };
