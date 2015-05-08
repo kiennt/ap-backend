@@ -8,6 +8,10 @@
 module.exports = {
 
   attributes: {
+    header: {
+      type: 'json',
+      required: true
+    },
     email: {
       type: 'email',
       required: true,

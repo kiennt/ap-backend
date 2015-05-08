@@ -4,10 +4,6 @@
 * @description :: User of Autopin
 * @docs        :: http://sailsjs.org/#!documentation/models
 */
-
-var CryptoJS = require('crypto-js');
-var SECRET = 'OhYeah-HarderAndHarder';
-
 module.exports = {
 
   attributes: {
@@ -29,14 +25,10 @@ module.exports = {
   },
 
   beforeCreate: function (user, cb) {
-    user.password = encryptString(user.password);
-    user.authKey = encryptString(user.email + user.password);
-    sails.log.info('create user', user);
+    user.email = user.email.toLowerCase();
+    user.password = StringService.encryptString(user.password);
+    user.authKey = StringService.encryptString(user.email + user.password);
+    sails.log.info('create user after encrypting', user);
     cb();
   }
-};
-
-encryptString = function (str) {
-  var encryptedString = CryptoJS.HmacSHA256(str, SECRET);
-  return encryptedString.toString(CryptoJS.enc.Hex);
 };
