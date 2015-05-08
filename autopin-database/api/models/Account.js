@@ -20,7 +20,7 @@ module.exports = {
     likesCount: {
       type: 'integer'
     },
-    followersCount: {
+    repinsCount: {
       type: 'integer'
     },
     followingCount: {

@@ -8,6 +8,7 @@
 var authentication = require('../../../dist/lib/authentication');
 var headers = require('../../../dist/config/http-headers');
 
+
 module.exports = {
   signup: function(req, res) {
     var user = req.body;
@@ -26,21 +27,21 @@ module.exports = {
                 return res.send({'auth_key': newUser.authKey});
               })
               .catch(function(err) {
-                sails.log.error(err);
-                res.status(401);
-                return res.send({error: 'Something is wrong. Please check username and password again'});
+                returnResponseError(res, err, 400, 'Something is wrong. Please check username and password again');
               });
           })
           .catch(function(err) {
-            sails.log.error(err);
-            res.status(400);
-            return res.send({error: 'Email already exist'});
+            returnResponseError(res, err, 400, 'Email already exist');
           });
       })
       .catch(function(err) {
-        sails.log.error(err);
-        res.status(401);
-        return res.send({error: 'Can not login to Pinterest. Please check username and password again'});
+        returnResponseError(res, err, 401, 'Can not login to Pinterest. Please check username and password again');
       });
   }
+};
+
+returnResponseError = function(res, err, code, message) {
+  sails.log.error(err);
+  res.status(code);
+  return res.send({error: message});
 };
