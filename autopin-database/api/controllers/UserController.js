@@ -12,8 +12,8 @@ var headers = require('../../../dist/config/http-headers');
 module.exports = {
   signin: function(req, res) {
     var query = {
-      email: postData.email.toLowerCase(),
-      password: StringService.encryptString(postData.password)
+      email: req.body.email.toLowerCase(),
+      password: StringService.encryptString(req.body.password)
     };
     User.findOne(query)
       .then(function(userFound) {
@@ -30,8 +30,8 @@ module.exports = {
 
   signup: function(req, res) {
     var user = {
-      email: postData.email.toLowerCase(),
-      password: postData.password
+      email: req.body.email.toLowerCase(),
+      password: req.body.password
     };
     var randomHeader = headers.randomHeaders();
     authentication.getAccessToken(user.email, user.password, randomHeader)
