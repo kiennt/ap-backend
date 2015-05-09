@@ -16,11 +16,25 @@ module.exports = {
       type: 'string',
       required: true,
     },
+    name: {
+      type: 'string'
+    },
     authKey: {
       type: 'string'
     },
     accounts: {
-      collection: 'Account'
+      collection: 'account',
+      via: 'user'
+    },
+
+    toJSON: function() {
+      var user = this.toObject();
+      return {
+        'email': user.email,
+        'name': user.name,
+        'auth_key': user.authKey,
+        'accounts': user.accounts
+      };
     }
   },
 

@@ -22,16 +22,20 @@ module.exports = {
       required: true
     },
     likesCount: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
     repinsCount: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
     followsCount: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
     commentsCount: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
     status: {
       type: 'boolean',
@@ -42,11 +46,39 @@ module.exports = {
       defaultsTo: 0
     },
     timeExecuting: {
-      type: 'integer'
+      type: 'integer',
+      defaultsTo: 0
     },
     user: {
-      model: 'User',
+      model: 'user',
       required: true
+    },
+    configuration: {
+      type: 'json',
+      defaultsTo: {
+        'do-like': true,
+        'do-comment': false,
+        'do-follow': true,
+        'do-unfollow': false,
+        'do-unfollow': false,
+        'unfollow-who-dont-follow-me': false,
+        'speed': 'normal'
+      }
+    },
+
+    toJSON: function() {
+      var account = this.toObject();
+      return {
+        'email': account.email,
+        'likes_count': account.likesCount,
+        'repins_count': account.repinsCount,
+        'follows_count': account.followsCount,
+        'comments_count': account.commentsCount,
+        'status': account.status,
+        'package': account.package,
+        'time_executing': account.timeExecuting,
+        'configuration': account.configuration
+      };
     }
   }
 };

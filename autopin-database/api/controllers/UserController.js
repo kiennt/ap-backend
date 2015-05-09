@@ -10,6 +10,24 @@ var headers = require('../../../dist/config/http-headers');
 
 
 module.exports = {
+  getUser: function(req, res) {
+    var query = {
+      authKey: req.body['auth_key']
+    };
+    User.findOne(query)
+      .populate('accounts')
+      .then(function(userFound) {
+        if (!userFound) {
+          return res.error(401, 'Invalid authkey');
+        } else {
+          return res.send(userFound.toJSON());
+        }
+      })
+      .catch(function(err) {
+        return res.error(401, 'Invalid authkey', err);
+      });
+  },
+
   signin: function(req, res) {
     var query = {
       email: req.body.email.toLowerCase(),
