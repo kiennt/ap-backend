@@ -56,12 +56,12 @@ module.exports = {
     configuration: {
       type: 'json',
       defaultsTo: {
-        'do-like': true,
-        'do-comment': false,
-        'do-follow': true,
-        'do-unfollow': false,
-        'do-unfollow': false,
-        'unfollow-who-dont-follow-me': false,
+        'do_like': true,
+        'do_comment': false,
+        'do_follow': true,
+        'do_unfollow': false,
+        'do_unfollow': false,
+        'unfollow_who_dont_follow_me': false,
         'speed': 'normal'
       }
     },
