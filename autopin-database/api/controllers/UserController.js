@@ -11,10 +11,6 @@ var headers = require('../../../dist/config/http-headers');
 
 module.exports = {
   signin: function(req, res) {
-    var postData = req.body;
-    if (!postData.email || !postData.password) {
-      return res.error(400, 'Wrong username and password');
-    }
     var query = {
       email: postData.email.toLowerCase(),
       password: StringService.encryptString(postData.password)
@@ -33,10 +29,6 @@ module.exports = {
   },
 
   signup: function(req, res) {
-    var postData = req.body;
-    if (!postData.email || !postData.password) {
-      return res.error(400, 'Wrong username and password');
-    }
     var user = {
       email: postData.email.toLowerCase(),
       password: postData.password
