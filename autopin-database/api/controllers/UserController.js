@@ -18,13 +18,13 @@ module.exports = {
     User.findOne(query)
       .then(function(userFound) {
         if (!userFound) {
-          return res.error(401, 'Wrong username and password');
+          return res.error(401, 'Wrong email or password');
         } else {
           return res.send({'auth_key': userFound.authKey});
         }
       })
       .catch(function(err) {
-        res.error(401, 'Wrong username and password', err);
+        res.error(401, 'Wrong email or password', err);
       });
   },
 
@@ -49,15 +49,15 @@ module.exports = {
                 return res.send({'auth_key': newUser.authKey});
               })
               .catch(function(err) {
-                return res.error(400, 'Something is wrong. Please check username and password again', err);
+                return res.error(400, 'This Pinterest account is already used', err);
               });
           })
           .catch(function(err) {
-            return res.error(400, 'Email already exist', err);
+            return res.error(400, 'Email already exists', err);
           });
       })
       .catch(function(err) {
-        return res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
+        return res.error(401, 'Can not login to Pinterest. Please check your Pinterest username and password again', err);
       });
   }
 };
