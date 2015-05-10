@@ -57,12 +57,13 @@ module.exports = {
       type: 'json',
       defaultsTo: {
         'do_like': true,
+        'do_repin': true,
         'do_comment': false,
         'do_follow': true,
         'do_unfollow': false,
         'do_unfollow': false,
         'unfollow_who_dont_follow_me': false,
-        'speed': 'normal'
+        'speed': 0
       }
     },
 
