@@ -45,6 +45,7 @@ module.exports.routes = {
   * for configuration options and examples.                                  *
   *                                                                          *
   ***************************************************************************/
-  'post /v1/members/signup/': 'UserController.signup',
-  'post /v1/members/signin/': 'UserController.signin'
+  'POST /v1/members/signup/': 'UserController.signup',
+  'POST /v1/members/signin/': 'UserController.signin',
+  'POST /v1/me/': 'UserController.getUser'
 };

@@ -10,6 +10,10 @@ var headers = require('../../../dist/config/http-headers');
 
 
 module.exports = {
+  getUser: function(req, res) {
+    return res.send(req.options.user.toJSON());
+  },
+
   signin: function(req, res) {
     var query = {
       email: req.body.email.toLowerCase(),
