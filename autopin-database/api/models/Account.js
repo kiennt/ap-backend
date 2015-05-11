@@ -70,6 +70,7 @@ module.exports = {
     toJSON: function() {
       var account = this.toObject();
       return {
+        'id': account.id,
         'email': account.email,
         'likes_count': account.likesCount,
         'repins_count': account.repinsCount,

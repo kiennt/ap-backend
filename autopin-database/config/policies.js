@@ -40,5 +40,9 @@ module.exports.policies = {
     getUser: 'isAuthenticated',
     updateUser: 'isAuthenticated',
     changePassword: 'isAuthenticated'
+  },
+
+  AccountController: {
+    delete: ['isAuthenticated', 'isValidAccount']
   }
 };

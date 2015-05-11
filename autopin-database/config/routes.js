@@ -49,5 +49,7 @@ module.exports.routes = {
   'POST /v1/members/signin/': 'UserController.signin',
   'POST /v1/me/': 'UserController.getUser',
   'PUT /v1/me/update_profile/': 'UserController.updateUser',
-  'PUT /v1/me/change_password/': 'UserController.changePassword'
+  'PUT /v1/me/change_password/': 'UserController.changePassword',
+
+  'DELETE /v1/accounts/': 'AccountController.delete'
 };
