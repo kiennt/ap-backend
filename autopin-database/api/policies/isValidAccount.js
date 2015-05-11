@@ -1,6 +1,6 @@
 module.exports = function isValidAccount (req, res, next) {
   var user = req.options.user;
-  var accountId = _.parseInt(req.body.id);
+  var accountId = parseInt(req.body.id);
   if (accountId) {
     var accountFound = _(user.accounts).find(function(account) {
       return (account.id === accountId);
