@@ -86,6 +86,9 @@ module.exports = {
     if (!oldPassword || !newPassword) {
       return res.error(401, 'Please enter password');
     }
+    if (!StringService.isValidPassword(newPassword)) {
+      return res.error(401, 'Please enter valid password');
+    }
     if (!user.isPasswordMatched(oldPassword)) {
       return res.error(401, 'Wrong password. Please try again');
     }
