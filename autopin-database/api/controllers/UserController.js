@@ -57,7 +57,7 @@ module.exports = {
               });
           })
           .catch(function(err) {
-            return res.error(400, 'Email already exist', err);
+            return res.error(500, 'Something is wrong. Please try again', err);
           });
       })
       .catch(function(err) {
