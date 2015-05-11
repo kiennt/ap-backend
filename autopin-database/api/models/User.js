@@ -44,5 +44,11 @@ module.exports = {
     user.authKey = StringService.encryptString(user.email + user.password);
     sails.log.info('create user after encrypting', user);
     cb();
+  },
+
+  beforeUpdate: function (user, cb) {
+    sails.log.info('update user', user);
+    user.authKey = StringService.encryptString(user.email + user.password);
+    cb();
   }
 };

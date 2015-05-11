@@ -37,6 +37,7 @@ module.exports.policies = {
   UserController: {
     signin: 'hasEmailAndPassword',
     signup: 'hasEmailAndPassword',
-    getUser: 'isAuthenticated'
+    getUser: 'isAuthenticated',
+    updateUser: 'isAuthenticated'
   }
 };

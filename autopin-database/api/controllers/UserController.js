@@ -63,5 +63,22 @@ module.exports = {
       .catch(function(err) {
         return res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
       });
+  },
+
+  updateUser: function(req, res) {
+    var user = req.options.user;
+    if (req.body.name) {
+      user.name = req.body.name;
+    }
+    if (req.body.password) {
+      user.password = StringService.encryptString(req.body.password);
+    }
+    user.save()
+      .then(function(newUser) {
+        return res.send({'auth_key': newUser.authKey});
+      })
+      .catch(function(err) {
+        return res.error(400, 'Something wrong. Please try again', err);
+      });
   }
 };
