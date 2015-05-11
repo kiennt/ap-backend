@@ -83,6 +83,9 @@ module.exports = {
     var user = req.options.user;
     var oldPassword = req.body['old_password'];
     var newPassword = req.body['new_password'];
+    if (!StringService.isValidPassword(oldPassword) || !StringService.isValidPassword(newPassword)) {
+      return res.error(401, 'Please enter valid password');
+    }
     if (!oldPassword || !newPassword) {
       return res.error(401, 'Please enter password');
     }

@@ -4,6 +4,10 @@ module.exports = function hasEmailAndPassword (req, res, next) {
   if (!postData.email || !postData.password) {
     return res.error(400, 'Wrong username and password');
   } else {
-    next();
+    if (!StringService.isValidPassword(postData.password)) {
+      return res.error(400, 'Wrong username and password');
+    } else {
+      next();
+    }
   }
 };
