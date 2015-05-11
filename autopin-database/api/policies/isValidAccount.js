@@ -7,12 +7,12 @@ module.exports = function isValidAccount (req, res, next) {
     });
 
     if (!accountFound) {
-      return res.error(403, 'Invalid account');
+      return res.error(400, 'Invalid account');
     } else {
       req.options.account = accountFound;
       next();
     }
   } else {
-    return res.error(403, 'Invalid account');
+    return res.error(400, 'Invalid account');
   }
 };
