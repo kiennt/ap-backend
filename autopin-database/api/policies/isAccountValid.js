@@ -1,4 +1,4 @@
-module.exports = function isValidAccount (req, res, next) {
+module.exports = function isAccountValid (req, res, next) {
   var user = req.options.user;
   var accountId = parseInt(req.param('id'));
   if (accountId) {

@@ -10,18 +10,7 @@ var headers = require('../../../dist/config/http-headers');
 
 
 module.exports = {
-  delete: function(req, res) {
-    var account = req.options.account;
-    account.destroy()
-      .then(function() {
-        return res.send();
-      })
-      .catch(function(err) {
-        return res.error(500, 'Something is wrong. Please try again', err);
-      });
-  },
-
-  addAccount: function(req, res) {
+  create: function(req, res) {
     var user = req.options.user;
     var email = req.body.email.toLowerCase();
     var password = req.body.password;
@@ -37,7 +26,7 @@ module.exports = {
         };
         Account.create(account)
           .then(function(newAccount) {
-            return res.send({'account': newAccount});
+            return res.send(newAccount);
           })
           .catch(function(err) {
             return res.error(500, 'Something is wrong. Please try again', err);
@@ -45,6 +34,17 @@ module.exports = {
       })
       .catch(function(err) {
         return res.error(401, 'Can not login to Pinterest. Please check username and password again', err);
+      });
+  },
+
+  delete: function(req, res) {
+    var account = req.options.account;
+    account.destroy()
+      .then(function() {
+        return res.send();
+      })
+      .catch(function(err) {
+        return res.error(500, 'Something is wrong. Please try again', err);
       });
   }
 }
