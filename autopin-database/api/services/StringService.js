@@ -9,17 +9,17 @@ module.exports = {
   },
 
   isValidPassword: function (str) {
-    var minLength = sails.config.myConfiguration.password.minLength;
-    var maxLength = sails.config.myConfiguration.password.maxLength;
-    if (!str) {
+    var minLength = sails.config.autopin.constraints.password.minLength;
+    var maxLength = sails.config.autopin.constraints.password.maxLength;
+    var forbiddenCharacters =
+      sails.config.autopin.constraints.password.forbiddenCharacters;
+
+    if (str && str.length >= minLength && str.length <= maxLength) {
+      return _.all(forbiddenCharacters, function(char) {
+        return str.indexOf(char) < 0;
+      });
+    } else {
       return false;
     }
-    if (str.length > maxLength || str.length < minLength) {
-      return false;
-    }
-    if (str.indexOf(' ') > -1) {
-      return false;
-    }
-    return true;
   }
 };
