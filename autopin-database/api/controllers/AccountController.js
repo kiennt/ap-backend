@@ -13,8 +13,7 @@ module.exports = {
         return res.send();
       })
       .catch(function(err) {
-        //TODO: 400 -> 500
-        return res.error(400, 'Something is wrong. Please try again', err);
+        return res.error(500, 'Something is wrong. Please try again', err);
       });
   },
 }

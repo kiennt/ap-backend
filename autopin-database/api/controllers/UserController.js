@@ -75,7 +75,7 @@ module.exports = {
         return res.send({'auth_key': newUser.authKey});
       })
       .catch(function(err) {
-        return res.error(400, 'Something wrong. Please try again', err);
+        return res.error(500, 'Something wrong. Please try again', err);
       });
   },
 
@@ -98,7 +98,7 @@ module.exports = {
         return res.send({'auth_key': newUser.authKey});
       })
       .catch(function(err) {
-        return res.error(400, 'Something wrong. Please try again', err);
+        return res.error(500, 'Something wrong. Please try again', err);
       });
   }
 };
