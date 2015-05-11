@@ -36,13 +36,14 @@ module.exports.policies = {
   ***************************************************************************/
   UserController: {
     signin: 'hasEmailAndPassword',
-    signup: ['hasEmailAndPassword', 'isAvailableEmail'],
+    signup: ['hasEmailAndPassword', 'isEmailAvailable'],
     getUser: 'isAuthenticated',
     updateUser: 'isAuthenticated',
     changePassword: 'isAuthenticated'
   },
 
   AccountController: {
-    delete: ['isAuthenticated', 'isValidAccount']
+    create: ['isAuthenticated', 'isAvailableAccount'],
+    delete: ['isAuthenticated', 'isAccountValid']
   }
 };
