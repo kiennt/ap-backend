@@ -70,9 +70,6 @@ module.exports = {
     if (req.body.name) {
       user.name = req.body.name;
     }
-    if (req.body.password) {
-      user.password = StringService.encryptString(req.body.password);
-    }
     user.save()
       .then(function(newUser) {
         return res.send({'auth_key': newUser.authKey});

@@ -27,6 +27,15 @@ module.exports = {
       via: 'user'
     },
 
+    hasSamePassword: function(str) {
+      var user = this.toObject();
+      var encryptedString = StringService.encryptString(str);
+      if (user.password === encryptedString) {
+        return true;
+      }
+      return false;
+    },
+
     toJSON: function() {
       var user = this.toObject();
       return {
