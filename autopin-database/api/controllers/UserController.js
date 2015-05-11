@@ -77,5 +77,25 @@ module.exports = {
       .catch(function(err) {
         return res.error(400, 'Something wrong. Please try again', err);
       });
+  },
+
+  changePassword: function(req, res) {
+    var user = req.options.user;
+    var oldPassword = req.body['old_password'];
+    var newPassword = req.body['new_password'];
+    if (!oldPassword || !newPassword) {
+      return res.error(401, 'Please enter password');
+    }
+    if (!user.isPasswordMatched(oldPassword)) {
+      return res.error(401, 'Wrong password. Please try again');
+    }
+    user.password = StringService.encryptString(newPassword);
+    user.save()
+      .then(function(newUser) {
+        return res.send({'auth_key': newUser.authKey});
+      })
+      .catch(function(err) {
+        return res.error(400, 'Something wrong. Please try again', err);
+      });
   }
 };

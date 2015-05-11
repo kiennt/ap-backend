@@ -1,7 +1,7 @@
 module.exports = function isAuthenticated (req, res, next) {
   var postData = req.body;
   if (!postData || !postData['auth_key']) {
-    return res.error(401, 'Invalid authkey');
+    return res.error(401, 'Invalid auth_key');
   };
 
   var query = {
@@ -14,7 +14,7 @@ module.exports = function isAuthenticated (req, res, next) {
         req.options.user = userFound;
         next();
       } else {
-        return res.error(401, 'Invalid authkey');
+        return res.error(401, 'Invalid auth_key');
       }
     })
     .catch(function(err)  {

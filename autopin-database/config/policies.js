@@ -38,6 +38,7 @@ module.exports.policies = {
     signin: 'hasEmailAndPassword',
     signup: 'hasEmailAndPassword',
     getUser: 'isAuthenticated',
-    updateUser: 'isAuthenticated'
+    updateUser: 'isAuthenticated',
+    'changePassword': 'isAuthenticated'
   }
 };

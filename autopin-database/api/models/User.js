@@ -27,10 +27,10 @@ module.exports = {
       via: 'user'
     },
 
-    hasSamePassword: function(str) {
+    isPasswordMatched: function(inputPassword) {
       var user = this.toObject();
-      var encryptedString = StringService.encryptString(str);
-      if (user.password === encryptedString) {
+      var encryptedPassword = StringService.encryptString(inputPassword);
+      if (user.password === encryptedPassword) {
         return true;
       }
       return false;

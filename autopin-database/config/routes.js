@@ -48,5 +48,6 @@ module.exports.routes = {
   'POST /v1/members/signup/': 'UserController.signup',
   'POST /v1/members/signin/': 'UserController.signin',
   'POST /v1/me/': 'UserController.getUser',
-  'PUT /v1/me/': 'UserController.updateUser'
+  'PUT /v1/me/': 'UserController.updateUser',
+  'PUT /v1/me/change_password/': 'UserController.changePassword'
 };
