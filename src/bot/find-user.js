@@ -30,7 +30,6 @@ export class Bot {
         // There's no risk about it
         console.log(user);
       })
-      .catch((e) => e.name === 'SearchNotFound',
-        (e) => console.error('Can not found with any ways'));
+      .catch((e) => e.name === 'SearchNotFound');
   }
 }
