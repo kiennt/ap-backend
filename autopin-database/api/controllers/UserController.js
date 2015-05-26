@@ -32,7 +32,7 @@ module.exports = {
       });
   },
 
-  signup: function(req, res) {
+  signupWithPinterestAccount: function(req, res) {
     var user = {
       email: req.body.email.toLowerCase(),
       password: req.body.password
