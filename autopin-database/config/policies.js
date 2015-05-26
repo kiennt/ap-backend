@@ -36,7 +36,7 @@ module.exports.policies = {
   ***************************************************************************/
   UserController: {
     signin: 'hasEmailAndPassword',
-    signup: ['hasEmailAndPassword', 'isEmailAvailable'],
+    signupWithPinterestAccount: ['hasEmailAndPassword', 'isEmailAvailable'],
     getUser: 'isAuthenticated',
     updateUser: 'isAuthenticated',
     changePassword: 'isAuthenticated'
