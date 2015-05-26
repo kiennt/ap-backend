@@ -32,6 +32,21 @@ module.exports = {
       });
   },
 
+  signup: function(req, res) {
+    var user = {
+      email: req.body.email.toLowerCase(),
+      password: req.body.password
+    };
+
+    User.create(user)
+      .then(function(newUser) {
+        return res.send({'auth_key': newUser.authKey});
+      })
+      .catch(function(err) {
+        return res.error(500, 'Something is wrong. Please try again', err);
+      });
+  },
+
   signupWithPinterestAccount: function(req, res) {
     var user = {
       email: req.body.email.toLowerCase(),
