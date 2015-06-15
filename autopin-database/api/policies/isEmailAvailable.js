@@ -1,5 +1,5 @@
 module.exports = function isEmailAvailable (req, res, next) {
-  var email = req.body.email.toLowerCase();
+  var email = req.body.username.toLowerCase();
   var query = {
     email: email
   };
