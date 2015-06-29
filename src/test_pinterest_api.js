@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .openBoard(155937274536657481)
+      .getInterestingItems()
       .then((data) => {
         console.log(data);
       });

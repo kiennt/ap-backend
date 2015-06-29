@@ -1,0 +1,36 @@
+{
+  "status": "success",
+  "code": 0,
+  "nags": [
+    {
+      "message": "<b>Suỵt.</b>Đừng quên xác nhận email của bạn! Chỉ cần tìm thư chúng tôi đã gửi cho bạn. <a href=\"#\" id=\"resendEmail\">Gửi lại email</a> hoặc <a href=\"#\" id=\"editEmail\">thay đổi địa chỉ của bạn</a>.",
+      "type": "nag",
+      "nag_type": "email_verification"
+    }
+  ],
+  "host": "coreapp-ngapi-981",
+  "generated_at": "Mon, 29 Jun 2015 09:28:52 +0000",
+  "message": "ok",
+  "data": [
+    {
+      "url_name": "technology",
+      "name": "Công Nghệ",
+      "feed_update_time": "Mon, 29 Jun 2015 09:25:51 +0000",
+      "creation_time": 1,
+      "key": "technology",
+      "follower_count": 10233870,
+      "background_color": "#222222",
+      "id": "905661505034"
+    },
+    {
+      "url_name": "men's-apparel",
+      "name": "Trang Phục Nam",
+      "feed_update_time": "Mon, 29 Jun 2015 09:19:38 +0000",
+      "creation_time": 1,
+      "key": "men's apparel",
+      "follower_count": 6538232,
+      "background_color": "#3F3F3F",
+      "id": "950853718057"
+    }
+  ]
+}
