@@ -571,4 +571,17 @@ describe('PinterestApi', () => {
         });
     });
   });
+
+  describe('selectInterests', () => {
+    it('should return ok', (done) => {
+      spyOn(api, 'post').and.returnValue(
+        fixtureAsync('me-select-interests.json'));
+
+      api.selectInterests('905661505034,950853718057')
+        .then((data) => {
+          expect(data.status).toBe('success');
+          done();
+        });
+    });
+  });
 });

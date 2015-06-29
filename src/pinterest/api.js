@@ -349,6 +349,15 @@ export default class PinterestApi {
     return this.get(getSearchPath(type), params, {})
       .then(JSON.parse);
   }
+
+  selectInterests(itemIds) {
+    let uri = 'orientation/signal/';
+    let data = {
+      'interests': itemIds
+    };
+    return this.post(uri, {}, data)
+      .then(JSON.parse);
+  }
 }
 
 _.extend(PinterestApi.prototype, HttpHandlersMixin);
