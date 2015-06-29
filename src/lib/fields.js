@@ -46,7 +46,7 @@ const GET_FEEDS = 'pin.images[236x,736x],pin.id,pin.description,' +
 const GET_INFO_OF_ME = 'user.country,user.default_shipping(),' +
   'user.default_payment()';
 
-const GET_INTERESTING_ITEMS = 'interest.id,interest.name,' +
+const GET_INTERESTS = 'interest.id,interest.name,' +
   'interest.creation_time,interest.key,interest.background_color,' +
   'interest.url_name,interest.follower_count,interest.feed_update_time,' +
   'interest.images[75x75,150x150(ir.12),150x150(ir.24),150x150(ir.48),' +
@@ -172,7 +172,7 @@ const FIELDS = {
   'getDetailOfPin': GET_DETAIL_OF_PIN,
   'getFeeds': GET_FEEDS,
   'getInfoOfMe': GET_INFO_OF_ME,
-  'getInterestingItems': GET_INTERESTING_ITEMS,
+  'getInterests': GET_INTERESTS,
   'getPinsOfBoard': GET_PINS_OF_BOARD,
   'getUserBoards': GET_USER_BOARDS,
   'getUserFollowers': GET_USER_FOLLOWERS,

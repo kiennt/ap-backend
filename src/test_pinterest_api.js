@@ -20,7 +20,7 @@ export default class TestPinterestApi {
   run() {
     /*eslint-disable*/
     this.api
-      .selectInterests('905661505034,950853718057')
+      .getInterests()
       .then((data) => {
         console.log(data);
       });
