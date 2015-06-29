@@ -210,6 +210,25 @@ describe('PinterestApi', () => {
     });
   });
 
+  describe('getInterestingItems', () => {
+    it('should return list of items', (done) => {
+      spyOn(api, 'get').and.returnValue(
+        fixtureAsync('me-get-interesting-items.json'));
+
+      let url = 'users/me/interests/';
+      let fields = Fields.getFields('getInterestingItems');
+      let params = {
+        'blend_type': 'nux',
+        'fields': fields
+      };
+      api.getInterestingItems().then((data) => {
+        expect(api.get).toHaveBeenCalledWith(url, params, {});
+        expect(data[0].url_name).toBe('technology');
+        done();
+      });
+    });
+  });
+
   describe('getNotifications', () => {
     it('should return notifications count', (done) => {
       spyOn(api, 'get').and.returnValue(

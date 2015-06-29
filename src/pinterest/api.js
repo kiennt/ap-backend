@@ -144,6 +144,16 @@ export default class PinterestApi {
     }
   }
 
+  getInterestingItems() {
+    let fields = Fields.getFields('getInterestingItems');
+    let params = {
+      'blend_type': 'nux',
+      'fields': fields
+    };
+    return this.get('users/me/interests/', params, {})
+      .then(JSON.parse).get('data');
+  }
+
   getNotifications() {
     return this.get('maia/notifications/counts/', {}, {})
       .then(JSON.parse).get('data');
