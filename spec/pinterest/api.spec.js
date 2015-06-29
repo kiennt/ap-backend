@@ -210,18 +210,18 @@ describe('PinterestApi', () => {
     });
   });
 
-  describe('getInterestingItems', () => {
+  describe('getInterests', () => {
     it('should return list of items', (done) => {
       spyOn(api, 'get').and.returnValue(
-        fixtureAsync('me-get-interesting-items.json'));
+        fixtureAsync('me-get-interests.json'));
 
       let url = 'users/me/interests/';
-      let fields = Fields.getFields('getInterestingItems');
+      let fields = Fields.getFields('getInterests');
       let params = {
         'blend_type': 'nux',
         'fields': fields
       };
-      api.getInterestingItems().then((data) => {
+      api.getInterests().then((data) => {
         expect(api.get).toHaveBeenCalledWith(url, params, {});
         expect(data[0].url_name).toBe('technology');
         done();

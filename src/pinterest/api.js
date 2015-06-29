@@ -144,8 +144,8 @@ export default class PinterestApi {
     }
   }
 
-  getInterestingItems() {
-    let fields = Fields.getFields('getInterestingItems');
+  getInterests() {
+    let fields = Fields.getFields('getInterests');
     let params = {
       'blend_type': 'nux',
       'fields': fields
