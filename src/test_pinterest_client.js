@@ -11,7 +11,7 @@ import './exts/lodash';
 export default class TestPinterestClient {
   constructor() {
     /*eslint-disable*/
-    let accessToken = 'MTQzMTYwMjo1MzcyNjU1Njc5NTQ5NDcxMjM6OTIyMzM3MjAzNjg1NDc3NTgwNzoxfDE0MjcyNzk0Njc6MC0tMTlhNGFhMWFmZTJmNmIxODE1NjgzM2U5YjZjZDgwYjg=';
+    let accessToken = 'MTQzMTU5NDo1MzcyNjU1Njc5NTQ5NDcxMjM6OTIyMzM3MjAzNjg1NDc3NTgwNzoxfDE0MzEwMTA4NzA6MC0tM2RjZWI2MmZiZjgwODkxY2M3OWE0M2Y2M2FkZGFmMDI=';
     /*eslint-enable*/
     let headers = HttpHeaders.randomHeaders();
     this.client = new PinterestClient(accessToken, headers);
@@ -20,14 +20,9 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .openApp()
-      .then((body) => {
-        return body.bookmark;
-      })
-      .then((bookmark) => {
-        this.client.browseMoreFeeds(bookmark, 2, (feeds, done) => {
-          console.log(feeds);
-        });
+      .selectInterests()
+      .then((data) => {
+        console.log(data);
       });
   }
 }

@@ -146,6 +146,23 @@ export default class PinterestClient {
       });
   }
 
+  selectInterests() {
+    return this.api
+      .getInterests()
+      .then((items) => {
+        let selectedItems = _.randomSample(items, 50, 80);
+        let selectedItemIds = _(selectedItems)
+          .map((item) => item.id)
+          .value()
+          .join();
+        return selectedItemIds;
+      })
+      .delay(_.random(10000, 60000))
+      .then((selectedItemIds) => {
+        return this.api.selectInterests(selectedItemIds);
+      });
+  }
+
   _autocompleteUser(query, predicate, sliceIndex) {
     sliceIndex = sliceIndex || 0;
     if (sliceIndex > query.length) {
