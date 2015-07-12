@@ -146,14 +146,13 @@ export default class PinterestClient {
       });
   }
 
-  selectInterests() {
+  chooseRandomInterests() {
     return this.api
       .getInterests()
       .then((items) => {
         let selectedItems = _.randomSample(items, 50, 80);
         let selectedItemIds = _(selectedItems)
           .map((item) => item.id)
-          .value()
           .join();
         return selectedItemIds;
       })

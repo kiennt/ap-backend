@@ -20,7 +20,7 @@ export default class TestPinterestClient {
   run() {
     /*eslint-disable*/
     this.client
-      .selectInterests()
+      .chooseRandomInterests()
       .then((data) => {
         console.log(data);
       });
