@@ -48,7 +48,7 @@ module.exports.routes = {
   'POST /v1/members/signup/': 'UserController.signup',
   'POST /v1/members/signup_with_pinterest/': 'UserController.signupWithPinterestAccount',
   'POST /v1/members/signin/': 'UserController.signin',
-  'POST /v1/me/': 'UserController.getUser',
+  'GET /v1/me/': 'UserController.getUser',
   'PUT /v1/me/update_profile/': 'UserController.updateUser',
   'PUT /v1/me/change_password/': 'UserController.changePassword',
 

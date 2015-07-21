@@ -1,11 +1,16 @@
 module.exports = function isAuthenticated (req, res, next) {
-  var postData = req.body;
-  if (!postData || !postData['auth_key']) {
-    return res.error(401, 'Invalid auth_key');
+  var authKey = req.param('auth_key');
+  if (!authKey) {
+    var postData = req.body;
+    if (!postData || !postData['auth_key']) {
+      return res.error(401, 'Invalid auth_key');
+    } else {
+      authKey = postData['auth_key'];
+    };
   };
 
   var query = {
-    authKey: req.body['auth_key']
+    authKey: authKey
   };
   User.findOne(query)
     .populate('accounts')
