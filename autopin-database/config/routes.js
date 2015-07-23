@@ -53,5 +53,6 @@ module.exports.routes = {
   'PUT /v1/me/change_password/': 'UserController.changePassword',
 
   'DELETE /v1/accounts/:id/': 'AccountController.delete',
+  'PUT /v1/accounts/:id/settings/': 'AccountController.updateSettings',
   'POST /v1/accounts/': 'AccountController.create'
 };
