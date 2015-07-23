@@ -24,7 +24,7 @@ module.exports = {
         if (!userFound) {
           return res.error(401, 'Wrong username and password');
         } else {
-          return res.send({'auth_key': userFound.authKey});
+          return res.send({'token': userFound.authKey});
         }
       })
       .catch(function(err) {
@@ -40,7 +40,7 @@ module.exports = {
 
     User.create(user)
       .then(function(newUser) {
-        return res.send({'auth_key': newUser.authKey});
+        return res.send({'token': newUser.authKey});
       })
       .catch(function(err) {
         return res.error(500, 'Something is wrong. Please try again', err);
@@ -65,7 +65,7 @@ module.exports = {
             };
             Account.create(account)
               .then(function(newAccount) {
-                return res.send({'auth_key': newUser.authKey});
+                return res.send({'token': newUser.authKey});
               })
               .catch(function(err) {
                 return res.error(400, 'Something is wrong. Please check username and password again', err);
