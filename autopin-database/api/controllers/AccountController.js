@@ -76,7 +76,7 @@ module.exports = {
     account.configuration = config;
     account.save()
       .then(function(account) {
-        return res.send({'account': account});
+        return res.send();
       })
       .catch(function(err) {
         return res.error(500, 'Something wrong. Please try again', err);
