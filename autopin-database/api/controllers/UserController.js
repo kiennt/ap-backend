@@ -16,7 +16,7 @@ module.exports = {
 
   signin: function(req, res) {
     var query = {
-      email: req.body.email.toLowerCase(),
+      email: req.body.username.toLowerCase(),
       password: StringService.encryptString(req.body.password)
     };
     User.findOne(query)
@@ -34,7 +34,7 @@ module.exports = {
 
   signup: function(req, res) {
     var user = {
-      email: req.body.email.toLowerCase(),
+      email: req.body.username.toLowerCase(),
       password: req.body.password
     };
 
@@ -49,7 +49,7 @@ module.exports = {
 
   signupWithPinterestAccount: function(req, res) {
     var user = {
-      email: req.body.email.toLowerCase(),
+      email: req.body.username.toLowerCase(),
       password: req.body.password
     };
     var randomHeader = headers.randomHeaders();
