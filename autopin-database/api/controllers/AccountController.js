@@ -89,5 +89,13 @@ module.exports = {
       'time_remaining': 1000
     };
     return res.send(fakeResult);
+  },
+
+  stop: function(req, res) {
+    var account = req.options.account;
+    var fakeResult = {
+      'time_remaining': 1000
+    };
+    return res.send(fakeResult);
   }
 }

@@ -55,5 +55,6 @@ module.exports.routes = {
   'DELETE /v1/accounts/:id/': 'AccountController.delete',
   'PUT /v1/accounts/:id/settings/': 'AccountController.updateSettings',
   'POST /v1/accounts/': 'AccountController.create',
-  'PUT /v1/accounts/:id/start/': 'AccountController.start'
+  'PUT /v1/accounts/:id/start/': 'AccountController.start',
+  'PUT /v1/accounts/:id/stop/': 'AccountController.stop'
 };
