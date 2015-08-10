@@ -61,7 +61,6 @@ module.exports = {
         'do_comment': false,
         'do_follow': true,
         'do_unfollow': false,
-        'do_unfollow': false,
         'unfollow_who_dont_follow_me': false,
         'speed': 0
       }
