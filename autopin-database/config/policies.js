@@ -46,6 +46,7 @@ module.exports.policies = {
   AccountController: {
     create: ['isAuthenticated', 'isAvailableAccount'],
     updateSettings: ['isAuthenticated', 'isAccountValid'],
-    delete: ['isAuthenticated', 'isAccountValid']
+    delete: ['isAuthenticated', 'isAccountValid'],
+    start: ['isAuthenticated', 'isAccountValid']
   }
 };

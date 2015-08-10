@@ -81,5 +81,13 @@ module.exports = {
       .catch(function(err) {
         return res.error(500, 'Something wrong. Please try again', err);
       });
+  },
+
+  start: function(req, res) {
+    var account = req.options.account;
+    var fakeResult = {
+      'time_remaining': 1000
+    };
+    return res.send(fakeResult);
   }
 }
