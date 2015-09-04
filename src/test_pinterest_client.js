@@ -21,8 +21,6 @@ export default class TestPinterestClient {
     /*eslint-disable*/
     this.client
       .openApp()
-      .then((data) => {
-        console.log(data);
-      });
+      .then(console.log, console.error);
   }
 }
