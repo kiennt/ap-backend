@@ -82,9 +82,11 @@ export default class HttpClient {
           if (isStatusCodeValid(statusCode)) {
             return body;
           } else {
+            console.error(response);
             throw new Errors.HttpResponseError(response, body);
           }
         }, (error) => {
+          console.error(error);
           throw new Errors.HttpRequestError(error);
         });
     };
