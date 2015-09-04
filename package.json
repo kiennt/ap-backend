@@ -26,7 +26,9 @@
     "nock": "^1.2.1"
   },
   "scripts": {
-    "test": "rm -rf dist spec-dist && gulp test"
+    "test": "rm -rf dist spec-dist && gulp test",
+    "start": "node dist/main.js",
+    "postinstall": "gulp dist"
   },
   "repository": {
     "type": "git",
