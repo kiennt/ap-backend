@@ -83,11 +83,11 @@ export default class HttpClient {
             return body;
           } else {
             console.error('body = ' + body);
-            console.error(response);
+            console.error(JSON.stringify(response));
             throw new Errors.HttpResponseError(response, body);
           }
         }, (error) => {
-          console.log(error);
+          // console.log(error);
           throw new Errors.HttpRequestError(error);
         });
     };
